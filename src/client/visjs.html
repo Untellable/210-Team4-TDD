@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Vis Network | Data | Scaling Nodes and Edges</title>
+
+    <style type="text/css">
+        html,
+        body {
+            font: 10pt arial;
+        }
+
+        #mynetwork {
+            width: 2000px;
+            height: 1000px;
+            border: 1px solid lightgray;
+            background-color: #333333;
+        }
+    </style>
+
+    <script
+            type="text/javascript"
+            src="vis-network.min.js"
+    ></script>
+
+    <script type="text/javascript">
+        const MAIN_USER = `Thomas`;
+        const CLUSTER_MAX_SIZE = 10;
+        const FOLLOWER_NUM = 10;
+        const FOLLOWING_NUM = 10;
+        const TEST_USER_NAMES = [`Ronny`, `Barton`, `Maria`, `Keneth`, `Lauren`,
+            `Coleman`, `Martin`, `Lucius`, `Errol`, `Taylor`, `Kirby`, `Glen`,
+            `Willian`, `Seymour`, `Audra`, `Erich`, `Juliet`, `Jennie`, `Danny`,
+            `Amparo`, `Britney`, `Maria`, `Carter`, `Lester`, `Jean`, `Nora`,
+            `Cecil`, `Scottie`, `Rhett`, `Tom`, `Ervin`, `Bryant`, `Connie`,
+            `Pamela`, `Cherie`, `Mauro`, `Trevor`, `Oren`, `Nigel`, `Barney`,
+            `Vera`, `Dolores`, `Nita`, `Rosalyn`, `Linwood`, `Karen`, `Enid`,
+            `Imelda`, `Amelia`, `Mario`, `Percy`, `Deanna`, `Jospeh`, `Deshawn`,
+            `Rita`, `Elvira`, `Derick`, `Jaclyn`, `Socorro`, `Betsy`, `Chong`,
+            `Ronald`, `Coleman`, `Stacie`, `Ingrid`, `Nora`, `Alisa`, `William`,
+            `Meagan`, `Jerri`, `Melissa`, `Jim`, `Theron`, `Daisy`, `Ismael`,
+            `Hoyt`, `Jewel`, `Marion`, `Marcos`, `Ricky`, `Suzette`, `Pearl`,
+            `Araceli`, `Noemi`, `Ivy`, `Emery`, `Bettye`, `Irma`, `Fidel`,
+            `Deloris`, `Gerard`, `Avery`, `Frankie`, `Ernesto`, `Erick`,
+            `Chance`, `Russel`, `Ruthie`, `Lincoln`, `Beverly`];
+        let nodes = [];
+        let count = 0;
+        nodes.push(
+            {
+                id: count++,
+                value: 20,
+                label: MAIN_USER
+            }
+        );
+
+        for (let user of TEST_USER_NAMES) {
+            nodes.push(
+                {
+                    id: count++,
+                    value: Math.floor(Math.random() * 11),
+                    label: user,
+                    cid: 1
+                }
+            );
+        }
+
+        let edges = [];
+        for (let i = 1; i < CLUSTER_MAX_SIZE; i++) {
+            for (let j = i * CLUSTER_MAX_SIZE; j < (i+1) * CLUSTER_MAX_SIZE + 1; j++) {
+                edges.push(
+                    {from: nodes[i].id, to: nodes[j].id, value: Math.floor(Math.random() * 4)}
+                );
+            }
+            edges.push(
+                {from: nodes[0].id, to: nodes[i].id, value: Math.floor(Math.random() * 4)}
+            );
+        }
+
+        function draw() {
+            let container = document.getElementById("mynetwork");
+            let data = {
+                nodes: nodes,
+                edges: edges,
+            };
+            let options = {
+                nodes: {
+                    shape: "dot",
+                    color: {
+                        border: "#222222",
+                        background: "#666666",
+                    },
+                    font: { color: "#eeeeee" },
+                },
+                edges: {
+                    color: "lightgray",
+                    arrows: {
+                        to: {
+                            enabled: true
+                        }
+                    },
+                    smooth: {
+                        enabled: false,
+                        type: 'continuous'
+                    },
+                    scaling: {
+                        min: 1,
+                        max: 3,
+                        label: {
+                            enabled: true,
+                            min: 14,
+                            max: 30,
+                            maxVisible: 30,
+                            drawThreshold: 5
+                        }
+                    },
+                    length: 100
+                },
+                physics: {
+                    adaptiveTimestep: true,
+                    barnesHut: {
+                        gravitationalConstant: -8000,
+                        springConstant: 0.04,
+                        springLength: 95
+                    },
+                    stabilization: {
+                        iterations: 987
+                    }
+                },
+                layout: {
+                    randomSeed: 191006,
+                    improvedLayout: true
+                }
+            };
+            network = new vis.Network(container, data, options);
+            //network.cluster();
+            network.once("beforeDrawing", function () {
+                network.focus(0, {
+                    scale: 12,
+                });
+            });
+            network.once("afterDrawing", function () {
+                network.fit({
+                    animation: {
+                        duration: 1500,
+                        easingFunction: "linear",
+                    },
+                });
+            });
+        }
+    </script>
+</head>
+<body onload="draw()">
+<p>
+    Scale nodes and edges depending on their value. Hover over the edges to
+    get a popup with more information.
+</p>
+<div id="mynetwork"></div>
+</body>
+</html>
