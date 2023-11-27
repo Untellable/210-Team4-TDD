@@ -7,8 +7,5 @@ How to run:
 `npm install` and then
 `NODE=10000 node index.js`
 
-**Get account post list**
-`curl http://localhost:10000/api/v1/account/109252111498807689`
-
-**Get post detail**
-`curl http://localhost:10000/api/v1/account/109252111498807689/post/111378929013053435`
+**API documentations**
+http://localhost:10000/api/v1/docs/
