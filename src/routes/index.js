@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
  *         required: true
  *         type: string
  *         description: Account ID
- *         example: 109252111498807689
+ *         example: "109252111498807689"
  *      responses:
  *          200:
  *              description: A successful response
