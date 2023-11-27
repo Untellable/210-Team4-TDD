@@ -1,7 +1,7 @@
-require('module-alias/register');
+import 'module-alias/register.js';
 
-const express = require('express');
-const routes = require('@/routes/index.js');
+import express from 'express';
+import routes from './src/routes/index.js';
 
 const app = express();
 const port = process.env.PORT || 10000;

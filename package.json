@@ -6,16 +6,22 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Keran Wang",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.2",
     "express": "^4.18.2",
     "gun": "^0.2020.1239",
     "mockjs": "^1.1.0",
-    "module-alias": "^2.2.3"
+    "module-alias": "^2.2.3",
+    "swagger-jsdoc": "6.2.8",
+    "swagger-ui-express": "^5.0.0"
   },
+  "type": "module",
   "_moduleAliases": {
-    "@": "src"
+    "@": "./src"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.2"
   }
 }
