@@ -1,7 +1,8 @@
-const express = require('express');
+import express from 'express';
+
 const router = express.Router();
-const { getAccountInfoService, getAccountPostsService, getAccountFollowersService } = require('@/service/accountService');
-const { getPostListService, getPostDetailService } = require('../service/postService');
+import { getAccountFollowingService, getAccountInfoService, getAccountPostsService, getAccountFollowersService } from '../services/accountService.js';
+import { getPostListService, getPostDetailService } from '../services/postService.js';
 
 /**
  * Home page
@@ -11,13 +12,33 @@ router.get('/', (req, res) => {
 });
 
 /**
+ * Get all necessary account data
+ * @api {get} /account/:id/initialize
+ */
+router.get('/account/:id/initialize', (req, res) => {
+    const { id } = req.params;
+    const accountInfo = getAccountInfoService(id);
+    const accountPosts = getAccountPostsService(id);
+    const accountFollowers = getAccountFollowersService(id);
+    const accountFollowing = getAccountFollowingService(id);
+    Promise.all([accountInfo, accountPosts, accountFollowers, accountFollowing])
+        .then(data => {
+            res.json(data)
+        })
+        .catch(error => {
+            res.json(error);
+        });
+}
+);
+
+/**
  * @api {get} /account/:id Get account information
  */
-router.get('/account/:id/info', (req, res) => {
+router.get('/account/:id', (req, res) => {
     const { id } = req.params;
     getAccountInfoService(id)
-        .then(data => {
-            res.json(data);
+        .then(accountInfo => {
+            res.json(accountInfo);
         })
         .catch(error => {
             res.json(error);
@@ -25,7 +46,16 @@ router.get('/account/:id/info', (req, res) => {
 });
 
 /**
- * @api {get} /account/:id/followers Get account post list
+ * Redirect any route starting with /account and ending with an id
+ */
+router.get('/account/*/:id', (req, res) => {
+    console.log(`Redirecting ${req.originalUrl} to /account/${req.params.id}`);
+    const { id } = req.params;
+    res.redirect(`/api/v1/account/${id}`);
+});
+
+/**
+ * @api {get} /account/:id/followers Get account followers list
  */
 router.get('/account/:id/followers', (req, res) => {
     const { id } = req.params;
@@ -37,6 +67,22 @@ router.get('/account/:id/followers', (req, res) => {
             res.json(error);
         });
 });
+
+/**
+ * @api {get} /account/:id/following Get account following list
+ */
+router.get('/account/:id/following', (req, res) => {
+    const { id } = req.params;
+    getAccountFollowingService(id)
+        .then(data => {
+            res.json(data);
+        })
+        .catch(error => {
+            res.json(error);
+        });
+}
+);
+
 
 /*
     * @api {get} /account/:id/posts/list Get account post list
@@ -66,4 +112,4 @@ router.get('/account/:id/post/:pid', (req, res) => {
         });
 });
 
-module.exports = router;
+export default router;

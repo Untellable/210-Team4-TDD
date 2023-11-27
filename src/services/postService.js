@@ -1,9 +1,9 @@
-const gun = require('@/db/index.js');
+import gun from '../db/index.js';
 
 
 const getPostListService = async (id) => {
     const posList = gun.get('account').get(id).get('post');
-    const posListData = await posList.then();
+    const posListData = await posList.once();
     if (posListData) {
         return posListData;
     } else {
@@ -13,7 +13,7 @@ const getPostListService = async (id) => {
 
 const getPostDetailService = async (id, pid) => {
     const post = gun.get('account').get(id).get('post').get(pid);
-    const postData = await post.then();
+    const postData = await post.once();
     if (postData) {
         return post;
     } else {
@@ -21,7 +21,7 @@ const getPostDetailService = async (id, pid) => {
     }
 }
 
-module.exports = {
+export {
     getPostListService,
     getPostDetailService,
 };
