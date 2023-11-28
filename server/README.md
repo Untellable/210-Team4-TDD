@@ -5,7 +5,6 @@ Demo for getting data from Mastodon API and save data in GUN.js database
 
 How to run:
 `npm install` and then
-`NODE=10000 node index.js`
+`node server.js`. Note: by default, the port is set to 10000.
 
-**API documentations**
-http://localhost:10000/api/v1/docs/
+[**API documentations**](http://localhost:10000/api/v1/docs/)
