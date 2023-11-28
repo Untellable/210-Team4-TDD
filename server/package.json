@@ -19,7 +19,7 @@
   },
   "type": "module",
   "_moduleAliases": {
-    "@": "./src"
+    "@": "./server"
   },
   "devDependencies": {
     "typescript": "^5.3.2"

@@ -1,4 +1,3 @@
-import path from 'path';
 import 'module-alias/register.js';
 
 import express from 'express';
@@ -17,7 +16,7 @@ const options = {
             description: 'TODO: Add description',
         },
     },
-    apis: [path.resolve('./src/routes/*.js')],
+    apis: ['./src/routes/*.js'],
 };
 const swaggerSpec = swaggerJSDoc(options);
 
