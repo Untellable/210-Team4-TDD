@@ -76,11 +76,11 @@ router.get('/account/:id', function (req, res) {
 /**
  * Redirect any route starting with /account and ending with an id
  */
-router.get('/account/*/:id', function (req, res) {
-    console.log(`Redirecting ${req.originalUrl} to /account/${req.params.id}`);
-    const { id } = req.params;
-    res.redirect(`/api/v1/account/${id}`);
-});
+// router.get('/account/*/:id', function (req, res) {
+//     console.log(`Redirecting ${req.originalUrl} to /account/${req.params.id}`);
+//     const { id } = req.params;
+//     res.redirect(`/api/v1/account/${id}`);
+// });
 
 /**
  * @api {get} /account/:id/followers Get account followers list
