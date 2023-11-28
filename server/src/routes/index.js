@@ -7,7 +7,7 @@ import { getPostListService, getPostDetailService } from '../services/postServic
 /**
  * Home page
  */
-router.get('/', (req, res) => {
+router.get('/', function (req, res) {
     res.json({ message: 'Home' });
 });
 
@@ -38,14 +38,14 @@ router.get('/', (req, res) => {
  *                      accountFollowing:
  *                        type: object
  */
-router.get('/account/:id/initialize', (req, res) => {
+router.get('/account/:id/initialize', function (req, res) {
     const { id } = req.params;
     const accountInfo = getAccountInfoService(id);
     // const accountPosts = getAccountPostsService(id);
     const accountFollowers = getAccountFollowersService(id);
     const accountFollowing = getAccountFollowingService(id);
     Promise.all([accountInfo, accountFollowers, accountFollowing])
-        .then(data => {
+        .then(function (data) {
             res.json({
                 accountInfo: data[0],
                 // accountPosts: data[1],
@@ -53,7 +53,7 @@ router.get('/account/:id/initialize', (req, res) => {
                 accountFollowing: data[2],
             });
         })
-        .catch(error => {
+        .catch(function (error) {
             res.json(error);
         });
 }
@@ -62,13 +62,13 @@ router.get('/account/:id/initialize', (req, res) => {
 /**
  * @api {get} /account/:id Get account information
  */
-router.get('/account/:id', (req, res) => {
+router.get('/account/:id', function (req, res) {
     const { id } = req.params;
     getAccountInfoService(id)
-        .then(accountInfo => {
+        .then(function (accountInfo) {
             res.json(accountInfo);
         })
-        .catch(error => {
+        .catch(function (error) {
             res.json(error);
         });
 });
@@ -76,7 +76,7 @@ router.get('/account/:id', (req, res) => {
 /**
  * Redirect any route starting with /account and ending with an id
  */
-router.get('/account/*/:id', (req, res) => {
+router.get('/account/*/:id', function (req, res) {
     console.log(`Redirecting ${req.originalUrl} to /account/${req.params.id}`);
     const { id } = req.params;
     res.redirect(`/api/v1/account/${id}`);
@@ -85,13 +85,13 @@ router.get('/account/*/:id', (req, res) => {
 /**
  * @api {get} /account/:id/followers Get account followers list
  */
-router.get('/account/:id/followers', (req, res) => {
+router.get('/account/:id/followers', function (req, res) {
     const { id } = req.params;
     getAccountFollowersService(id)
-        .then(data => {
+        .then(function (data) {
             res.json(data);
         })
-        .catch(error => {
+        .catch(function (error) {
             res.json(error);
         });
 });
@@ -99,13 +99,13 @@ router.get('/account/:id/followers', (req, res) => {
 /**
  * @api {get} /account/:id/following Get account following list
  */
-router.get('/account/:id/following', (req, res) => {
+router.get('/account/:id/following', function (req, res) {
     const { id } = req.params;
     getAccountFollowingService(id)
-        .then(data => {
+        .then(function (data) {
             res.json(data);
         })
-        .catch(error => {
+        .catch(function (error) {
             res.json(error);
         });
 }
@@ -115,13 +115,13 @@ router.get('/account/:id/following', (req, res) => {
 /*
     * @api {get} /account/:id/posts/list Get account post list
 */
-router.get('/account/:id/post/list', (req, res) => {
+router.get('/account/:id/post/list', function (req, res) {
     const { id, pid } = req.params;
     getPostListService(id)
-        .then(data => {
+        .then(function (data) {
             res.json(data);
         })
-        .catch(error => {
+        .catch(function (error) {
             res.json(error);
         });
 });
@@ -129,13 +129,13 @@ router.get('/account/:id/post/list', (req, res) => {
 /*
     * @api {get} /account/:id/post/:pid Get account post detail
 */
-router.get('/account/:id/post/:pid', (req, res) => {
+router.get('/account/:id/post/:pid', function (req, res) {
     const { id, pid } = req.params;
     getPostDetailService(id, pid)
-        .then(data => {
+        .then(function (data) {
             res.json(data);
         })
-        .catch(error => {
+        .catch(function (error) {
             res.json(error);
         });
 });
