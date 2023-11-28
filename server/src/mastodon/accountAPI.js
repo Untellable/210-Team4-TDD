@@ -2,7 +2,7 @@ import httpInstance from '../utils/http.js';
 
 
 // GET https://mastodon.social/api/v1/accounts/:id
-const getAccountInfoAPI = async (id) => {
+async function getAccountInfoAPI(id) {
     try {
         console.log(`GET https://mastodon.social/api/v1/accounts/${id}`);
         const accountInfo = await httpInstance.get(`/accounts/${id}`);
@@ -19,7 +19,7 @@ const getAccountInfoAPI = async (id) => {
 
 
 // GET https://mastodon.social/api/v1/accounts/:id/statuses
-const getAccountPostsAPI = async (id) => {
+async function getAccountPostsAPI(id) {
     try {
         const { data: accountPosts } = await httpInstance.get(`/accounts/${id}/statuses`);
         return accountPosts;
@@ -29,7 +29,7 @@ const getAccountPostsAPI = async (id) => {
 };
 
 // GET https://mastodon.social/api/v1/accounts/:id/followers
-const getAccountFollowersAPI = async (id) => {
+async function getAccountFollowersAPI(id) {
     console.log(`GET https://mastodon.social/api/v1/accounts/${id}/followers`);
     try {
         const data = await httpInstance.get(`/accounts/${id}/followers`);
@@ -40,7 +40,7 @@ const getAccountFollowersAPI = async (id) => {
 };
 
 // GET https://mastodon.social/api/v1/accounts/:id/following
-const getAccountFollowingAPI = async (id) => {
+async function getAccountFollowingAPI(id) {
     console.log(`GET https://mastodon.social/api/v1/accounts/${id}/following`);
     try {
         const data = await httpInstance.get(`/accounts/${id}/following`);

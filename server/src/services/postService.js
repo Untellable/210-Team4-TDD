@@ -1,7 +1,7 @@
 import gun from '../db/index.js';
 
 
-const getPostListService = async (id) => {
+async function getPostListService(id) {
     const posList = gun.get('account').get(id).get('post');
     const posListData = await posList.once();
     if (posListData) {
@@ -11,7 +11,7 @@ const getPostListService = async (id) => {
     }
 }
 
-const getPostDetailService = async (id, pid) => {
+async function getPostDetailService(id, pid) {
     const post = gun.get('account').get(id).get('post').get(pid);
     const postData = await post.once();
     if (postData) {
