@@ -1,7 +1,7 @@
 import express from 'express';
 
 const router = express.Router();
-import { getAccountFollowingService, getAccountInfoService, getAccountPostsService, getAccountFollowersService } from '../services/accountService.js';
+import { getAccountFollowingService, getAccountInfoService, getAccountPostsService, getAccountFollowersService, getAccountInitializeService } from '../services/accountService.js';
 import { getPostListService, getPostDetailService } from '../services/postService.js';
 
 /**
@@ -38,26 +38,20 @@ router.get('/', function (req, res) {
  *                      accountFollowing:
  *                        type: object
  */
+
 router.get('/account/:id/initialize', function (req, res) {
     const { id } = req.params;
-    const accountInfo = getAccountInfoService(id);
-    // const accountPosts = getAccountPostsService(id);
-    const accountFollowers = getAccountFollowersService(id);
-    const accountFollowing = getAccountFollowingService(id);
-    Promise.all([accountInfo, accountFollowers, accountFollowing])
+
+    getAccountInitializeService(id)
         .then(function (data) {
-            res.json({
-                accountInfo: data[0],
-                // accountPosts: data[1],
-                accountFollowers: data[1],
-                accountFollowing: data[2],
-            });
+            console.log('Data received:', data);
+            res.json(data);
         })
         .catch(function (error) {
+            console.error('Error:', error);
             res.json(error);
         });
-}
-);
+});
 
 /**
  * @api {get} /account/:id Get account information

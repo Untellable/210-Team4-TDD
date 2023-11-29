@@ -32,10 +32,11 @@ async function getAccountPostsAPI(id) {
 async function getAccountFollowersAPI(id) {
     console.log(`GET https://mastodon.social/api/v1/accounts/${id}/followers`);
     try {
-        const data = await httpInstance.get(`/accounts/${id}/followers`);
+        const {data} = await httpInstance.get(`/accounts/${id}/followers`);
         return data;
     } catch (error) {
-        console.log('getAccountFollowersAPI Error:', error.response.data.error);
+        console.log(error);
+        // console.log('getAccountFollowersAPI Error:', error.response.data.error);
     }
 };
 
@@ -43,10 +44,11 @@ async function getAccountFollowersAPI(id) {
 async function getAccountFollowingAPI(id) {
     console.log(`GET https://mastodon.social/api/v1/accounts/${id}/following`);
     try {
-        const data = await httpInstance.get(`/accounts/${id}/following`);
+        const {data} = await httpInstance.get(`/accounts/${id}/following`);
         return data;
     } catch (error) {
-        console.log('getAccountFollowingAPI Error:', error.response.data.error);
+        console.log(error);
+        // console.log('getAccountFollowingAPI Error:', error.response.data.error);
     }
 };
 

@@ -1,6 +1,6 @@
 // import gun from '../db/index.js';
 import { getAccountInfoAPI, getAccountFollowersAPI, getAccountPostsAPI, getAccountFollowingAPI } from '../mastodon/accountAPI.js';
-
+import { createAccountInfo } from '../models/account.js';
 
 /*
     * @param {string} id
@@ -9,6 +9,72 @@ async function getAccountInfoService(id) {
     const { data } = await getAccountInfoAPI(id);
     return data;
 };
+
+async function getAccountInitializeService(id) {
+    let relations = {};
+    let accountInfoMap = new Map();
+
+    // Initialize the relations for the first-level account
+    relations[id] = new Set();
+
+    // Function to process followers and followings
+    async function processAccounts(accounts, isFollowerOfId) {
+        for (let account of accounts) {
+            // Add account information
+            accountInfoMap.set(account.id, account);
+
+            // Update relations
+            if (!relations[account.id]) {
+                relations[account.id] = new Set();
+            }
+            if (isFollowerOfId) {
+                relations[account.id].add(id);
+            } else {
+                relations[id].add(account.id);
+            }
+
+            // Fetch second-level followers and followings
+            const followers = await getAccountFollowersService(account.id);
+            const followings = await getAccountFollowingService(account.id);
+
+            for (let follower of followers) {
+                if (!relations[follower.id]) {
+                    relations[follower.id] = new Set();
+                }
+                relations[follower.id].add(account.id);
+                accountInfoMap.set(follower.id, follower);
+            }
+
+            for (let following of followings) {
+                if (!relations[account.id]) {
+                    relations[account.id] = new Set();
+                }
+                relations[account.id].add(following.id);
+                accountInfoMap.set(following.id, following);
+            }
+        }
+    }
+
+    // Fetch first-level followers and followings
+    const firstLevelFollowers = await getAccountFollowersService(id);
+    const firstLevelFollowings = await getAccountFollowingService(id);
+
+    // Process first-level followers and followings
+    await processAccounts(firstLevelFollowers, true);
+    await processAccounts(firstLevelFollowings, false);
+
+    // Convert Sets to arrays before returning
+    Object.keys(relations).forEach(key => {
+        relations[key] = Array.from(relations[key]);
+    });
+
+    const result = {
+        'relations': relations,
+        'accountInfoList': Array.from(accountInfoMap.values())
+    };
+
+    return result;
+}
 
 /*
     * @param {string} id
@@ -34,89 +100,39 @@ async function getAccountPostsService(id) {
     return data;
 };
 
+async function processAccountList(id, data) {
+    if (!data) return null;
+
+    let result = [];
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].id == id) continue;
+        if (i == 10) break; // Limit 10
+        const accountInfo = createAccountInfo(data[i]);
+        result.push(accountInfo);
+    }
+    return result;
+}
+
 /*
     * @param {string} id
 */
-async function getAccountFollowersService(id, level = 1) {
-    // const account = gun.get('account').get(id);
-    // const accountData = await account.once();
-
-    // if (accountData) {
-    // console.log('Get account data from DB');
-    // } else {
-    const { data } = await getAccountFollowersAPI(id);
-    if (!data) {
-        return null;
-    } else {
-        let result = [];
-        for (let i = 0; i < data.length; i++) {
-            const accountInfo = {
-                id: data[i].id,
-                username: data[i].username,
-                display_name: data[i].display_name,
-                following_count: data[i].following_count,
-                followers_count: data[i].followers_count,
-                statuses_count: data[i].statuses_count,
-            };
-            if (level == 1) {
-                const followings = await getAccountFollowingService(data[i].id, level + 1);
-                const followers = await getAccountFollowersService(data[i].id, level + 1);
-                accountInfo.following = followings;
-                accountInfo.follower = followers;
-            }
-            result.push(accountInfo);
-            // gun.get('account').get(id).get('follower').get(data[i].id).put(accountInfo);
-            // gun.get('account').get(data[i].id).put(accountInfo);
-        }
-        // console.log(gun.get('account').get(id).get('follower'));
-        return result;
-    }
-    // }
-    // return gun.get('account').get(id).get('follower');
+async function getAccountFollowersService(id) {
+    const data = await getAccountFollowersAPI(id);
+    const result = processAccountList(id, data);
+    return result;
 };
 
-async function getAccountFollowingService(id, level = 1) {
-    // const account = gun.get('account').get(id);
-    // const accountData = await account.once();
-    // if (accountData) {
-    //     console.log('Get account data from DB');
-    // } else {
-    const { data } = await getAccountFollowingAPI(id);
-    if (!data) {
-        return null;
-    } else {
-        let result = [];
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].id == id) {
-                continue;
-            }
-            // Limit 10
-            if (i == 10) break;
-            const accountInfo = {
-                id: data[i].id,
-                username: data[i].username,
-                display_name: data[i].display_name,
-                following_count: data[i].following_count,
-                followers_count: data[i].followers_count,
-                statuses_count: data[i].statuses_count,
-            };
-            if (level == 1) {
-                const followings = await getAccountFollowingService(data[i].id, level + 1);
-                const followers = await getAccountFollowersService(data[i].id, level + 1);
-                accountInfo.following = followings;
-                accountInfo.follower = followers;
-            }
-            // gun.get('account').get(id).get('following').get(data[i].id).put(accountInfo);
-            // gun.get('account').get(data[i].id).put(accountInfo);
-            result.push(accountInfo);
-        }
-        return result;
-    }
-    // }
-    // return gun.get('account').get(id).get('following');
+/*
+    * @param {string} id
+*/
+async function getAccountFollowingService(id) {
+    const data = await getAccountFollowersAPI(id);
+    const result = processAccountList(id, data);
+    return result;
 }
 
 export {
+    getAccountInitializeService,
     getAccountInfoService,
     getAccountPostsService,
     getAccountFollowersService,
