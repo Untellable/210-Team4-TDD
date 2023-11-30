@@ -1,12 +1,9 @@
-import {
-    getAccountFollowersAPI,
-    getAccountFollowingAPI,
-    getAccountInfoAPI,
-    getAccountPostsAPI
-} from '../mastodon/accountAPI.js';
-import { dao } from "../db/dao.js";
+import DAO from "../db/dao.js";
+import GunDBAdaptor from "../db/gun/gun-db-adapator.js";
+import FediverseAPIFactory from "../fediverse/fediverse-api-factory.js";
 
-const db = new dao();
+const db = new DAO(new GunDBAdaptor());
+const api = FediverseAPIFactory.createAdapter('user@mastodon.social');
 
 /**
  * @param {object} data
@@ -32,66 +29,34 @@ async function getAccountInfoService(id) {
         return user;
     }
 
-    const { data } = await getAccountInfoAPI(id);
+    const { data } = await api.getAccountInfo(id);
     const accountInfo = createAccountInfo(data);
     db.addUser(id, accountInfo);
     return accountInfo;
 }
 
-/*
-    * @param {string} id
-*/
-async function getAccountPostsService(id) {
-    // const account = gun.get('account').get(id);
-    // const accountData = await account.once();
-    // if (accountData) {
-    //     console.log('Get account data from DB');
-    // } else {
-    console.log('Get account data from API');
-    const { data } = await getAccountPostsAPI(id);
-
-    for (let i = 0; i < data.length; i++) {
-        const status = {
-            created_at: data[i].created_at,
-            content: data[i].content,
-        };
-        // gun.get('account').get(id).get('post').get(data[i].id).put(status);
-    }
-    // }
-    // return gun.get('account').get(id).get('post');
-    return data;
-};
-
-/*
-    * @param {string} id
-*/
-async function getAccountFollowersService(id, level = 1) {
+/**
+ * @param {string} id
+ */
+async function getAccountFollowersService(id) {
     const followers = await db.getFollowers(id);
     if (followers) {
         console.log(`getting followers from db`);
         return followers;
     }
 
-    const { data } = await getAccountFollowersAPI(id);
+    const { data } = await api.getAccountFollowers(id);
     if (!data) {
         return null;
     } else {
         let response = {};
         for (let i = 0; i < data.length; i++) {
             const accountInfo = createAccountInfo(data[i]);
-            // if (level === 1) {
-            //     const followings = await getAccountFollowingService(data[i].id, level + 1);
-            //     const followers = await getAccountFollowersService(data[i].id, level + 1);
-            //     accountInfo.following = followings;
-            //     accountInfo.follower = followers;
-            // }
             response[data[i].id] = accountInfo;
             db.addFollower(id, data[i].id, accountInfo);
         }
         return response;
     }
-    // }
-    // return gun.get('account').get(id).get('follower');
 }
 
 async function getAccountFollowingService(id, level = 1) {
@@ -101,19 +66,13 @@ async function getAccountFollowingService(id, level = 1) {
         return followings;
     }
 
-    const { data } = await getAccountFollowingAPI(id);
+    const { data } = await api.getAccountFollowing(id);
     if (!data) {
         return null;
     } else {
         let response = {};
         for (let i = 0; i < data.length; i++) {
             const accountInfo = createAccountInfo(data[i]);
-            // if (level === 1) {
-            //     const followings = await getAccountFollowingService(data[i].id, level + 1);
-            //     const followers = await getAccountFollowersService(data[i].id, level + 1);
-            //     accountInfo.following = followings;
-            //     accountInfo.follower = followers;
-            // }
             response[data[i].id] = accountInfo;
             db.addFollowing(id, data[i].id, accountInfo);
         }
@@ -123,7 +82,6 @@ async function getAccountFollowingService(id, level = 1) {
 
 export {
     getAccountInfoService,
-    getAccountPostsService,
     getAccountFollowersService,
     getAccountFollowingService
 };

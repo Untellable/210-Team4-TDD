@@ -9,7 +9,7 @@ const options = {
             description: 'TODO: Add description',
         },
     },
-    apis: ['./src/routes/*.js'],
+    apis: ['./src/api/*.js'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

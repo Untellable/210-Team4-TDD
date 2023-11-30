@@ -14,7 +14,7 @@ Demo for getting data from Mastodon API and save data in GUN.js database
 
 How to run:
 `npm install` and then
-`NODE=10000 node index.js`
+`NODE=10000 node router.js`
 
 **API documentations**
 http://localhost:10000/api/v1/docs/
