@@ -3,6 +3,10 @@
 
 name: Node.js CI
 
+on:
+  pull_request:
+    branches:
+      - 'CI-test'
 
 jobs:
   client-tests:
@@ -26,7 +30,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-
+    
   server-tests:
 
     runs-on: ubuntu-latest
