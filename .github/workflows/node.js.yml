@@ -5,7 +5,6 @@ name: Node.js CI
 
 on:
   pull_request:
-    branches: [ "main" ]
 
 jobs:
   client-tests:
