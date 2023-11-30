@@ -1,17 +1,10 @@
-// Read the json file example.json
-
-
 const baseURL = "http://localhost:8991";
 
-// fetch('./example2.json')
-//     .then((response) => response.json())
-//     .then((json) => {
-//         console.log(json)
-//         const [nodes,edges] = processData(json)
-//         console.log("Nodes and edges",nodes,edges)
-//         drawFromResponse(nodes, edges)
-//     });
 
+/**
+ * Function is called when the user clicks on the "Update" button
+ * Updates the network graph with the user ID entered in the input box
+ */
 
 function updateID(){ 
 
@@ -37,7 +30,18 @@ function updateID(){
 
 }
 
-// Process the json file to visualize graph in visjs
+/**
+ * 
+ * @param {JSON} json Response json from the API
+ * @param {Number} mainID
+ * @returns {Array} [nodes,edges]
+ * 
+ * Function takes in the JSON response from the API and the main user ID
+ * Returns an array of nodes and edges to be used in the network graph
+ * 
+ * 
+ */
+
 function processData(json, mainID = 109252111498807689){
     // console.log(json.accountFollowers)
 
@@ -94,6 +98,12 @@ function processData(json, mainID = 109252111498807689){
 
     return [nodes,edges]
 }
+
+/**
+ * Draws the network graph using the nodes and edges array
+ * @param {*} nodes  
+ * @param {*} edges 
+ */
 
 function drawFromResponse(nodes, edges) {
     let container = document.getElementById("mynetwork");
