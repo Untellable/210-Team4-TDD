@@ -2,20 +2,7 @@
 <html lang="en">
 <head>
     <title>Vis Network | Data | Scaling Nodes and Edges</title>
-
-    <style type="text/css">
-        html,
-        body {
-            font: 10pt arial;
-        }
-
-        #mynetwork {
-            width: 2000px;
-            height: 1000px;
-            border: 1px solid lightgray;
-            background-color: #333333;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="visjs.css">
 
     <script
             type="text/javascript"
@@ -29,12 +16,20 @@
 
 </head>
 <body onload="drawFromResponse()">
-<p>
-    Scale nodes and edges depending on their value. Hover over the edges to
-    get a popup with more information.
-</p>
-<input type="text" id = "idInput" placeholder="Enter ID of the mastodon user"/>
-<input type="button" onclick="updateID()" value="Enter"/>
-<div id="mynetwork"></div>
+    <div id="mainContainer">
+        <h2>
+            Scale nodes and edges depending on their value. Hover over the edges to
+            get a popup with more information.
+        </h2>
+        <div class="input-container">
+            <input type="text" id="idInput" placeholder="Enter ID of the mastodon user"/>
+            <input type="button" id="enterButton" onclick="updateID()" value="Enter"/>
+        </div>
+        <div id="mynetwork"></div>
+        <div id="overlay" class="overlay"></div>
+        <div id="loadingSpinner" class="spinner-container">
+            <div class="spinner"></div>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,6 +1,41 @@
 const baseURL = "http://localhost:8991";
 
 
+
+/**
+ * Function displays the overlay
+ */
+
+function showOverlay() {
+    document.getElementById('overlay').style.display = 'block';
+}
+
+/**
+ * Function hides the overlay
+ */
+
+function hideOverlay() {
+    document.getElementById('overlay').style.display = 'none';
+}
+
+/**
+ * Function displays the loading spinner and overlay
+ */
+
+function showSpinner() {
+    showOverlay();
+    document.getElementById('loadingSpinner').style.display = 'block';
+}
+
+/**
+ * Function hides the loading spinner and overlay
+ */
+
+function hideSpinner() {
+    hideOverlay();
+    document.getElementById('loadingSpinner').style.display = 'none';
+}
+
 /**
  * Function is called when the user clicks on the "Update" button
  * Updates the network graph with the user ID entered in the input box
@@ -8,26 +43,44 @@ const baseURL = "http://localhost:8991";
 
 function updateID(){ 
 
+    showSpinner();
+
     let userID = document.getElementById("idInput").value;
 
-    if(userID == ""){
-        console.log("No user ID entered")
-        return
+
+    if (!/^\d+$/.test(userID)) {
+        alert("Please enter a valid number.");
+        console.log("Invalid user ID entered")
+        hideSpinner();
+        return;
     }
 
     console.log("User ID", userID)
 
     let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`
 
-    fetch(apiURL)
-        .then((response) => response.json())
-        .then((json) => {
-            console.log(json)
-            const [nodes,edges] = processData(json, userID)
-            console.log("Nodes and edges",nodes,edges)
-            drawFromResponse(nodes, edges)
-        });
 
+    // Need to write a common http request function with error handling
+    try {
+        fetch(apiURL)
+            .then((response) => response.json())
+            .then((json) => {
+                try {
+                    console.log(json);
+                    const [nodes, edges] = processData(json, userID);
+                    console.log("Nodes and edges", nodes, edges);
+                    drawFromResponse(nodes, edges);
+                    hideSpinner();
+                } catch (error) {
+                    console.log("Error in processing response", error);
+                    // Handle or rethrow the error as needed
+                }
+            });
+    } catch (error) {
+        alert("Error fetching data from API. Please try again later.")
+        console.log("Error", error)
+        hideSpinner();
+    }
 }
 
 /**
