@@ -1,26 +1,50 @@
 // Read the json file example.json
 
 
+const baseURL = "http://localhost:8991";
+
+// fetch('./example2.json')
+//     .then((response) => response.json())
+//     .then((json) => {
+//         console.log(json)
+//         const [nodes,edges] = processData(json)
+//         console.log("Nodes and edges",nodes,edges)
+//         drawFromResponse(nodes, edges)
+//     });
 
 
-fetch('./example2.json')
-    .then((response) => response.json())
-    .then((json) => {
-        console.log(json)
-        const [nodes,edges] = processData(json)
-        console.log("Nodes and edges",nodes,edges)
-        drawFromResponse(nodes, edges)
-    });
+function updateID(){ 
 
+    let userID = document.getElementById("idInput").value;
+
+    if(userID == ""){
+        console.log("No user ID entered")
+        return
+    }
+
+    console.log("User ID", userID)
+
+    let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`
+
+    fetch(apiURL)
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(json)
+            const [nodes,edges] = processData(json, userID)
+            console.log("Nodes and edges",nodes,edges)
+            drawFromResponse(nodes, edges)
+        });
+
+}
 
 // Process the json file to visualize graph in visjs
 function processData(json, mainID = 109252111498807689){
     // console.log(json.accountFollowers)
 
-    const MAIN_USER = json.accountInfo;
-    const CLUSTER_MAX_SIZE = 10;
-    const FOLLOWER_NUM = 10;
-    const FOLLOWING_NUM = 10;
+    // const MAIN_USER = json.accountInfo;
+    // const CLUSTER_MAX_SIZE = 10;
+    // const FOLLOWER_NUM = 10;
+    // const FOLLOWING_NUM = 10;
 
     nodes_json = json.accountInfoList;
     edges_json = json.relations;
@@ -28,7 +52,6 @@ function processData(json, mainID = 109252111498807689){
     main_node = nodes_json.filter(node => node.id == mainID)[0];
 
     let nodes = [];
-    let count = 0;
     let nodesCreated = new Set() // to keep track of nodes created using the ids of accounts
     nodes.push(
         {
@@ -55,56 +78,6 @@ function processData(json, mainID = 109252111498807689){
             nodesCreated.add(node.id); 
         }
     });
-
-    // num_followers = Math.min(FOLLOWER_NUM, main_node.followers_count) // get the minimum of the two numbers
-
-    // for (let i = 0; i < num_followers; i++) {
-    //     let follower = json.accountFollowers[i];
-    //     if (follower != null) {
-    //         if (!nodesCreated.has(follower.id)) {
-    //             nodes.push(
-    //                 {
-    //                     id: follower.id,
-    //                     value: 10,
-    //                     label: follower.display_name
-    //                 }
-    //             );
-    //             console.log("Added node", follower.display_name)
-    //             nodesCreated.add(follower.id); 
-    //         }
-    //         edges.push(
-    //             {
-    //                 from: follower.id,
-    //                 to: MAIN_USER.id
-    //             }
-    //         );
-    //     }
-
-    //     // Adding followers of followers
-    //     let num_followers_of_follower = Math.min(FOLLOWER_NUM, follower.follower.length) // get the minimum of the two numbers
-    //     for (let j = 0; j < num_followers_of_follower; j++) {
-    //         let follower_of_follower = follower.follower[j];
-    //         if (follower_of_follower != null) {
-    //             if (!nodesCreated.has(follower_of_follower.id)) {
-    //                 nodes.push(
-    //                     {
-    //                         id: follower_of_follower.id,
-    //                         value: 10,
-    //                         label: follower_of_follower.display_name
-    //                     }
-    //                 );
-    //                 console.log("Added node", follower_of_follower.display_name)
-    //                 nodesCreated.add(follower_of_follower.id); 
-    //             }
-    //             edges.push(
-    //                 {
-    //                     from: follower_of_follower.id,
-    //                     to: follower.id
-    //                 }
-    //             );
-    //         }
-    //     }
-    // }
     
     for (let key in edges_json){
         let followers = edges_json[key];
@@ -178,7 +151,6 @@ function drawFromResponse(nodes, edges) {
         }
     };
     network = new vis.Network(container, data, options);
-    //network.cluster();
     network.once("beforeDrawing", function () {
         network.focus(0, {
             scale: 12,
