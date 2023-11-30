@@ -20,6 +20,23 @@ function createAccountInfo(data) {
 }
 
 /**
+ * @param {string} account
+ */
+async function accountLookupService(account) {
+    try {
+        const api = FediverseAPIFactory.createAdapter(account);
+        const response = await api.accountLookup(account);
+        if (response && response.data) {
+            return response.data;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error during account lookup:', error);
+    }
+}
+
+/**
  * @param {string} id
  */
 async function getAccountInfoService(id) {
@@ -29,10 +46,18 @@ async function getAccountInfoService(id) {
         return user;
     }
 
-    const { data } = await api.getAccountInfo(id);
-    const accountInfo = createAccountInfo(data);
-    db.addUser(id, accountInfo);
-    return accountInfo;
+    try {
+        const response = await api.getAccountInfo(id);
+        if (!response || !response.data) {
+            return null;
+        }
+
+        const accountInfo = createAccountInfo(response.data);
+        db.addUser(id, accountInfo);
+        return accountInfo;
+    } catch (error) {
+        console.error('Error during getting account info:', error);
+    }
 }
 
 /**
@@ -59,7 +84,7 @@ async function getAccountFollowersService(id) {
     }
 }
 
-async function getAccountFollowingService(id, level = 1) {
+async function getAccountFollowingService(id) {
     const followings = await db.getFollowings(id);
     if (followings) {
         console.log(`getting followings from db`);
@@ -81,7 +106,8 @@ async function getAccountFollowingService(id, level = 1) {
 }
 
 export {
+    accountLookupService,
     getAccountInfoService,
     getAccountFollowersService,
-    getAccountFollowingService
+    getAccountFollowingService,
 };

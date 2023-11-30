@@ -31,4 +31,12 @@ export default class FediverseAdapter {
     async getAccountFollowing(accountId) {
         throw new Error('getAccountFollowing not implemented');
     }
+
+    /**
+     * @param {string} acct
+     * @return {Promise<any>}
+     */
+    async accountLookup(acct) {
+        throw new Error('accountLookup not implemented');
+    }
 }

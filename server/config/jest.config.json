@@ -1,0 +1,7 @@
+{
+  "rootDir": "..",
+  "transform": {
+    "^.+\\.js$": "babel-jest"
+  },
+  "testMatch": ["<rootDir>/src/**/*.test.js"]
+}

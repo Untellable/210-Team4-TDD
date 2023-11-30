@@ -40,4 +40,16 @@ export default class MastodonAdapter extends FediverseAdapter {
             console.error(error);
         }
     }
+
+    // GET https://mastodon.social/api/v1/accounts/lookup
+    async accountLookup(acct) {
+        try {
+            // Decode URL-encoded string
+            acct = decodeURIComponent(acct);
+            console.log(`GET https://${this.server}/api/v1/accounts/lookup?acct=${acct}`);
+            return await httpInstance.get(`https://${this.server}/api/v1/accounts/lookup?acct=${acct}`);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
