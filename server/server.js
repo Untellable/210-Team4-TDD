@@ -1,13 +1,16 @@
 import 'module-alias/register.js';
 
 import express from 'express';
+import cors from 'cors';
 import routes from './src/routes/index.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './src/utils/swaggerSpec.js';
 
 
 const app = express();
-const port = process.env.PORT || 10000;
+app.use(cors())
+
+const port = process.env.PORT || 8991;
 
 
 app.use('/api/v1', routes);
