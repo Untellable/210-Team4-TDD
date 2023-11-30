@@ -4,10 +4,7 @@
 name: Node.js CI
 
 on:
-  push:
   pull_request:
-    branches:
-      - '**'
 
 jobs:
   client-tests:
