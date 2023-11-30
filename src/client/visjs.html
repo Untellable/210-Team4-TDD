@@ -22,7 +22,12 @@
             src="vis-network.min.js"
     ></script>
 
-    <script type="text/javascript">
+    <script
+            type="text/javascript"
+            src="process.js"
+    ></script>
+
+    <!-- <script type="text/javascript">
         const MAIN_USER = `Thomas`;
         const CLUSTER_MAX_SIZE = 10;
         const FOLLOWER_NUM = 10;
@@ -146,9 +151,9 @@
                 });
             });
         }
-    </script>
+    </script> -->
 </head>
-<body onload="draw()">
+<body onload="drawFromResponse()">
 <p>
     Scale nodes and edges depending on their value. Hover over the edges to
     get a popup with more information.
