@@ -10,15 +10,15 @@ jobs:
         working-directory: ./client
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        cache: 'npm'
-        cache-dependency-path: ./client/package-lock.json
-    - run: npm ci
-    - run: npx prettier src --check
-    - run: npx eslint src
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: ./client/package-lock.json
+      - run: npm ci
+      - run: npx prettier src --check
+      - run: npx eslint src
 
   client-tests:
     runs-on: ubuntu-latest
@@ -27,14 +27,14 @@ jobs:
         working-directory: ./client
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        cache: 'npm'
-        cache-dependency-path: ./client/package-lock.json
-    - run: npm ci
-    - run: npm test
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: ./client/package-lock.json
+      - run: npm ci
+      - run: npm test
 
   server-lint:
     runs-on: ubuntu-latest
@@ -43,15 +43,15 @@ jobs:
         working-directory: ./server
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        cache: 'npm'
-        cache-dependency-path: ./server/package-lock.json
-    - run: npm ci
-    - run: npx prettier src --check
-    - run: npx eslint src
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: ./server/package-lock.json
+      - run: npm ci
+      - run: npx prettier src --check
+      - run: npx eslint src
 
   server-tests:
     runs-on: ubuntu-latest
@@ -60,11 +60,11 @@ jobs:
         working-directory: ./server
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        cache: 'npm'
-        cache-dependency-path: ./server/package-lock.json
-    - run: npm ci
-    - run: npm test
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: ./server/package-lock.json
+      - run: npm ci
+      - run: npm test
