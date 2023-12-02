@@ -8,7 +8,7 @@ import { createAccountInfo } from '../models/account.js';
 async function getAccountInfoService(id) {
     const { data } = await getAccountInfoAPI(id);
     return data;
-};
+}
 
 async function getAccountInitializeService(id) {
     let relations = {};
@@ -18,6 +18,10 @@ async function getAccountInitializeService(id) {
     relations[id] = new Set();
 
     // Function to process followers and followings
+    /**
+     * @param {any[]} accounts
+     * @param {boolean} isFollowerOfId
+     */
     async function processAccounts(accounts, isFollowerOfId) {
         for (let account of accounts) {
             // Add account information
@@ -100,13 +104,18 @@ async function getAccountPostsService(id) {
     return data;
 };
 
+/**
+ * @param {string} id , the id of the account
+ * @param {string | any[]} data
+ * @returns {Promise<Object[]>} result, an array of processed account info
+ */
 async function processAccountList(id, data) {
     if (!data) return null;
 
     let result = [];
     for (let i = 0; i < data.length; i++) {
-        if (data[i].id == id) continue;
-        if (i == 10) break; // Limit 10
+        if (data[i].id === id) continue;
+        if (i === 40) break; // Limit 10
         const accountInfo = createAccountInfo(data[i]);
         result.push(accountInfo);
     }

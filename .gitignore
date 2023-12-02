@@ -28,3 +28,6 @@ radata
 
 .prettierrc
 test.ipynb
+.idea
+.DS_Store
+*.json
