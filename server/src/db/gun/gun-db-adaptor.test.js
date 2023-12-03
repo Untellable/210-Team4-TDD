@@ -1,16 +1,25 @@
-import GunDBAdaptor from './gun-db-adapator.js'; // Update with the correct path
-import { jest, expect, beforeEach, test, describe } from "@jest/globals";
+import { jest } from '@jest/globals';
+import GunDBAdaptor from './gun-db-adapator.js';
 import GUN from 'gun'; // Import GUN to ensure the mock is used
 
-jest.mock('gun'); // This uses the mock from __mocks__/gun.js if present
+const mockGun = {
+    get: jest.fn().mockReturnThis(),
+    put: jest.fn().mockImplementation(() => {}),
+    once: jest.fn(),
+    set: jest.fn(),
+};
+
+jest.mock('gun', () => {
+    return jest.fn(() => {
+        return mockGun;
+    });
+});
 
 describe('GunDBAdaptor', () => {
     let gunDbAdaptor;
-    let mockGun;
 
     beforeEach(() => {
-        mockGun = GUN(); // Get the mocked instance
-        gunDbAdaptor = new GunDBAdaptor();
+        gunDbAdaptor = new GunDBAdaptor(GUN());
     });
     describe('addUser', () => {
         test('should successfully add a user with valid data', () => {
@@ -38,24 +47,37 @@ describe('GunDBAdaptor', () => {
     describe('getUser', () => {
         test('should successfully retrieve a user when the user exists', async () => {
             const userId = 'user123';
-            const mockUserData = { _:'#internal', name: 'John Doe', email: 'johndoe@example.com' };
-            mockGun.get().get().once.mockImplementation(callback => {
-                callback(mockUserData);
-            });
+            const mockUserData = {
+                _: '#internal',
+                name: 'John Doe',
+                email: 'johndoe@example.com',
+            };
+            mockGun
+                .get()
+                .get()
+                .once.mockImplementation((callback) => {
+                    callback(mockUserData);
+                });
 
             const result = await gunDbAdaptor.getUser(userId);
 
             expect(mockGun.get).toHaveBeenCalledWith('users');
             expect(mockGun.get().get).toHaveBeenCalledWith(userId);
             expect(mockGun.get().get().once).toHaveBeenCalled();
-            expect(result).toEqual({ name: 'John Doe', email: 'johndoe@example.com' });
+            expect(result).toEqual({
+                name: 'John Doe',
+                email: 'johndoe@example.com',
+            });
         });
 
         test('should return null when the user does not exist', async () => {
             const userId = 'user123';
-            mockGun.get().get().once.mockImplementation(callback => {
-                callback(null); // Simulates user not found
-            });
+            mockGun
+                .get()
+                .get()
+                .once.mockImplementation((callback) => {
+                    callback(null); // Simulates user not found
+                });
 
             const result = await gunDbAdaptor.getUser(userId);
 
@@ -70,7 +92,10 @@ describe('GunDBAdaptor', () => {
         test('should successfully add a follower with valid data', () => {
             const userId = 'user123';
             const followerId = 'follower456';
-            const followerData = { name: 'Jane Doe', email: 'janedoe@example.com' };
+            const followerData = {
+                name: 'Jane Doe',
+                email: 'janedoe@example.com',
+            };
 
             gunDbAdaptor.addFollower(userId, followerId, followerData);
 
@@ -78,8 +103,12 @@ describe('GunDBAdaptor', () => {
             expect(mockGun.get().get).toHaveBeenCalledWith(followerId);
             expect(mockGun.get().get().put).toHaveBeenCalledWith(followerData);
             expect(mockGun.get().get().get).toHaveBeenCalledWith('followers');
-            expect(mockGun.get().get().get().get).toHaveBeenCalledWith(followerId);
-            expect(mockGun.get().get().get().get().set).toHaveBeenCalledWith(mockGun.get().get().put());
+            expect(mockGun.get().get().get().get).toHaveBeenCalledWith(
+                followerId
+            );
+            expect(mockGun.get().get().get().get().set).toHaveBeenCalledWith(
+                mockGun.get().get().put()
+            );
         });
     });
 });

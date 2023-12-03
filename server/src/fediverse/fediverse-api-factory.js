@@ -1,19 +1,14 @@
-import MastodonAdapter from './mastodon-adapter.js'
-import FediverseAdapter from './fediverse-adapter.js'
-import getServerName from "../utils/string-util.js";
+import MastodonAPI from './mastodon-api.js';
 
 export default class FediverseAPIFactory {
     /**
-     * Creates an adaptor to the Fediverse api for the given account
-     * @param {string} accountUrl user's account url
-     * @return {FediverseAdapter} api adaptor based on the account's server
+     * Creates an adaptor to the Fediverse api for the given server
+     * For the scope of this project, we are always returning an adaptor to the Mastodon API, but the intention of
+     * this factory is to make it possible to integrate with other Fediverse platforms in the future
+     * @param {string} server user's account server
+     * @return {MastodonAPI} api adaptor based on the account's server
      */
-    static createAdapter(accountUrl) {
-        const server = getServerName(accountUrl);
-        if (server) {
-            return new MastodonAdapter(server);
-        } else {
-            return new MastodonAdapter('mastodon.social');
-        }
+    static createAdapter(server = 'mastodon.social') {
+        return new MastodonAPI(server);
     }
 }
