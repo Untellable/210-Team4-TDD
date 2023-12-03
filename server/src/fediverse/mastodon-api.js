@@ -73,17 +73,17 @@ export default class MastodonAPI extends FediverseAPI {
      * Performs a lookup for an account on Mastodon based on the account's ID.
      * This method decodes the URL-encoded account ID and sends a GET request to the Mastodon API for the account lookup.
      *
-     * @param {string} accountId - The URL-encoded ID of the account to be looked up.
+     * @param {string} accountUrl - The URL-encoded ID of the account to be looked up.
      * @return {Promise<any>} - A promise that resolves to the account details from the lookup if successful, or an error if not.
      */
-    async accountLookup(accountId) {
+    async accountLookup(accountUrl) {
         try {
-            accountId = decodeURIComponent(accountId); // Decode URL-encoded string
+            accountUrl = decodeURIComponent(accountUrl); // Decode URL-encoded string
             console.log(
-                `GET https://${this.server}/api/v1/accounts/lookup?acct=${accountId}`
+                `GET https://${this.server}/api/v1/accounts/lookup?acct=${accountUrl}`
             );
             return await httpInstance.get(
-                `https://${this.server}/api/v1/accounts/lookup?acct=${accountId}`
+                `https://${this.server}/api/v1/accounts/lookup?acct=${accountUrl}`
             );
         } catch (error) {
             console.log(error);
