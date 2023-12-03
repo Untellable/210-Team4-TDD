@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "ci": "npm run prettier && npm run lint && npm test"
+    "ci": "npm run prettier && npm run lint && npm test",
+    "lint": "eslint src",
+    "prettier": "prettier --write 'src/**/*.js'"
   },
   "author": "Hao Luo",
   "license": "ISC",
