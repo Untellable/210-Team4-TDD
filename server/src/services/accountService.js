@@ -1,13 +1,112 @@
-// import gun from '../db/index.js';
-import { getAccountInfoAPI, getAccountFollowersAPI, getAccountPostsAPI, getAccountFollowingAPI } from '../mastodon/accountAPI.js';
-import { createAccountInfo } from '../models/account.js';
+import DAO from "../db/dao.js";
+import GunDBAdaptor from "../db/gun/gun-db-adapator.js";
+import FediverseAPIFactory from "../fediverse/fediverse-api-factory.js";
 
-/*
-    * @param {string} id
-*/
+const db = new DAO(new GunDBAdaptor());
+const api = FediverseAPIFactory.createAdapter('user@mastodon.social');
+
+/**
+ * @param {object} data
+ */
+function createAccountInfo(data) {
+    return {
+        id: data.id,
+        username: data.username,
+        display_name: data.display_name,
+        following_count: data.following_count,
+        followers_count: data.followers_count,
+        statuses_count: data.statuses_count,
+    };
+}
+
+/**
+ * @param {string} account
+ */
+async function accountLookupService(account) {
+    try {
+        const api = FediverseAPIFactory.createAdapter(account);
+        const response = await api.accountLookup(account);
+        if (response && response.data) {
+            return response.data;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error during account lookup:', error);
+    }
+}
+
+/**
+ * @param {string} id
+ */
 async function getAccountInfoService(id) {
-    const { data } = await getAccountInfoAPI(id);
-    return data;
+    const user = await db.getUser(id);
+    if (user) {
+        console.log(`getting user from db` + JSON.stringify(user));
+        return user;
+    }
+
+    try {
+        const response = await api.getAccountInfo(id);
+        if (!response || !response.data) {
+            return null;
+        }
+
+        const accountInfo = createAccountInfo(response.data);
+        db.addUser(id, accountInfo);
+        return accountInfo;
+    } catch (error) {
+        console.error('Error during getting account info:', error);
+    }
+}
+
+
+/**
+ * @param {string} id
+ */
+async function getAccountFollowersService(id) {
+    const followers = await db.getFollowers(id);
+    if (followers) {
+        console.log(`getting followers from db`);
+        return followers;
+    }
+
+    console.log(`getting followers from api`);
+    const { data } = await api.getAccountFollowers(id);
+    if (!data) {
+        return null;
+    } else {
+        let response = {};
+        for (let i = 0; i < data.length; i++) {
+            // if (i == 3) break;
+            const accountInfo = createAccountInfo(data[i]);
+            response[data[i].id] = accountInfo;
+            db.addFollower(id, data[i].id, accountInfo);
+        }
+        return response;
+    }
+}
+
+async function getAccountFollowingService(id) {
+    const followings = await db.getFollowings(id);
+    if (followings) {
+        console.log(`getting followings from db`);
+        return followings;
+    }
+
+    const { data } = await api.getAccountFollowing(id);
+    if (!data) {
+        return null;
+    } else {
+        let response = {};
+        for (let i = 0; i < data.length; i++) {
+            // if (i == 3) break;
+            const accountInfo = createAccountInfo(data[i]);
+            response[data[i].id] = accountInfo;
+            db.addFollowing(id, data[i].id, accountInfo);
+        }
+        return response;
+    }
 }
 
 async function getAccountInitializeService(id) {
@@ -23,7 +122,9 @@ async function getAccountInitializeService(id) {
      * @param {boolean} isFollowerOfId
      */
     async function processAccounts(accounts, isFollowerOfId) {
-        for (let account of accounts) {
+
+        for (const accountId in accounts) {
+            const account = accounts[accountId];
             // Add account information
             accountInfoMap.set(account.id, account);
 
@@ -41,7 +142,8 @@ async function getAccountInitializeService(id) {
             const followers = await getAccountFollowersService(account.id);
             const followings = await getAccountFollowingService(account.id);
 
-            for (let follower of followers) {
+            for (const followerId in followers) {
+                const follower = followers[followerId];
                 if (!relations[follower.id]) {
                     relations[follower.id] = new Set();
                 }
@@ -49,7 +151,8 @@ async function getAccountInitializeService(id) {
                 accountInfoMap.set(follower.id, follower);
             }
 
-            for (let following of followings) {
+            for (const followingId in followings) {
+                const following = followings[followingId];
                 if (!relations[account.id]) {
                     relations[account.id] = new Set();
                 }
@@ -80,70 +183,10 @@ async function getAccountInitializeService(id) {
     return result;
 }
 
-/*
-    * @param {string} id
-*/
-async function getAccountPostsService(id) {
-    // const account = gun.get('account').get(id);
-    // const accountData = await account.once();
-    // if (accountData) {
-    //     console.log('Get account data from DB');
-    // } else {
-    console.log('Get account data from API');
-    const { data } = await getAccountPostsAPI(id);
-
-    for (let i = 0; i < data.length; i++) {
-        const status = {
-            created_at: data[i].created_at,
-            content: data[i].content,
-        };
-        // gun.get('account').get(id).get('post').get(data[i].id).put(status);
-    }
-    // }
-    // return gun.get('account').get(id).get('post');
-    return data;
-};
-
-/**
- * @param {string} id , the id of the account
- * @param {string | any[]} data
- * @returns {Promise<Object[]>} result, an array of processed account info
- */
-async function processAccountList(id, data) {
-    if (!data) return null;
-
-    let result = [];
-    for (let i = 0; i < data.length; i++) {
-        if (data[i].id === id) continue;
-        if (i === 40) break; // Limit 10
-        const accountInfo = createAccountInfo(data[i]);
-        result.push(accountInfo);
-    }
-    return result;
-}
-
-/*
-    * @param {string} id
-*/
-async function getAccountFollowersService(id) {
-    const data = await getAccountFollowersAPI(id);
-    const result = processAccountList(id, data);
-    return result;
-};
-
-/*
-    * @param {string} id
-*/
-async function getAccountFollowingService(id) {
-    const data = await getAccountFollowersAPI(id);
-    const result = processAccountList(id, data);
-    return result;
-}
-
 export {
-    getAccountInitializeService,
+    accountLookupService,
     getAccountInfoService,
-    getAccountPostsService,
     getAccountFollowersService,
-    getAccountFollowingService
+    getAccountFollowingService,
+    getAccountInitializeService
 };

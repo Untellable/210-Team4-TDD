@@ -9,7 +9,8 @@
         "paths": {
             "@/*": ["src/*"]
         },
+        "types": ["jest"]
     },
-    "include": ["./**/*.js", "server.js"],
+    "include": ["./**/*.js", "server.js", "jest.d.ts"],
     "exclude": ["node_modules"]
 }

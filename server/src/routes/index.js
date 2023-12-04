@@ -1,7 +1,7 @@
 import express from 'express';
 
 const router = express.Router();
-import { getAccountFollowingService, getAccountInfoService, getAccountPostsService, getAccountFollowersService, getAccountInitializeService } from '../services/accountService.js';
+import { getAccountFollowingService, getAccountInfoService, getAccountFollowersService, getAccountInitializeService } from '../services/accountService.js';
 import { getPostListService, getPostDetailService } from '../services/postService.js';
 
 /**

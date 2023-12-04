@@ -26,8 +26,16 @@ replay_pid*
 node_modules
 radata
 
+origin/basic-server-api
 .prettierrc
 test.ipynb
 .idea
 .DS_Store
-*.json
+API Response Example/*.json
+
+.prettierrc
+
+node_modules
+radata
+
+.prettierrc

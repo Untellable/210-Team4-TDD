@@ -26,10 +26,4 @@ docker run -p 8080:10000 -d tdd/server
 
 Note: the number 8080 can be replaced with any port number on local machine.
 
-## Future Work
-
-- Create structured data models for accounts, posts, etc. and integrate with the Gun.js database
-
-- Develop controllers for data management -- save, access and update
-
-- Detailed documentation of each API route -- error handling, expected response, parameters. Make sure easy to understand
+How to run unit tests: `npm test`
