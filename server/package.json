@@ -1,0 +1,85 @@
+{
+  "name": "cse210-team4-tdd-server",
+  "version": "1.0.0",
+  "description": "Server for CSE 210 mastodon visualization project",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf radata && npm ci",
+    "cleanstart": "npm run clean && npm run start",
+    "ci": "npm run prettier && npm run lint && npm test",
+    "dev": "NODE=10000 nodemon server.js",
+    "lint": "eslint src",
+    "prettier": "prettier --write 'src/**/*.js'",
+    "start": "NODE=10000 node server.js",
+    "test": "jest"
+  },
+  "author": "Keran Wang, Hao Luo",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "express": "^4.18.2",
+    "gun": "^0.2020.1239",
+    "swagger-jsdoc": "6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.5",
+    "@babel/preset-env": "^7.23.5",
+    "@types/jest": "^29.5.10",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2",
+    "prettier": "3.1.0",
+    "rimraf": "^5.0.5"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "testMatch": [
+      "<rootDir>/src/**/*.test.js"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es2021": true,
+      "jest": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "rules": {
+      "semi": [
+        "error",
+        "always"
+      ],
+      "no-unused-vars": [
+        "error",
+        {
+          "vars": "all",
+          "args": "none",
+          "ignoreRestSiblings": true
+        }
+      ]
+    }
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "singleQuote": true
+  }
+}
