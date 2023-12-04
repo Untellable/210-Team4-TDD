@@ -109,6 +109,10 @@ async function getAccountFollowingService(id) {
     }
 }
 
+/*
+    * @param {string} id
+    * @returns {Promise<{relations: object, accountInfoList: object[]}>}
+*/
 async function getAccountInitializeService(id) {
     let relations = {};
     let accountInfoMap = new Map();
