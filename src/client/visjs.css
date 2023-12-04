@@ -47,8 +47,8 @@ body {
 .input-container{
     display: flex;
     flex-direction: row;
-    /* align-items: left;
-    justify-content: center; */
+    /* align-items: left; */
+    justify-content: center;
 }
 
 .spinner-container {
@@ -78,6 +78,11 @@ body {
     background: rgba(0, 0, 0, 0.3);
     z-index: 999; /* Ensure the overlay is behind the spinner */
     display: none;
+}
+
+.main-heading {
+    display: flex;
+    justify-content: center;
 }
 
 @keyframes spin {

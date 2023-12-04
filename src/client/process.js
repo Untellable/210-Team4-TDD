@@ -1,7 +1,5 @@
 const baseURL = "http://localhost:8991";
 
-
-
 /**
  * Function displays the overlay
  */
@@ -96,12 +94,6 @@ function updateID(){
  */
 
 function processData(json, mainID = 109252111498807689){
-    // console.log(json.accountFollowers)
-
-    // const MAIN_USER = json.accountInfo;
-    // const CLUSTER_MAX_SIZE = 10;
-    // const FOLLOWER_NUM = 10;
-    // const FOLLOWING_NUM = 10;
 
     nodes_json = json.accountInfoList;
     edges_json = json.relations;
@@ -205,7 +197,7 @@ function drawFromResponse(nodes, edges) {
                 springLength: 95
             },
             stabilization: {
-                iterations: 987
+                iterations: 2000
             }
         },
         layout: {
