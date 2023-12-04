@@ -23,4 +23,5 @@
 hs_err_pid*
 replay_pid*
 
-server/node_modules
+node_modules
+radata
