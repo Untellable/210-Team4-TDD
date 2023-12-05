@@ -1,15 +1,10 @@
-import express from 'express';
+import express from "express";
 
 const router = express.Router();
 import {
     accountLookupService,
     getAccountInitializeService
-} from '../services/accountService.js';
-import e from "express";
-
-router.get('/', (res) => {
-    res.json({ message: 'Home' });
-});
+} from "../services/accountService.js";
 
 /**
  *  @swagger
@@ -63,16 +58,16 @@ router.get('/', (res) => {
  *                            description: Number of statuses posted by this account.
  *                      description: A list containing information for each account.
  */
-router.get('/account/:id/initialize', function (req, res) {
+router.get("/account/:id/initialize", function(req, res) {
     const { id } = req.params;
 
     getAccountInitializeService(id)
-        .then(function (data) {
-            console.log('Data received:', data);
+        .then(function(data) {
+            console.log("Data received:", data);
             res.status(200).json(data);
         })
-        .catch(function (error) {
-            console.error('Error:', error);
+        .catch(function(error) {
+            console.error("Error:", error);
             res.status(500).json({ error: error.message });
         });
 });
@@ -101,10 +96,10 @@ router.get('/account/:id/initialize', function (req, res) {
  *                      accountInfo:
  *                        type: object
  */
-router.get('/account/lookup', async function (req, res) {
+router.get("/account/lookup", async function(req, res) {
     const { acct } = req.query;
     if (!acct) {
-        return res.status(400).json({ error: 'Account ID (acct) is required as a query parameter.' });
+        return res.status(400).json({ error: "Account ID (acct) is required as a query parameter." });
     }
 
     try {
@@ -113,11 +108,11 @@ router.get('/account/lookup', async function (req, res) {
             res.json(accountInfo);
         } else {
             // If accountInfo is null, it means account not found or an error occurred
-            res.status(404).json({ error: 'Account not found.' });
+            res.status(404).json({ error: "Account not found." });
         }
     } catch (error) {
-        console.error('Unexpected error during account lookup:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error("Unexpected error during account lookup:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 

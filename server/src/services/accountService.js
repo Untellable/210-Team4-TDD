@@ -2,11 +2,14 @@ import DAO from "../db/dao.js";
 import GunDBAdaptor from "../db/gun/gun-db-adapator.js";
 import FediverseAPIFactory from "../fediverse/fediverse-api-factory.js";
 
+// Create database and API instances
 const db = new DAO(new GunDBAdaptor());
-const api = FediverseAPIFactory.createAdapter('user@mastodon.social');
+const api = FediverseAPIFactory.createAdapter("user@mastodon.social");
 
 /**
- * @param {object} data
+ * Creates a structured account information object from raw data.
+ * @param {object} data - Raw data from which account information is extracted.
+ * @returns {object} Structured account information.
  */
 function createAccountInfo(data) {
     return {
@@ -15,137 +18,115 @@ function createAccountInfo(data) {
         display_name: data.display_name,
         following_count: data.following_count,
         followers_count: data.followers_count,
-        statuses_count: data.statuses_count,
+        statuses_count: data.statuses_count
     };
 }
 
 /**
- * @param {string} account
+ * Looks up an account using a specified identifier.
+ * @param {string} account - The identifier of the account to look up.
+ * @returns {Promise<object|null>} Account data or null if not found.
  */
 async function accountLookupService(account) {
     try {
         const api = FediverseAPIFactory.createAdapter(account);
         const response = await api.accountLookup(account);
-        if (response && response.data) {
-            return response.data;
-        } else {
-            return null;
-        }
+        return response && response.data ? response.data : null;
     } catch (error) {
-        console.error('Error during account lookup:', error);
+        console.error("Error during account lookup:", error);
     }
 }
 
 /**
- * @param {string} id
- */
-async function getAccountInfoService(id) {
-    const user = await db.getUser(id);
-    if (user) {
-        console.log(`getting user from db` + JSON.stringify(user));
-        return user;
-    }
-
-    try {
-        const response = await api.getAccountInfo(id);
-        if (!response || !response.data) {
-            return null;
-        }
-
-        const accountInfo = createAccountInfo(response.data);
-        db.addUser(id, accountInfo);
-        return accountInfo;
-    } catch (error) {
-        console.error('Error during getting account info:', error);
-    }
-}
-
-
-/**
- * @param {string} id
+ * Retrieves account followers either from the database or the API.
+ * @param {string} id - Identifier of the account for which followers are to be retrieved.
+ * @returns {Promise<object|null>} Object mapping follower IDs to their account info, or null if no data is available.
  */
 async function getAccountFollowersService(id) {
+    // First, attempt to get followers from the database
     const followers = await db.getFollowers(id);
     if (followers) {
-        console.log(`getting followers from db`);
+        console.log(`Getting followers from db`);
         return followers;
     }
 
-    console.log(`getting followers from api`);
+    // If not in the database, fetch from the API
+    console.log(`Getting followers from API`);
     const { data } = await api.getAccountFollowers(id);
     if (!data) {
         return null;
     } else {
         let response = {};
         for (let i = 0; i < data.length; i++) {
-            // if (i == 3) break;
             const accountInfo = createAccountInfo(data[i]);
             response[data[i].id] = accountInfo;
-            db.addFollower(id, data[i].id, accountInfo);
+            db.addFollower(id, data[i].id, accountInfo); // Storing fetched data in the database
         }
         return response;
     }
 }
 
+/**
+ * Retrieves accounts that a specific account is following.
+ * @param {string} id - Identifier of the account to check for followings.
+ * @returns {Promise<object|null>} Object mapping following IDs to their account info, or null if no data is available.
+ */
 async function getAccountFollowingService(id) {
+    // Attempt to get the followings from the database
     const followings = await db.getFollowings(id);
     if (followings) {
-        console.log(`getting followings from db`);
+        console.log(`Getting followings from db`);
         return followings;
     }
 
+    // If not in the database, fetch from the API
     const { data } = await api.getAccountFollowing(id);
     if (!data) {
         return null;
     } else {
         let response = {};
         for (let i = 0; i < data.length; i++) {
-            // if (i == 3) break;
             const accountInfo = createAccountInfo(data[i]);
             response[data[i].id] = accountInfo;
-            db.addFollowing(id, data[i].id, accountInfo);
+            db.addFollowing(id, data[i].id, accountInfo); // Storing fetched data in the database
         }
         return response;
     }
 }
 
-/*
-    * @param {string} id
-    * @returns {Promise<{relations: object, accountInfoList: object[]}>}
-*/
+/**
+ * Initializes account data including relationships and information of followers and followings.
+ * @param {string} id - Identifier of the account to initialize data for.
+ * @returns {Promise<{relations: object, accountInfoList: object[]}>} Object containing relationship data and a list of account information.
+ */
 async function getAccountInitializeService(id) {
-    let relations = {};
-    let accountInfoMap = new Map();
+    let relations = {}; // To store relationships between accounts
+    let accountInfoMap = new Map(); // To store account information
 
-    // Initialize the relations for the first-level account
+    // Initialize the relations for the primary account
     relations[id] = new Set();
 
     // Function to process followers and followings
-    /**
-     * @param {any[]} accounts
-     * @param {boolean} isFollowerOfId
-     */
     async function processAccounts(accounts, isFollowerOfId) {
-
         for (const accountId in accounts) {
             const account = accounts[accountId];
-            // Add account information
-            accountInfoMap.set(account.id, account);
+            accountInfoMap.set(account.id, account); // Add account information to the map
 
             // Update relations
             if (!relations[account.id]) {
                 relations[account.id] = new Set();
             }
             if (isFollowerOfId) {
-                relations[account.id].add(id);
+                relations[account.id].add(id); // Add relation as a follower
             } else {
-                relations[id].add(account.id);
+                relations[id].add(account.id); // Add relation as following
             }
 
             // Fetch second-level followers and followings
             const followers = await getAccountFollowersService(account.id);
             const followings = await getAccountFollowingService(account.id);
 
+            // Process followers and followings for the account
             for (const followerId in followers) {
                 const follower = followers[followerId];
                 if (!relations[follower.id]) {
@@ -166,30 +147,26 @@ async function getAccountInitializeService(id) {
         }
     }
 
-    // Fetch first-level followers and followings
+    // Fetch and process first-level followers and followings
     const firstLevelFollowers = await getAccountFollowersService(id);
     const firstLevelFollowings = await getAccountFollowingService(id);
-
-    // Process first-level followers and followings
     await processAccounts(firstLevelFollowers, true);
     await processAccounts(firstLevelFollowings, false);
 
-    // Convert Sets to arrays before returning
+    // Convert relation sets to arrays for easy handling
     Object.keys(relations).forEach(key => {
         relations[key] = Array.from(relations[key]);
     });
 
-    const result = {
-        'relations': relations,
-        'accountInfoList': Array.from(accountInfoMap.values())
+    // Construct the final result
+    return {
+        "relations": relations,
+        "accountInfoList": Array.from(accountInfoMap.values())
     };
-
-    return result;
 }
 
 export {
     accountLookupService,
-    getAccountInfoService,
     getAccountFollowersService,
     getAccountFollowingService,
     getAccountInitializeService
