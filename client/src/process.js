@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const baseURL = "http://localhost:10000";
 
 /**
@@ -48,14 +49,14 @@ export function updateID(){
 
     if (!/^\d+$/.test(userID)) {
         alert("Please enter a valid number.");
-        console.log("Invalid user ID entered")
+        console.log("Invalid user ID entered");
         hideSpinner();
         return;
     }
 
-    console.log("User ID", userID)
+    console.log("User ID", userID);
 
-    let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`
+    let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`;
 
 
     // Need to write a common http request function with error handling
@@ -75,8 +76,8 @@ export function updateID(){
                 }
             });
     } catch (error) {
-        alert("Error fetching data from API. Please try again later.")
-        console.log("Error", error)
+        alert("Error fetching data from API. Please try again later.");
+        console.log("Error", error);
         hideSpinner();
     }
 }
@@ -93,7 +94,7 @@ export function updateID(){
  * 
  */
 
-export function processData(json, mainID = 109252111498807689){
+export function processData(json, mainID = '109252111498807689'){
 
     nodes_json = json.accountInfoList;
     edges_json = json.relations;
@@ -101,7 +102,7 @@ export function processData(json, mainID = 109252111498807689){
     main_node = nodes_json.filter(node => node.id == mainID)[0];
 
     let nodes = [];
-    let nodesCreated = new Set() // to keep track of nodes created using the ids of accounts
+    let nodesCreated = new Set(); // to keep track of nodes created using the ids of accounts
     nodes.push(
         {
             id: main_node.id,
@@ -123,7 +124,7 @@ export function processData(json, mainID = 109252111498807689){
                     label: node.display_name
                 }
             );
-            console.log("Added node", node.display_name)
+            console.log("Added node", node.display_name);
             nodesCreated.add(node.id); 
         }
     });
@@ -141,7 +142,7 @@ export function processData(json, mainID = 109252111498807689){
     }
 
 
-    return [nodes,edges]
+    return [nodes,edges];
 }
 
 /**

@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 // Import the functions to be tested
 import { showOverlay, hideOverlay, showSpinner, hideSpinner } from './process.js';
 
