@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Mastodon Network Visualizer!</title>
+    <link rel="stylesheet" href="inputpage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="form-container">
+        <form class="input-form">
+            <h1 class = "title"> Welcome to Mastodon Visualizer!</h1>
+            <p class="subtitle">
+                Enter your username and server domain of your Mastodon account to see the social network visualizer made just for you.
+            </p>
+
+            <div class="fields-group">
+                <label class="input-label"> Username </label>
+                <div>
+                    <input type="text" id="input-username" class="input-box", placeholder="e.g. joe123">
+                </div>
+            </div>
+
+            <div class="fields-group">
+                <label class="input-label"> Server Domain </label>
+                <div>
+                    <input type="text" id="input-serverdomain" class="input-box", placeholder="e.g. mastodon.social">
+                </div>
+            </div>
+
+            <div class="actions">
+                <button name="button" type="submit" class="btn"> SUBMIT </button>
+            </div>
+        </form>
+
+        <div class="form-footer">
+            <ul class="links-group">
+                <li>
+                    <a href="https://joinmastodon.org/">join Mastodon</a>
+                </li>
+                <li>
+                    <a href="">What is my username/server domain?</a>
+                </li>   
+            </ul>
+        </div>
+
+    </div>
+
+    <script src="inputpage.js"></script>
+</body>
+</html>
