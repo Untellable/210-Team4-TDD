@@ -4,27 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Mastodon Network Visualizer!</title>
-    <link rel="stylesheet" href="inputpage.css">
+    <link rel="stylesheet" href="welcomepage.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="form-container">
         <form class="input-form">
-            <h1 class = "title"> Welcome to Mastodon Visualizer!</h1>
+            <h1 class = "title"> Welcome to Mastodon Network Visualizer!</h1>
             <p class="subtitle">
-                Enter your username and server domain of your Mastodon account to see the social network visualizer made just for you.
+                Enter the username and the server domain of your Mastodon account to see the social network visualizer made just for you.
             </p>
 
             <div class="fields-group">
                 <label class="input-label"> Username </label>
-                <div>
+                <div class="input-container">
                     <input type="text" id="input-username" class="input-box", placeholder="e.g. joe123">
                 </div>
             </div>
 
             <div class="fields-group">
                 <label class="input-label"> Server Domain </label>
-                <div>
+                <div class="input-container">
                     <input type="text" id="input-serverdomain" class="input-box", placeholder="e.g. mastodon.social">
                 </div>
             </div>
@@ -37,16 +37,25 @@
         <div class="form-footer">
             <ul class="links-group">
                 <li>
+                    <a href="inputinstruction.html" class="hover-link">What is my username/server domain?</a>
+                </li> 
+                
+                <li>
                     <a href="https://joinmastodon.org/">join Mastodon</a>
                 </li>
+
                 <li>
-                    <a href="">What is my username/server domain?</a>
-                </li>   
+                    <a href="https://mastodonservers.net/"> other servers </a>
+                </li>
             </ul>
+
+            <div class="hover-image-container">
+                <img src="assets/username serverdomain instruction.jpg" alt="Image" class="hover-image">
+            </div>
         </div>
 
     </div>
 
-    <script src="inputpage.js"></script>
+    <script src="welcomepage.js"></script>
 </body>
 </html>

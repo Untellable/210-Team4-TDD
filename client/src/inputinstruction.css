@@ -1,0 +1,89 @@
+body {
+    background-color: rgb(40, 44, 55);
+    font-family: 'Roboto', Arial;
+    color:white;
+}
+
+.form-container {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 25%;
+    margin: 3% auto;
+}
+
+.form-container * {
+    text-align: left;
+}
+
+.title{
+    font-size: 26px;
+} 
+
+.subtitle{
+    color: rgb(200, 200, 200);
+    font-size: 20px;
+    margin: 0 0 50px 0;
+}
+
+.address{
+    font-weight: bold;
+    font-style: italic;
+}
+
+
+
+.image {
+    width: 100%;
+    margin: 0 0 5% 0;
+
+    border: 1px solid rgb(155, 174, 200);
+    border-radius: 10px;
+}
+
+
+.btn {
+    background-color: rgb(99, 100, 255);
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    
+    border: none;
+    border-radius: 5px;
+    
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+    margin: 20px 0 20px 0;
+    padding: 10px 0 10px 0;
+
+}
+
+.btn:hover {
+    background-color: rgb(90, 71, 220);
+}
+
+.btn a{
+    color: white;
+    text-decoration: none;
+}
+
+.links-group {
+    list-style: none;
+    display: flex;
+}
+
+.links-group li {
+    margin-right: 20px;
+}
+
+.links-group li a {
+    color: rgb(155, 174, 200);
+    text-decoration: none;
+}
+
+.links-group li a:hover {
+    text-decoration: underline;
+}
