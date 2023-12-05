@@ -36,6 +36,25 @@ export function hideSpinner() {
 }
 
 /**
+ * Funntion to validate the user ID entered in the input box
+ * @returns {Boolean} true if the user ID is valid, else false
+ */
+export function verifyUserID() {
+    let userID = document.getElementById('idInput').value;
+
+    if (!/^\d+$/.test(userID)) {
+        alert('Please enter a valid number.');
+        console.log('Invalid user ID entered');
+        hideSpinner();
+        return false;
+    }
+
+    console.log('User ID', userID);
+
+    return true;
+}
+
+/**
  * Function is called when the user clicks on the "Update" button
  * Updates the network graph with the user ID entered in the input box
  */
@@ -44,40 +63,32 @@ export function updateID() {
     console.log('Update ID called');
     showSpinner();
 
-    let userID = document.getElementById('idInput').value;
-
-    if (!/^\d+$/.test(userID)) {
-        alert('Please enter a valid number.');
-        console.log('Invalid user ID entered');
-        hideSpinner();
+    if (!verifyUserID()) {
         return;
     }
 
-    console.log('User ID', userID);
+    let userID = document.getElementById('idInput').value;
 
     let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`;
 
     // Need to write a common http request function with error handling
-    try {
-        fetch(apiURL)
-            .then((response) => response.json())
-            .then((json) => {
-                try {
-                    console.log(json);
-                    const [nodes, edges] = processData(json, userID);
-                    console.log('Nodes and edges', nodes, edges);
-                    drawFromResponse(nodes, edges);
-                    hideSpinner();
-                } catch (error) {
-                    console.log('Error in processing response', error);
-                    // Handle or rethrow the error as needed
-                }
-            });
-    } catch (error) {
-        alert('Error fetching data from API. Please try again later.');
-        console.log('Error', error);
-        hideSpinner();
-    }
+    fetch(apiURL)
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(json);
+            const [nodes, edges] = processData(json, userID);
+            console.log('Nodes and edges', nodes, edges);
+            drawFromResponse(nodes, edges);
+            hideSpinner();
+        })
+        .catch((error) => {
+            console.log(
+                'Error fetching data from API. Please try again later.'
+            );
+            alert('Error fetching data from API. Please try again later.');
+            console.log('Error', error);
+            hideSpinner();
+        });
 }
 
 /**
@@ -92,7 +103,7 @@ export function updateID() {
  *
  */
 
-export function processData(json, mainID = '109252111498807689') {
+export function processData(json, mainID) {
     nodes_json = json.accountInfoList;
     edges_json = json.relations;
 
@@ -102,7 +113,7 @@ export function processData(json, mainID = '109252111498807689') {
     let nodesCreated = new Set(); // to keep track of nodes created using the ids of accounts
     nodes.push({
         id: main_node.id,
-        value: 20,
+        value: 20, // size of the node in the graph
         label: main_node.display_name,
     });
 
@@ -114,7 +125,7 @@ export function processData(json, mainID = '109252111498807689') {
         if (node.id != main_node.id) {
             nodes.push({
                 id: node.id,
-                value: 10,
+                value: 10, // lower size for followers
                 label: node.display_name,
             });
             console.log('Added node', node.display_name);
