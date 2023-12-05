@@ -10,12 +10,16 @@
     ></script>
 
     <script
-            type="text/javascript"
+            type="module"
             src="process.js"
-    ></script>
+    >
+        import { updateID } from 'process.js';
+        // Attach the function to the window object to make it globally accessible
+        window.updateID = updateID;
+    </script>
 
 </head>
-<body onload="drawFromResponse()">
+<body>
     <div id="mainContainer">
         <h2 class="main-heading">
             Social media visualizer

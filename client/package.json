@@ -67,5 +67,8 @@
     "trailingComma": "es5",
     "tabWidth": 4,
     "singleQuote": true
+  },
+  "dependencies": {
+    "jsdom": "^23.0.1"
   }
 }

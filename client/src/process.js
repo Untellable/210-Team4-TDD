@@ -4,7 +4,7 @@ const baseURL = "http://localhost:8991";
  * Function displays the overlay
  */
 
-function showOverlay() {
+export function showOverlay() {
     document.getElementById('overlay').style.display = 'block';
 }
 
@@ -12,7 +12,7 @@ function showOverlay() {
  * Function hides the overlay
  */
 
-function hideOverlay() {
+export function hideOverlay() {
     document.getElementById('overlay').style.display = 'none';
 }
 
@@ -20,7 +20,7 @@ function hideOverlay() {
  * Function displays the loading spinner and overlay
  */
 
-function showSpinner() {
+export function showSpinner() {
     showOverlay();
     document.getElementById('loadingSpinner').style.display = 'block';
 }
@@ -29,7 +29,7 @@ function showSpinner() {
  * Function hides the loading spinner and overlay
  */
 
-function hideSpinner() {
+export function hideSpinner() {
     hideOverlay();
     document.getElementById('loadingSpinner').style.display = 'none';
 }
@@ -39,7 +39,7 @@ function hideSpinner() {
  * Updates the network graph with the user ID entered in the input box
  */
 
-function updateID(){ 
+export function updateID(){ 
 
     showSpinner();
 
@@ -93,7 +93,7 @@ function updateID(){
  * 
  */
 
-function processData(json, mainID = 109252111498807689){
+export function processData(json, mainID = 109252111498807689){
 
     nodes_json = json.accountInfoList;
     edges_json = json.relations;
@@ -150,7 +150,7 @@ function processData(json, mainID = 109252111498807689){
  * @param {*} edges 
  */
 
-function drawFromResponse(nodes, edges) {
+export function drawFromResponse(nodes, edges) {
     let container = document.getElementById("mynetwork");
     let data = {
         nodes: nodes,
