@@ -5,7 +5,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import cors from 'cors';
 
 const app = express();
-app.use(cors())
+app.use(cors());
 const port = process.env.PORT || 10000;
 const options = {
     definition: {
