@@ -41,7 +41,6 @@ export function hideSpinner() {
  * @returns {Boolean} true if the user ID is valid, else false
  */
 export function verifyUserID(userID) {
-
     if (!/^\d+$/.test(userID)) {
         alert('Please enter a valid number.');
         console.log('Invalid user ID entered');
