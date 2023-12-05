@@ -11,11 +11,9 @@
 
     <script
             type="module"
-            src="process.js"
     >
-        import { updateID } from 'process.js';
-        // Attach the function to the window object to make it globally accessible
-        window.updateID = updateID;
+        import { updateID } from './process.js';
+        document.getElementById("enterButton").addEventListener("click", updateID);
     </script>
 
 </head>
@@ -26,7 +24,7 @@
         </h2>
         <div class="input-container">
             <input type="text" id="idInput" placeholder="Enter ID of the mastodon user"/>
-            <input type="button" id="enterButton" onclick="updateID()" value="Enter"/>
+            <input type="button" id="enterButton" value="Enter"/>
         </div>
         <div id="mynetwork"></div>
         <div id="overlay" class="overlay"></div>

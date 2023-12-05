@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:8991";
+const baseURL = "http://localhost:10000";
 
 /**
  * Function displays the overlay
@@ -40,7 +40,7 @@ export function hideSpinner() {
  */
 
 export function updateID(){ 
-
+    console.log("Update ID called");
     showSpinner();
 
     let userID = document.getElementById("idInput").value;
