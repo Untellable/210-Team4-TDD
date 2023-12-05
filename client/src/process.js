@@ -37,10 +37,10 @@ export function hideSpinner() {
 
 /**
  * Funntion to validate the user ID entered in the input box
+ * @param {Number} userID user ID entered in the input box
  * @returns {Boolean} true if the user ID is valid, else false
  */
-export function verifyUserID() {
-    let userID = document.getElementById('idInput').value;
+export function verifyUserID(userID) {
 
     if (!/^\d+$/.test(userID)) {
         alert('Please enter a valid number.');
@@ -63,11 +63,11 @@ export function updateID() {
     console.log('Update ID called');
     showSpinner();
 
-    if (!verifyUserID()) {
+    let userID = document.getElementById('idInput').value;
+
+    if (!verifyUserID(userID)) {
         return;
     }
-
-    let userID = document.getElementById('idInput').value;
 
     let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`;
 
