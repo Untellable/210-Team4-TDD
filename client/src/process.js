@@ -42,9 +42,7 @@ export function hideSpinner() {
  */
 export function verifyUserID(userID) {
     if (!/^\d+$/.test(userID)) {
-        alert('Please enter a valid number.');
         console.log('Invalid user ID entered');
-        hideSpinner();
         return false;
     }
 
@@ -65,6 +63,8 @@ export function updateID() {
     let userID = document.getElementById('idInput').value;
 
     if (!verifyUserID(userID)) {
+        alert('Please enter a valid number.');
+        hideSpinner();
         return;
     }
 
