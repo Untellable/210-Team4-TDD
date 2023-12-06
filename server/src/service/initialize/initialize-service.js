@@ -17,7 +17,7 @@ function createAccountInfo(data) {
 /**
  * Retrieves account followers either from the database or the API.
  *
- * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account lookup.
+ * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account related api calls.
  * @param {string} id - Identifier of the account for which followers are to be retrieved.
  * @param {DAO} db - An instance of the DAO to perform database operations.
  *
@@ -50,7 +50,7 @@ async function accountFollowersService(api, id, db) {
 /**
  * Retrieves accounts that a specific account is following.
  *
- * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account lookup.
+ * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account related api calls.
  * @param {string} id - Identifier of the account to check for followings.
  * @param {DAO} db - An instance of the DAO to perform database operations.
  *
@@ -81,7 +81,7 @@ async function accountFollowingService(api, id, db) {
 
 /**
  * Initializes account data including relationships and information of followers and followings.
- * @param api
+ * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account related api calls.
  * @param {string} id - Identifier of the account to initialize data for.
  * @param {DAO} db - An instance of the DAO to perform database operations.
  *
