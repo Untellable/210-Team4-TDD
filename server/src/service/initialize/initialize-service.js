@@ -10,7 +10,7 @@ function createAccountInfo(data) {
         display_name: data.display_name,
         following_count: data.following_count,
         followers_count: data.followers_count,
-        statuses_count: data.statuses_count
+        statuses_count: data.statuses_count,
     };
 }
 
@@ -111,8 +111,16 @@ async function accountInitializeService(api, id, db) {
             }
 
             // Fetch second-level followers and followings
-            const followers = await accountFollowersService(api, account.id, db);
-            const followings = await accountFollowingService(api, account.id, db);
+            const followers = await accountFollowersService(
+                api,
+                account.id,
+                db
+            );
+            const followings = await accountFollowingService(
+                api,
+                account.id,
+                db
+            );
 
             // Process followers and followings for the account
             for (const followerId in followers) {
@@ -142,19 +150,19 @@ async function accountInitializeService(api, id, db) {
     await processAccounts(firstLevelFollowings, false);
 
     // Convert relation sets to arrays for easy handling
-    Object.keys(relations).forEach(key => {
+    Object.keys(relations).forEach((key) => {
         relations[key] = Array.from(relations[key]);
     });
 
     // Construct the final result
     return {
-        "relations": relations,
-        "accountInfoList": Array.from(accountInfoMap.values())
+        relations: relations,
+        accountInfoList: Array.from(accountInfoMap.values()),
     };
 }
 
 export {
     accountFollowersService,
     accountFollowingService,
-    accountInitializeService
+    accountInitializeService,
 };
