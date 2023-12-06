@@ -37,7 +37,7 @@ export default async function accountInitializeHandler(req, res) {
             db
         );
         if (accountInitializeData) {
-            res.json(accountInitializeData);
+            res.status(200).json(accountInitializeData);
         } else {
             res.status(404).json({
                 error: `Record not found for id: ${id}`,
