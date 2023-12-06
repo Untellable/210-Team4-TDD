@@ -1,10 +1,3 @@
-import GUN from "gun";
-import DAO from "../../db/dao.js";
-import GunDBAdaptor from "../../db/gun/gun-db-adapator.js";
-
-// Create database and API instances
-const db = new DAO(new GunDBAdaptor(GUN()));
-
 /**
  * Creates a structured account information object from raw data.
  * @param {object} data - Raw data from which account information is extracted.
@@ -26,9 +19,11 @@ function createAccountInfo(data) {
  *
  * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account lookup.
  * @param {string} id - Identifier of the account for which followers are to be retrieved.
+ * @param {DAO} db - An instance of the DAO to perform database operations.
+ *
  * @returns {Promise<object|null>} Object mapping follower IDs to their account info, or null if no data is available.
  */
-async function accountFollowersService(api, id) {
+async function accountFollowersService(api, id, db) {
     // First, attempt to get followers from the database
     const followers = await db.getFollowers(id);
     if (followers) {
@@ -57,9 +52,11 @@ async function accountFollowersService(api, id) {
  *
  * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account lookup.
  * @param {string} id - Identifier of the account to check for followings.
+ * @param {DAO} db - An instance of the DAO to perform database operations.
+ *
  * @returns {Promise<object|null>} Object mapping following IDs to their account info, or null if no data is available.
  */
-async function accountFollowingService(api, id) {
+async function accountFollowingService(api, id, db) {
     // Attempt to get the followings from the database
     const followings = await db.getFollowings(id);
     if (followings) {
@@ -86,9 +83,11 @@ async function accountFollowingService(api, id) {
  * Initializes account data including relationships and information of followers and followings.
  * @param api
  * @param {string} id - Identifier of the account to initialize data for.
+ * @param {DAO} db - An instance of the DAO to perform database operations.
+ *
  * @returns {Promise<{relations: object, accountInfoList: object[]}>} Object containing relationship data and a list of account information.
  */
-async function accountInitializeService(api, id) {
+async function accountInitializeService(api, id, db) {
     let relations = {}; // To store relationships between accounts
     let accountInfoMap = new Map(); // To store account information
 
@@ -112,8 +111,8 @@ async function accountInitializeService(api, id) {
             }
 
             // Fetch second-level followers and followings
-            const followers = await accountFollowersService(api, account.id);
-            const followings = await accountFollowingService(api, account.id);
+            const followers = await accountFollowersService(api, account.id, db);
+            const followings = await accountFollowingService(api, account.id, db);
 
             // Process followers and followings for the account
             for (const followerId in followers) {
@@ -137,8 +136,8 @@ async function accountInitializeService(api, id) {
     }
 
     // Fetch and process first-level followers and followings
-    const firstLevelFollowers = await accountFollowersService(api, id);
-    const firstLevelFollowings = await accountFollowingService(api, id);
+    const firstLevelFollowers = await accountFollowersService(api, id, db);
+    const firstLevelFollowings = await accountFollowingService(api, id, db);
     await processAccounts(firstLevelFollowers, true);
     await processAccounts(firstLevelFollowings, false);
 
