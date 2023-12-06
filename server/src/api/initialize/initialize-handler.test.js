@@ -1,6 +1,3 @@
-import { jest } from '@jest/globals';
-import accountInitializeHandler from './initialize-handler.js';
-
 describe('accountInitializeHandler', () => {
     test('should return 400 if id is missing', async () => {});
 

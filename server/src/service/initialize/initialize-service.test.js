@@ -1,9 +1,7 @@
-import DAO from '../../db/dao.js';
 import { describe, jest } from '@jest/globals';
 import {
     accountFollowingService,
     accountFollowersService,
-    accountInitializeService,
 } from './initialize-service.js';
 
 jest.mock('../../fediverse/mastodon-api.js'); // Mock the MastodonAPI class
