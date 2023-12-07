@@ -7,7 +7,7 @@
     "test": "jest",
     "ci": "npm run prettier && npm run lint && npm test",
     "lint": "eslint src",
-    "prettier": "prettier --write 'src/**/*.js'"
+    "prettier": "prettier --write ."
   },
   "author": "Hao Luo",
   "license": "ISC",
@@ -67,5 +67,8 @@
     "trailingComma": "es5",
     "tabWidth": 4,
     "singleQuote": true
+  },
+  "dependencies": {
+    "jsdom": "^23.0.1"
   }
 }

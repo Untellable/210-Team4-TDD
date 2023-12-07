@@ -2,8 +2,10 @@ import express from 'express';
 import routes from './src/api/router.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 const port = process.env.PORT || 10000;
 const options = {
     definition: {

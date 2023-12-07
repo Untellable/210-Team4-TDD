@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Vis Network | Data | Scaling Nodes and Edges</title>
+        <link rel="stylesheet" type="text/css" href="visjs.css" />
+
+        <script type="text/javascript" src="vis-network.min.js"></script>
+
+        <script type="module">
+            import { updateID } from './process.js';
+            document
+                .getElementById('enterButton')
+                .addEventListener('click', updateID);
+        </script>
+    </head>
+    <body>
+        <div id="mainContainer">
+            <h2 class="main-heading">Social media visualizer</h2>
+            <div class="input-container">
+                <input
+                    type="text"
+                    id="idInput"
+                    placeholder="Enter ID of the mastodon user"
+                />
+                <input type="button" id="enterButton" value="Enter" />
+            </div>
+            <div id="mynetwork"></div>
+            <div id="overlay" class="overlay"></div>
+            <div id="loadingSpinner" class="spinner-container">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </body>
+</html>
