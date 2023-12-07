@@ -36,6 +36,10 @@ export default async function accountInitializeHandler(req, res) {
             id,
             db
         );
+<<<<<<< Updated upstream
+=======
+        console.log('Account initialize data:', accountInitializeData);
+>>>>>>> Stashed changes
         if (accountInitializeData.accountInfoList.length > 0) {
             res.status(200).json(accountInitializeData);
         } else {
