@@ -36,7 +36,7 @@ export default async function accountInitializeHandler(req, res) {
             id,
             db
         );
-        if (accountInitializeData) {
+        if (accountInitializeData.accountInfoList.length > 0) {
             res.status(200).json(accountInitializeData);
         } else {
             res.status(404).json({
