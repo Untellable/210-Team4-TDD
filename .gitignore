@@ -24,4 +24,9 @@ hs_err_pid*
 replay_pid*
 
 node_modules
+
 radata
+.prettierrc
+.DS_Store
+.vscode/settings.json
+server/.idea
