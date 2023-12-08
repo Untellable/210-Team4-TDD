@@ -10,8 +10,8 @@
         "ci": "npm run prettier && npm run lint && npm test",
         "dev": "NODE=10000 nodemon server.js",
         "lint": "eslint src",
-        "prettier": "prettier --write 'src/**/*.js'",
-        "start": "NODE=10000 node server.js",
+        "prettier": "prettier --write .",
+        "start": "node server.js",
         "test": "jest"
     },
     "author": "Keran Wang, Hao Luo",
