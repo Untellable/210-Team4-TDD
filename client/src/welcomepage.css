@@ -76,6 +76,10 @@ body {
     border-bottom: 2px solid rgba(99, 100, 255, 0.5);
 }
 
+#expandable-container-1 {
+    border-top: 2px solid rgba(99, 100, 255, 0.5);
+}
+
 .expandable-trigger {
     cursor: pointer;
     display: flex;
