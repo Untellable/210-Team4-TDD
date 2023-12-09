@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Instructions</title>
+    <link rel="stylesheet" href="inputinstruction.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="form-container">
+        <form class="input-form">
+            <h1 class = "title"> What is my username/server domain?</h1>
+            <p class="subtitle">
+                Log in to your Mastodon server and go to your profile page.
+                <br> <br>
+                Under the profile picture, find the unique address in the format of <span class="address"> @username@serverdomain <span>
+            </p>
+
+            <div class="image-container">
+                <img src="assets/username serverdomain instruction.jpg" alt="Image" class="image">
+            </div>
+
+            <div class="actions">
+                <button name="button" class="btn" id="welcome-page-btn" onclick="welcomePageBtnOnClick()"> 
+                    <a href="welcomepage.html" class="welcome-page-link"> I Understand </a> 
+                </button>
+            </div>
+        </form>
+
+        <div class="form-footer">
+            <ul class="links-group">
+                <li>
+                    <a href="https://joinmastodon.org/">join Mastodon</a>
+                </li>
+                <li>
+                    <a href="https://mastodon.social/"> go to mastodon.social </a>
+                </li>
+
+                <li>
+                    <a href="https://mastodonservers.net/"> other servers </a>
+                </li> 
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+</html>
