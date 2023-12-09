@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Mastodon Network Visualizer!</title>
+    <title>Mastodon Network Visualizer</title>
     <link rel="stylesheet" href="welcomepage.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="form-container">
         <form class="input-form">
-            <h1 class = "title"> Welcome to Mastodon Network Visualizer!</h1>
+            <h1 class = "title"> Welcome to Network Visualizer!</h1>
             <p class="subtitle">
                 Enter the username and the server domain of your Mastodon account to see the social network visualizer made just for you.
             </p>
@@ -34,25 +34,55 @@
             </div>
         </form>
 
-        <div class="form-footer">
-            <ul class="links-group">
-                <li>
-                    <a href="inputinstruction.html" class="hover-link">What is my username/server domain?</a>
-                </li> 
-                
-                <li>
-                    <a href="https://joinmastodon.org/">join Mastodon</a>
-                </li>
 
+        <div class="expandable-container">
+            <button class="expandable-trigger">
+                <span class="expandable-trigger-text">What is Mastodon?</span>
+                <span class="expandable-trigger-arrow">&#x2C5;</span>
+            </button>
+            <div class="expandable-content" style="display: none;">
                 <li>
-                    <a href="https://mastodonservers.net/"> other servers </a>
+                    Mastodon is a decentralized, open-source social network.
+                    Users can join different servers with unique themes and rules, yet still interact across the broader network.
                 </li>
-            </ul>
-
-            <div class="hover-image-container">
-                <img src="assets/username serverdomain instruction.jpg" alt="Image" class="hover-image">
+                <li>
+                    <a href="https://joinmastodon.org/">Join Mastodon</a>
+                </li>
+                <li>
+                    <a href="https://mastodonservers.net/"> Explore Mastodon Servers </a>
+                </li>
             </div>
         </div>
+
+
+        <div class="expandable-container">
+            <button class="expandable-trigger">
+                <span class="expandable-trigger-text">What is my username/server domain?</span>
+                <span class="expandable-trigger-arrow">&#x2C5;</span>
+            </button>
+            <div class="expandable-content" style="display: none;">
+                <li>
+                    1. Log in to your Mastodon server and go to your profile page.
+                </li>
+                <li>
+                    2. Under the profile picture, find the unique address in the format of <span class="address"> @username@serverdomain <span>
+                </li>
+                <div class="image-container">
+                    <img src="assets/username serverdomain instruction.jpg" alt="Image" class="instruction-image">
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="form-footer">
+            <ul class="links-group">               
+                <li>
+                    <a href="https://joinmastodon.org/">Join Mastodon</a>
+                </li>
+                <li>
+                    <a href="https://mastodonservers.net/"> Explore Mastodon Servers </a>
+                </li>
+            </ul>
+        </div> -->
 
     </div>
 
