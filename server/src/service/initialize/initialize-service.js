@@ -1,3 +1,5 @@
+import { Heap } from 'heap-js';
+
 /**
  * Creates a structured account information object from raw data.
  * @param {object} data - Raw data from which account information is extracted.
@@ -79,86 +81,115 @@ async function accountFollowingService(api, id, db) {
     }
 }
 
-/**
- * Initializes account data including relationships and information of followers and followings.
- * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account related api calls.
- * @param {string} id - Identifier of the account to initialize data for.
- * @param {DAO} db - An instance of the DAO to perform database operations.
- *
- * @returns {Promise<{relations: object, accountInfoList: object[]}>} Object containing relationship data and a list of account information.
- */
-async function accountInitializeService(api, id, db) {
-    let relations = {}; // To store relationships between accounts
-    let accountInfoMap = new Map(); // To store account information
+async function accountInitializeService(
+    api,
+    mainId,
+    db,
+    maxNodes = 10,
+    locality = 2,
+    nodeRank = 'followers'
+) {
+    let mainNodeInfoRaw;
+    try {
+        mainNodeInfoRaw = await api.getAccountInfo(mainId);
+    } catch (e) {
+        return { accountInfoMap: {} }; // TODO Specifically catch axios errors somewhere else and case on return being null here
+    } // TODO: how to handle slow axios responses giving errors? Auto retry in api?
+    if (!mainNodeInfoRaw) {
+        return { accountInfoMap: {} };
+    }
+    const mainNodeInfo = createAccountInfo(mainNodeInfoRaw['data']);
 
-    // Initialize the relations for the primary account
-    relations[id] = new Set();
+    const seenNodes = new Set([mainId]); // Track seen nodes
+    const accountInfoMap = new Map(); // Track info of selected nodes
+    accountInfoMap.set(mainId, { ...mainNodeInfo, depth: 0, priority: 1 });
 
-    // Function to process followers and followings
-    async function processAccounts(accounts, isFollowerOfId) {
-        for (const accountId in accounts) {
-            const account = accounts[accountId];
-            accountInfoMap.set(account.id, account); // Add account information to the map
+    // Sort nodes by priority using custom max heap
+    const heapComparator = (a, b) => b.priority - a.priority;
+    const nodeHeap = new Heap(heapComparator);
+    nodeHeap.init([accountInfoMap.get(mainId)]);
 
-            // Update relations
-            if (!relations[account.id]) {
-                relations[account.id] = new Set();
-            }
-            if (isFollowerOfId) {
-                relations[account.id].add(id); // Add relation as a follower
-            } else {
-                relations[id].add(account.id); // Add relation as following
-            }
+    let rankFun; // Choose parameter to rank nodes by
+    if (nodeRank == 'followers') {
+        rankFun = (nodeInfo) => nodeInfo['followersCount'];
+    } else if (nodeRank == 'posts') {
+        rankFun = (nodeInfo) => nodeInfo['statusesCount'];
+    } else if (nodeRank == 'random') {
+        rankFun = (nodeInfo) => Math.random();
+    } else {
+        throw new RangeError( // TODO: need to deal with this case in handler
+            'nodeRank must be one of: "followers", "posts", or "random".'
+        );
+    }
 
-            // Fetch second-level followers and followings
-            const followers = await accountFollowersService(
-                api,
-                account.id,
-                db
+    // Calculate node priority based on rank and locality
+    const calcPriority = (nodeInfo) =>
+        rankFun(nodeInfo) / locality ** nodeInfo['depth'];
+
+    while (!nodeHeap.isEmpty() && accountInfoMap.size < maxNodes) {
+        // TODO move single step to helper function for testing?
+        console.log(`Node ${accountInfoMap.size} of ${maxNodes}`);
+        const curNodeInfo = nodeHeap.pop();
+
+        let curFollowing;
+        let curFollowers;
+        try {
+            curFollowing = new Map(
+                Object.entries(
+                    await accountFollowingService(api, curNodeInfo['id'], db)
+                )
             );
-            const followings = await accountFollowingService(
-                api,
-                account.id,
-                db
+            curFollowers = new Map(
+                Object.entries(
+                    await accountFollowersService(api, curNodeInfo['id'], db)
+                )
             );
+        } catch (e) {
+            continue; // TODO: 
+        }
+        console.log(curFollowing)
+        return {}
 
-            // Process followers and followings for the account
-            for (const followerId in followers) {
-                const follower = followers[followerId];
-                if (!relations[follower.id]) {
-                    relations[follower.id] = new Set();
-                }
-                relations[follower.id].add(account.id);
-                accountInfoMap.set(follower.id, follower);
-            }
+        const curNeighbors = [...curFollowing, ...curFollowers];
 
-            for (const followingId in followings) {
-                const following = followings[followingId];
-                if (!relations[account.id]) {
-                    relations[account.id] = new Set();
-                }
-                relations[account.id].add(following.id);
-                accountInfoMap.set(following.id, following);
-            }
+        const newNeighbors = new Map();
+        for (const [nodeId, nodeInfo] of curNeighbors) {
+            if (!seenNodes.has(nodeId)) {
+                newNeighbors.set(nodeId, nodeInfo);
+                seenNodes.add(nodeId);
+            } else if (accountInfoMap.has(nodeId)) {
+                // update depth if shorter path is found
+                curNodeInfo['depth'] = Math.min(
+                    curNodeInfo['depth'],
+                    accountInfoMap.get(nodeId)['depth'] + 1
+                );
+            } // TODO: same as earlier try/catch
+        }
+
+        // Update current node info
+        curNodeInfo['following'] = new Set(curFollowing.keys());
+        accountInfoMap.set(curNodeInfo['id'], curNodeInfo);
+
+        for (const [nodeId, nodeInfo] of newNeighbors) {
+            nodeInfo['depth'] = curNodeInfo['depth'] + 1;
+            const nodePriority = calcPriority(nodeInfo);
+            nodeHeap.push({ priority: nodePriority, ...nodeInfo });
         }
     }
 
-    // Fetch and process first-level followers and followings
-    const firstLevelFollowers = await accountFollowersService(api, id, db);
-    const firstLevelFollowings = await accountFollowingService(api, id, db);
-    await processAccounts(firstLevelFollowers, true);
-    await processAccounts(firstLevelFollowings, false);
+    // Update node follower info to only contain nodes in accountInfoMap
+    const selectedNodes = new Set(accountInfoMap.keys());
+    for (const [nodeId, nodeInfo] of accountInfoMap) {
+        const removeUnusedFollower = (nodeId) =>
+            !selectedNodes.has(nodeId)
+                ? nodeInfo['following'].delete(nodeId)
+                : null;
+        nodeInfo['following'].forEach(removeUnusedFollower);
 
-    // Convert relation sets to arrays for easy handling
-    Object.keys(relations).forEach((key) => {
-        relations[key] = Array.from(relations[key]);
-    });
-
-    // Construct the final result
-    return {
-        relations: relations,
-        accountInfoList: Array.from(accountInfoMap.values()),
-    };
+        // convert to array for json conversion
+        nodeInfo['following'] = Array.from(nodeInfo['following']);
+    }
+    return accountInfoMap;
 }
 
 export {
