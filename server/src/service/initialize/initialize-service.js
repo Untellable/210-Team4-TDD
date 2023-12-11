@@ -7,10 +7,10 @@ function createAccountInfo(data) {
     return {
         id: data.id,
         username: data.username,
-        display_name: data.display_name,
-        following_count: data.following_count,
-        followers_count: data.followers_count,
-        statuses_count: data.statuses_count,
+        displayName: data.display_name,
+        followingCount: data.following_count,
+        followersCount: data.followers_count,
+        statusesCount: data.statuses_count,
     };
 }
 
