@@ -27,12 +27,12 @@ async function accountFollowersService(api, id, db) {
     // First, attempt to get followers from the database
     const followers = await db.getFollowers(id);
     if (followers) {
-        console.log(`Getting followers from db`);
+        console.log(`Getting followers of id (${id}) from db`);
         return followers;
     }
 
     // If not in the database, fetch from the API
-    console.log(`Getting followers from API`);
+    console.log(`Getting followers of id (${id}) from API`);
     const { data } = await api.getAccountFollowers(id);
     if (!data) {
         return null;
@@ -60,11 +60,12 @@ async function accountFollowingService(api, id, db) {
     // Attempt to get the followings from the database
     const followings = await db.getFollowings(id);
     if (followings) {
-        console.log(`Getting followings from db`);
+        console.log(`Getting followings of id (${id}) from db`);
         return followings;
     }
 
     // If not in the database, fetch from the API
+    console.log(`Getting followings of id (${id}) of id (${id}) from API`);
     const { data } = await api.getAccountFollowing(id);
     if (!data) {
         return null;

@@ -58,16 +58,12 @@ export default class GunDBAdaptor extends BaseDBAdaptor {
      * @param {object} followerData - The data of the follower to be stored in the database.
      */
     async addFollower(userId, followerId, followerData) {
-        const follower = this.db
-            .get(USER_COLLECTION)
-            .get(followerId)
-            .put(followerData);
         this.db
             .get(USER_COLLECTION)
             .get(userId)
             .get(FOLLOWER_COLLECTION)
             .get(followerId)
-            .set(follower);
+            .put(followerData);
     }
 
     /**
@@ -88,16 +84,12 @@ export default class GunDBAdaptor extends BaseDBAdaptor {
      * @param {object} followingData - The data of the following to be stored in the database.
      */
     async addFollowing(userId, followingId, followingData) {
-        const following = this.db
-            .get(USER_COLLECTION)
-            .get(followingId)
-            .put(followingData);
         this.db
             .get(USER_COLLECTION)
             .get(userId)
             .get(FOLLOWING_COLLECTION)
             .get(followingId)
-            .set(following);
+            .put(followingData);
     }
 
     /**
@@ -123,6 +115,7 @@ export default class GunDBAdaptor extends BaseDBAdaptor {
     async #getFollowerOrFollowing(userId, collection) {
         return new Promise((resolve) => {
             const response = {};
+            let count = 0;
             this.db
                 .get(USER_COLLECTION)
                 .get(userId)
@@ -130,22 +123,26 @@ export default class GunDBAdaptor extends BaseDBAdaptor {
                 .map()
                 .once(
                     (user, id) => {
-                        console.log(`getting ${collection}: ${id} from db`);
+                        // console.log(`getting ${collection}: ${id} from db`);
                         if (user) {
                             const { _, ...userData } = user; // get rid of the '_' property used by db
                             response[id] = userData;
+                            count++;
                         }
                     },
                     { wait: 0 }
                 );
 
-            if (Object.keys(response).length !== 0) {
-                resolve(response);
-            } else {
-                // Resolve with null if followers/followings not found in db, b/c this is not an error
-                // It simply indicates that we need to fetch from Mastodon API
-                resolve(null);
-            }
+
+            const checkCompletion = setInterval(() => {
+                if (count === 0) {
+                    clearInterval(checkCompletion);
+                    resolve(null);
+                } else if (Object.keys(response).length === count) {
+                    clearInterval(checkCompletion);
+                    resolve(response);
+                }
+            }, 500);
         });
     }
 }
