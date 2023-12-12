@@ -7,10 +7,14 @@
         <script type="text/javascript" src="vis-network.min.js"></script>
 
         <script type="module">
-            import { updateID } from './process.js';
+            import { updateID,handleNodeSizeSelection,handleNodeColorSelection } from './process.js';
             document
                 .getElementById('enterButton')
                 .addEventListener('click', updateID);
+
+            document.getElementById('nodeSize').addEventListener('change', handleNodeSizeSelection);
+
+            document.getElementById('nodeColor').addEventListener('change', handleNodeColorSelection);
         </script>
     </head>
     <body>
@@ -24,11 +28,30 @@
                 />
                 <input type="button" id="enterButton" value="Enter" />
             </div>
+            <div class="graph-settings">
+                <div class = "dropdown">
+                    <label for="nodeSize">Node size</label>
+                    <select name="" id="nodeSize">
+                        <option value="none">None</option>
+                        <option value="followers">Number of followers</option>
+                        <option value="activity">Recent activity</option>
+                    </select>
+                </div>
+                <div class = "dropdown">
+                    <label for="nodeColor">Node color</label>
+                    <select name="" id="nodeColor">
+                        <option value="none">None</option>
+                        <option value="followers">Number of followers</option>
+                        <option value="activity">Recent activity</option>
+                    </select>
+                </div>
+            </div>
             <div id="mynetwork"></div>
             <div id="overlay" class="overlay"></div>
             <div id="loadingSpinner" class="spinner-container">
                 <div class="spinner"></div>
             </div>
+            <div id="legend"></div>
         </div>
     </body>
 </html>
