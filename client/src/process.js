@@ -35,7 +35,8 @@ export function updateID() {
         return;
     }
 
-    let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`;
+    // let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`;
+    let apiURL = `example_response.json`;
 
     // Need to write a common http request function with error handling
     fetch(apiURL)
