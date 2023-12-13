@@ -28,6 +28,9 @@ export function updateID() {
     showSpinner();
 
     let userID = document.getElementById('idInput').value;
+    let maxNodes = document.getElementById('maxNodesInput').value;
+    let locality = document.getElementById('localityInput').value;
+    let nodeRank = document.getElementById('rankingOptions').value;
 
     if (!verifyUserID(userID)) {
         alert('Please enter a valid number.');
@@ -37,8 +40,16 @@ export function updateID() {
 
     let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`;
 
+    let queryParams = new URLSearchParams({
+        maxNodes: maxNodes,
+        locality: locality,
+        nodeRank: nodeRank
+    });
+
+    let apiURLWithParams = `${apiURL}?${queryParams}`;
+
     // Need to write a common http request function with error handling
-    fetch(apiURL)
+    fetch(apiURLWithParams)
         .then((response) => response.json())
         .then((json) => {
             console.log(json);
