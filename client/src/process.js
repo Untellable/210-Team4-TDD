@@ -32,6 +32,10 @@ var legendHeading = document.getElementById('legendHeading');
 export function updateID() {
     showSpinner();
 
+    // Clear the nodes and edges array
+    nodes = [];
+    edges = [];
+
     let userID = document.getElementById('idInput').value;
     let maxNodes = document.getElementById('maxNodesInput').value;
     let locality = document.getElementById('localityInput').value;
