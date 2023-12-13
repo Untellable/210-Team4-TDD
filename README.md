@@ -8,7 +8,7 @@ A team project by UCSD grad students in CSE 210 from team 4 Thomas-Driven Develo
 
 ### Use Instructions
 - How to run server: In '/server' directory, run `npm install` and then `npm start`
-- How to run client: In '/client' directory, run `npm install` and then `node start`
+- How to run client: In '/client' directory, run `npm install` and then `npm start`
 
 ### Things to add:
 - more detailed high level scope, with pictures
