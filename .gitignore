@@ -30,3 +30,5 @@ radata
 .DS_Store
 .vscode/settings.json
 server/.idea
+
+client/node_modules
