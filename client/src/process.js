@@ -1,4 +1,4 @@
-/*global document,alert,vis,FileReader*/
+/*global document,alert,vis,sessionStorage,FileReader*/
 import {
     stylingType,
     metricType,
@@ -34,11 +34,14 @@ const legendHeading = document.getElementById('legendHeading');
 export function updateID() {
     showSpinner();
 
+    // retrieve id from json processing from welcomepage.html
+    let userID = sessionStorage.getItem('account_id');
+    console.log('userID retrieved: ', userID);
+
     // Clear the nodes and edges array
     nodes = [];
     edges = [];
 
-    let userID = document.getElementById('idInput').value;
     let maxNodes = document.getElementById('maxNodesInput').value;
     let locality = document.getElementById('localityInput').value;
     let nodeRank = document.getElementById('rankingOptions').value;
