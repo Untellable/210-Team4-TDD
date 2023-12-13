@@ -20,9 +20,9 @@ const db = new DAO(new GunDBAdaptor(GUN()));
  * @returns {Promise<void>} - A promise that resolves when the response is sent.
  */
 export default async function accountInitializeHandler(req, res) {
-    const { id } = req.params;
+    const { mainId } = req.params;
 
-    if (!id) {
+    if (!mainId) {
         return res.status(400).json({
             error: 'Account ID is required as a path parameter.',
         });
@@ -31,17 +31,20 @@ export default async function accountInitializeHandler(req, res) {
     try {
         // Server is unknown given the id, create an adapter with default server
         const api = FediverseAPIFactory.createAdapter();
-        const accountInitializeData = await accountInitializeService(
+        const accountInfoList = await accountInitializeService(
             api,
-            id,
-            db
+            mainId,
+            db,
+            req.query['maxNodes'],
+            req.query['nodeRank'],
+            req.query['locality']
         );
 
-        if (accountInitializeData.accountInfoList.length > 0) {
-            res.status(200).json(accountInitializeData);
+        if (accountInfoList.length > 0) {
+            res.status(200).json(accountInfoList);
         } else {
             res.status(404).json({
-                error: `Record not found for id: ${id}`,
+                error: `Record not found for id: ${mainId}`,
             });
         }
     } catch (error) {
