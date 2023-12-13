@@ -54,4 +54,5 @@ document.getElementById('yes-btn').addEventListener('click', () => {
 
     console.log('Yes button clicked');
 
+    window.location.href = 'visjs.html';
 });

@@ -27,7 +27,10 @@ let edges = [];
 export function updateID() {
     showSpinner();
 
-    let userID = document.getElementById('idInput').value;
+    // retrieve id from json processing from welcomepage.html
+    let userID = sessionStorage.getItem('account_id');
+    console.log('userID retrieved: ', userID);
+
     let maxNodes = document.getElementById('maxNodesInput').value;
     let locality = document.getElementById('localityInput').value;
     let nodeRank = document.getElementById('rankingOptions').value;

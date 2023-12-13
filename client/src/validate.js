@@ -80,8 +80,13 @@ function processResponse(json) {
     }
 }
 
+function saveId(id){
+    sessionStorage.setItem('account_id', id);
+}
 
-function updateFromResponse(combinedInputData, displayName, profImgUrl, numFollowers) {
+function updateFromResponse(combinedInputData, id, displayName, profImgUrl, numFollowers) {
+    saveId(id);
+
     let displayNameElement = document.getElementById('display-name');
     displayNameElement.textContent = displayName;
 
@@ -110,7 +115,7 @@ function validateInput(username, serverDomain) {
             
             [id, displayName, profImgUrl, numFollowers] = processResponse(json);
             
-            console.log('user_acct, display_name, profile_img_url, num_followers: ', combinedInputData, displayName, profImgUrl, numFollowers);
+            console.log('user_acct, id, display_name, profile_img_url, num_followers: ', combinedInputData, id, displayName, profImgUrl, numFollowers);
             
             // show the username if the user has never set the display name
             if (displayName === '') {
@@ -118,7 +123,7 @@ function validateInput(username, serverDomain) {
             }
             
             // update the account info using parsed data from api fetching
-            updateFromResponse(combinedInputData, displayName, profImgUrl, numFollowers);
+            updateFromResponse(combinedInputData, id, displayName, profImgUrl, numFollowers);
             
             // switch to welcome/input page display
             hideForm();
