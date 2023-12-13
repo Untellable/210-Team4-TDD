@@ -147,7 +147,6 @@ async function accountInitializeService(
         } catch (e) {
             continue; // TODO: 
         }
-        console.log(curFollowing)
         return {}
 
         const curNeighbors = [...curFollowing, ...curFollowers];
