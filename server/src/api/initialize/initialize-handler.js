@@ -21,7 +21,6 @@ const db = new DAO(new GunDBAdaptor(GUN()));
  */
 export default async function accountInitializeHandler(req, res) {
     const { mainId } = req.params;
-    const { maxNodes, nodeRank, locality } = req.query;
 
     if (!mainId) {
         return res.status(400).json({
@@ -36,9 +35,9 @@ export default async function accountInitializeHandler(req, res) {
             api,
             mainId,
             db,
-            maxNodes,
-            nodeRank,
-            locality
+            req.query['maxNodes'],
+            req.query['nodeRank'],
+            req.query['locality']
         );
 
         if (accountInfoList.length > 0) {
