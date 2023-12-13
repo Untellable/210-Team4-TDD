@@ -27,4 +27,4 @@ window.onclick = function (event) {
 
 export function hideModal() {
     modal.style.display = 'none';
-};
+}
