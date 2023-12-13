@@ -16,10 +16,13 @@ import {
 } from './util/ui.js';
 import { verifyUserID, verifyLocality, verifyMaxNodes } from './util/utils.js';
 import './util/modal.js';
+import './util/instructions-modal.js';
 import { hideModal } from './util/modal.js';
 
 let nodes = []; // array of nodes
 let edges = [];
+let currentStyle;
+let currentMetric;
 let responseJson; // Stores the response from the API
 
 const legendHeading = document.getElementById('legendHeading');
@@ -79,7 +82,7 @@ export function updateID() {
             console.log(json);
             const [nodes, edges] = processData(json, userID);
             console.log('Nodes and edges', nodes, edges);
-            drawFromResponse(nodes, edges);
+            applyNodeStyling(nodes, currentStyle, currentMetric);
             hideSpinner();
         })
         .catch((error) => {
@@ -108,7 +111,7 @@ export function processData(json, mainID) {
     let main_node;
 
     if (mainID != null) {
-        main_node = json.filter((node) => node.id === mainID)[0];
+        main_node = json.filter((node) => node?.id === mainID)[0];
         nodes.push({
             id: main_node.id,
             value: 20, // size of the node in the graph
@@ -269,6 +272,9 @@ export function applyActivityMetric(nodes, type) {
  */
 
 export function applyNodeStyling(nodes, type, metric) {
+    currentMetric = metric;
+    currentStyle = type;
+
     if (metric === metricType.FOLLOWERS) {
         nodes = applyFollowerMetric(nodes, type);
     } else if (metric === metricType.ACTIVITY) {
@@ -441,6 +447,10 @@ export function importGraph() {
         return;
     }
 
+    // Clear the nodes and edges array
+    nodes = [];
+    edges = [];
+
     // Create a new FileReader instance
     const reader = new FileReader();
 
@@ -450,8 +460,11 @@ export function importGraph() {
     // When the file has been read...
     reader.onload = function () {
         // ...call the `processData` function and pass the result
-        const [nodes, edges] = processData(JSON.parse(reader.result));
-        drawFromResponse(nodes, edges);
+        const [nodes_response, edges_response] = processData(
+            JSON.parse(reader.result)
+        );
+        edges = edges_response; // Updating global edges variable
+        applyNodeStyling(nodes_response, currentStyle, currentMetric);
         hideModal();
     };
 }

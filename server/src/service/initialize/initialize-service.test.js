@@ -2,6 +2,7 @@ import { describe, jest } from '@jest/globals';
 import {
     accountFollowingService,
     accountFollowersService,
+    getPriorityFunction,
 } from './initialize-service.js';
 
 jest.mock('../../fediverse/mastodon-api.js'); // Mock the MastodonAPI class
@@ -21,42 +22,7 @@ describe('accountFollowingService', () => {
         jest.clearAllMocks();
     });
 
-    test('should retrieve followings from the database if available', async () => {
-        const accountId = 'valid-account-id';
-        const mockFollowingsFromDb = {
-            account1: {
-                id: 'account1',
-                username: 'user1',
-                displayName: 'User One',
-            },
-            account2: {
-                id: 'account2',
-                username: 'user2',
-                displayName: 'User Two',
-            },
-        };
-
-        // Set up the mock database to return the mock data
-        mockDb.getFollowings.mockResolvedValue(mockFollowingsFromDb);
-
-        // Call the service with the mock database and API
-        const result = await accountFollowingService(
-            mockApi,
-            accountId,
-            mockDb
-        );
-
-        // Assert that the database was queried
-        expect(mockDb.getFollowings).toHaveBeenCalledWith(accountId);
-
-        // Assert that the API was not called
-        expect(mockApi.getAccountFollowing).not.toHaveBeenCalled();
-
-        // Assert that the result matches the mock data from the database
-        expect(result).toEqual(mockFollowingsFromDb);
-    });
-
-    test('should fetch followings from the API if not in the database', async () => {
+    test('should fetch followings from the API', async () => {
         const accountId = 'valid-account-id';
         const mockApiData = [
             { id: 'account1', username: 'user1', display_name: 'User One' },
@@ -89,69 +55,24 @@ describe('accountFollowingService', () => {
 
 describe('accountFollowersService', () => {
     let mockApi;
-    let mockDb;
 
     beforeEach(() => {
         mockApi = {
             getAccountFollowers: jest.fn(),
         };
-        mockDb = {
-            getFollowers: jest.fn(),
-            addFollower: jest.fn(),
-        };
         jest.clearAllMocks();
     });
 
-    test('should retrieve followers from the database if available', async () => {
-        const accountId = 'valid-account-id';
-        const mockFollowersFromDb = {
-            account1: {
-                id: 'account1',
-                username: 'user1',
-                displayName: 'User One',
-            },
-            account2: {
-                id: 'account2',
-                username: 'user2',
-                displayName: 'User Two',
-            },
-        };
-
-        // Set up the mock database to return the mock data
-        mockDb.getFollowers.mockResolvedValue(mockFollowersFromDb);
-
-        // Call the service with the mock database and API
-        const result = await accountFollowersService(
-            mockApi,
-            accountId,
-            mockDb
-        );
-
-        // Assert that the database was queried
-        expect(mockDb.getFollowers).toHaveBeenCalledWith(accountId);
-
-        // Assert that the API was not called
-        expect(mockApi.getAccountFollowers).not.toHaveBeenCalled();
-
-        // Assert that the result matches the mock data from the database
-        expect(result).toEqual(mockFollowersFromDb);
-    });
-
-    test('should fetch followers from the API if not in the database', async () => {
+    test('should fetch followers from the API', async () => {
         const accountId = 'valid-account-id';
         const mockApiData = [
             { id: 'account1', username: 'user1', display_name: 'User One' },
             { id: 'account2', username: 'user2', display_name: 'User Two' },
         ];
         const mockApiResponse = { data: mockApiData };
-        mockDb.getFollowers.mockResolvedValue(Promise.any([null, undefined]));
         mockApi.getAccountFollowers.mockResolvedValue(mockApiResponse);
 
-        const result = await accountFollowersService(
-            mockApi,
-            accountId,
-            mockDb
-        );
+        const result = await accountFollowersService(mockApi, accountId);
         expect(mockApi.getAccountFollowers).toHaveBeenCalledWith(accountId);
         expect(result).toEqual({
             account1: {
@@ -165,5 +86,30 @@ describe('accountFollowersService', () => {
                 displayName: 'User Two',
             },
         });
+    });
+});
+
+describe('getPriorityFunction', () => {
+    test('should calculate priority based on followers', () => {
+        // setup
+        const nodeRank = 'followers';
+        const locality = 2;
+        const nodeInfo = { followersCount: 100, depth: 1 };
+        const priorityFunction = getPriorityFunction(nodeRank, locality);
+
+        // execute
+        const result = priorityFunction(nodeInfo);
+
+        // verify
+        expect(result).toBe(50); // Adjust as per your logic
+    });
+
+    test('should throw RangeError for invalid nodeRank', () => {
+        const nodeRank = 'invalidOption';
+        const locality = 2;
+
+        expect(() => getPriorityFunction(nodeRank, locality)).toThrow(
+            RangeError
+        );
     });
 });
