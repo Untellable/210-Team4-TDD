@@ -106,8 +106,8 @@ async function accountInitializeService(
     try {
         mainNodeInfoRaw = await api.getAccountInfo(mainId);
     } catch (e) {
-        return new Array(); // TODO Specifically catch axios errors somewhere else and case on return being null here
-    } // TODO: how to handle slow axios responses giving errors? Auto retry in api?
+        return new Array();
+    }
     if (!mainNodeInfoRaw || !mainNodeInfoRaw['data']) {
         return new Array();
     }
@@ -134,7 +134,7 @@ async function accountInitializeService(
     } else if (nodeRank == 'random') {
         rankFun = (nodeInfo) => Math.random();
     } else {
-        throw new RangeError( // TODO: need to deal with this case in handler
+        throw new RangeError(
             'nodeRank must be one of: "followers", "posts", or "random".'
         );
     }
@@ -144,12 +144,11 @@ async function accountInitializeService(
         rankFun(nodeInfo) / locality ** nodeInfo['depth'];
 
     while (!nodeHeap.isEmpty() && accountInfoMap.size < maxNodes) {
-        // TODO move single step to helper function for testing?
         console.log(`Node ${accountInfoMap.size} of ${maxNodes}`);
         const curNodeInfo = nodeHeap.pop();
 
         let curFollowing;
-        let curFollowers;
+        let curFollowers; // get info on current node following and followers
         try {
             curFollowing = new Map(
                 Object.entries(
@@ -162,7 +161,7 @@ async function accountInitializeService(
                 )
             );
         } catch (e) {
-            continue; // TODO:
+            continue; // Ignore failed requests
         }
         const curFollowingIds = new Set(curFollowing.keys());
         const curFollowersIds = new Set(curFollowers.keys());
@@ -179,7 +178,7 @@ async function accountInitializeService(
                     curNodeInfo['depth'],
                     accountInfoMap.get(nodeId)['depth'] + 1
                 );
-            } // TODO: same as earlier try/catch
+            }
         }
 
         // Update current node info
