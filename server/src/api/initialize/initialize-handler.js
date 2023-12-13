@@ -21,6 +21,7 @@ const db = new DAO(new GunDBAdaptor(GUN()));
  */
 export default async function accountInitializeHandler(req, res) {
     const { id } = req.params;
+    const { maxNodes, nodeRank, locality } = req.query;
 
     if (!id) {
         return res.status(400).json({
@@ -31,7 +32,14 @@ export default async function accountInitializeHandler(req, res) {
     try {
         // Server is unknown given the id, create an adapter with default server
         const api = FediverseAPIFactory.createAdapter();
-        const accountInfoMap = await accountInitializeService(api, id, db);
+        const accountInfoMap = await accountInitializeService(
+            api,
+            id,
+            db,
+            maxNodes,
+            nodeRank,
+            locality
+        );
 
         if (accountInfoMap.size > 0) {
             res.status(200).json(Object.fromEntries(accountInfoMap));

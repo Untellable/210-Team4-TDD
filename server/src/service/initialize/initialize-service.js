@@ -145,7 +145,7 @@ async function accountInitializeService(
                 )
             );
         } catch (e) {
-            continue; // TODO: 
+            continue; // TODO:
         }
 
         const curNeighbors = [...curFollowing, ...curFollowers];

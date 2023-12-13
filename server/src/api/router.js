@@ -16,6 +16,28 @@ const router = express.Router();
  *            type: string
  *            description: The unique identifier of the account.
  *            example: "109252111498807689"
+ *          - in: query
+ *            name: maxNodes
+ *            required: false
+ *            type: integer
+ *            description: Max number of account nodes to return.
+ *            example: 10
+ *          - in: query
+ *            name: nodeRank
+ *            required: false
+ *            type: string
+ *            description: Account parameter to rank based on. Only nodes with a high rank will be selected.
+ *            example: "followers"
+ *            enum:
+ *              - followers
+ *              - posts
+ *              - random
+ *          - in: query
+ *            name: locality
+ *            required: false
+ *            type: integer
+ *            description: Strength of preference for nodes closer to the main node. Node priority = nodeRank value / locality^depth.
+ *            example: 2
  *        responses:
  *          200:
  *            description: A successful response containing account data.
@@ -56,7 +78,7 @@ const router = express.Router();
  *                            description: Number of statuses posted by this account.
  *                      description: A list containing information for each account.
  */
-router.get('/account/:id/initialize', accountInitializeHandler);
+router.get('/account/:id/initialize?', accountInitializeHandler);
 
 /**
  *  @swagger
