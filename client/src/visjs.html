@@ -7,10 +7,22 @@
         <script type="text/javascript" src="vis-network.min.js"></script>
 
         <script type="module">
-            import { updateID } from './process.js';
+            import {
+                updateID,
+                handleNodeSizeSelection,
+                handleNodeColorSelection,
+            } from './process.js';
             document
                 .getElementById('enterButton')
                 .addEventListener('click', updateID);
+
+            document
+                .getElementById('nodeSize')
+                .addEventListener('change', handleNodeSizeSelection);
+
+            document
+                .getElementById('nodeColor')
+                .addEventListener('change', handleNodeColorSelection);
         </script>
     </head>
     <body>
@@ -22,12 +34,96 @@
                     id="idInput"
                     placeholder="Enter ID of the mastodon user"
                 />
+                <input
+                    type="number"
+                    id="maxNodesInput"
+                    placeholder="Max Nodes (10-500)"
+                    min="10"
+                    max="500"
+                    value="10"
+                />
+                <input
+                    type="number"
+                    id="localityInput"
+                    placeholder="Locality (1-10)"
+                    min="1"
+                    max="10"
+                    value="2"
+                />
+                <select id="rankingOptions" class="ranking-options">
+                    <option value="followers">Rank by Followers</option>
+                    <option value="posts">Rank by Posts</option>
+                    <option value="random">Surprise Me</option>
+                </select>
                 <input type="button" id="enterButton" value="Enter" />
             </div>
+            <div class="graph-settings">
+                <div class="dropdown">
+                    <label for="nodeSize">Node size</label>
+                    <select name="" id="nodeSize">
+                        <option value="none">None</option>
+                        <option value="followers">Number of followers</option>
+                        <option value="activity">Recent activity</option>
+                    </select>
+                </div>
+                <div class="dropdown">
+                    <label for="nodeColor">Node color</label>
+                    <select name="" id="nodeColor">
+                        <option value="none">None</option>
+                        <option value="followers">Number of followers</option>
+                        <option value="activity">Recent activity</option>
+                    </select>
+                </div>
+            </div>
             <div id="mynetwork"></div>
+            <div id="node-popup"></div>
             <div id="overlay" class="overlay"></div>
             <div id="loadingSpinner" class="spinner-container">
                 <div class="spinner"></div>
+            </div>
+            <div id="legend">
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #ff0000"
+                    ></div>
+                    <div class="legend-text">0 - 99 followers</div>
+                </div>
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #ff6600"
+                    ></div>
+                    <div class="legend-text">100 - 999 followers</div>
+                </div>
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #ffcc00"
+                    ></div>
+                    <div class="legend-text">1000 - 9999 followers</div>
+                </div>
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #99ff00"
+                    ></div>
+                    <div class="legend-text">10000 - 99999 followers</div>
+                </div>
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #00ff00"
+                    ></div>
+                    <div class="legend-text">100000 - 999999 followers</div>
+                </div>
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #00ff99"
+                    ></div>
+                    <div class="legend-text">1000000+ followers</div>
+                </div>
             </div>
         </div>
     </body>

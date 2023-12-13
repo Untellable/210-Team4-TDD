@@ -1,10 +1,5 @@
 // Import the functions to be tested
-import {
-    showOverlay,
-    hideOverlay,
-    showSpinner,
-    hideSpinner,
-} from './process.js';
+import { showOverlay, hideOverlay, showSpinner, hideSpinner } from './ui.js';
 
 const { JSDOM } = require('jsdom');
 
