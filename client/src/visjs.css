@@ -12,16 +12,30 @@ body {
     border-radius: 5px;
     width: 250px;
     margin: 10px 10px 10px 0;
+    background-color: #131415;
+    color: white;
+    font-size: 18px;
+    border: 1px solid black;
 }
 
 #maxNodesInput,
 #localityInput {
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
     border-radius: 5px;
     margin-right: 10px;
     width: 250px;
+    background-color: #131415;
+    color: white;
+    font-size: 18px;
+    border: 1px solid black;
+}
+
+#maxNodesInput:focus,
+#idInput:focus,
+#localityInput:focus {
+    border-color: #573ccf;
+    background-color: #131415;
 }
 
 #enterButton {
@@ -50,6 +64,7 @@ body {
     display: flex;
     margin-left: 5px;
     width: 100%;
+    height: 100%;
     flex-direction: column;
 }
 
@@ -65,6 +80,10 @@ body {
     margin: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    background-color: #131415;
+    color: white;
+    font-size: 18px;
+    border: 1px solid black;
 }
 
 .spinner-container {
@@ -124,8 +143,9 @@ body {
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
-    background-color: #34495e;
+    background-color: #131415;
     color: white;
+    font-size: 18px;
 }
 
 .graph-settings .dropdown {

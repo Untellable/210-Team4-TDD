@@ -38,9 +38,13 @@
     <body>
         <div id="mainContainer">
             <div class="heading-container">
-                <h2 class="main-heading">Social media visualizer</h2>
-                <button id="instructionsButton" class="instructions-button" onclick="showInstructions()">
-                    Instructions
+                <h2 class="main-heading">Mastodon Network Visualizer</h2>
+                <button
+                    id="instructionsButton"
+                    class="instructions-button"
+                    onclick="showInstructions()"
+                >
+                    User Guide
                 </button>
             </div>
             <div class="fields-container">
@@ -78,7 +82,7 @@
                         Import/Export Graph
                     </button>
                 </div>
-            </div>         
+            </div>
             <div class="graph-settings">
                 <div class="dropdown">
                     <label for="nodeSize">Node size</label>
@@ -185,11 +189,25 @@
                     <h2>Instructions</h2>
                     <p>
                         Network Visualization Tool: Customize Your View
-                        <li>Metric Selection: Choose between 'Number of followers' and 'Recent Activity' from the dropdown to size and color nodes.</li>
-                        <li>Limit Nodes: Set a maximum number of nodes to display for a clearer view. </li>
-                        <li>Locality Filter: Enter a 'locality' criterion to focus on the most popular/active users in your local network. </li>
-                        <li>Dynamic Visualization: The graph updates automatically to reflect your choices. </li>
-                        Explore, analyze, and understand your network with ease! 
+                        <li>
+                            Metric Selection: Choose between 'Number of
+                            followers' and 'Recent Activity' from the dropdown
+                            to size and color nodes.
+                        </li>
+                        <li>
+                            Limit Nodes: Set a maximum number of nodes to
+                            display for a clearer view.
+                        </li>
+                        <li>
+                            Node selection: Prioritize nodes by follower or post
+                            count with Node Rank Criteria, and favor closer
+                            nodes using a higher Locality.
+                        </li>
+                        <li>
+                            Dynamic Visualization: The graph updates
+                            automatically to reflect your choices.
+                        </li>
+                        Explore, analyze, and understand your network with ease!
                     </p>
                 </div>
             </div>
