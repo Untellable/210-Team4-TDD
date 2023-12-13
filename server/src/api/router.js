@@ -44,39 +44,40 @@ const router = express.Router();
  *            content:
  *              application/json:
  *                schema:
- *                  type: object
- *                  properties:
- *                    relations:
- *                      type: object
- *                      additionalProperties:
+ *                  type: array
+ *                  items:
+ *                    type: object
+ *                    properties:
+ *                      id:
+ *                        type: string
+ *                        description: Unique identifier of the account.
+ *                      username:
+ *                        type: string
+ *                        description: Username of the account.
+ *                      display_name:
+ *                        type: string
+ *                        description: Display name of the account.
+ *                      following_count:
+ *                        type: integer
+ *                        description: Number of accounts this account is following.
+ *                      followers_count:
+ *                        type: integer
+ *                        description: Number of followers this account has.
+ *                      statuses_count:
+ *                        type: integer
+ *                        description: Number of statuses posted by this account.
+ *                      following:
  *                        type: array
  *                        items:
  *                          type: string
- *                      description: A map of account relationships, showing connections between various accounts.
- *                    accountInfoList:
- *                      type: array
- *                      items:
- *                        type: object
- *                        properties:
- *                          id:
- *                            type: string
- *                            description: Unique identifier of the account.
- *                          username:
- *                            type: string
- *                            description: Username of the account.
- *                          display_name:
- *                            type: string
- *                            description: Display name of the account.
- *                          following_count:
- *                            type: integer
- *                            description: Number of accounts this account is following.
- *                          followers_count:
- *                            type: integer
- *                            description: Number of followers this account has.
- *                          statuses_count:
- *                            type: integer
- *                            description: Number of statuses posted by this account.
- *                      description: A list containing information for each account.
+ *                        description: List of accounts in this list which this account follows.
+ *                      depth:
+ *                        type: integer
+ *                        description: Estimated minimum path distance from the id account.
+ *                      priority:
+ *                        type: float
+ *                        description: Priority assigned to this account based on ranking parameter, locality, and depth.
+ *                  description: A list containing information for each account.
  */
 router.get('/account/:id/initialize?', accountInitializeHandler);
 
