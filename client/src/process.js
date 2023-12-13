@@ -25,7 +25,6 @@ let edges = [];
  */
 
 export function updateID() {
-    console.log('Update ID called');
     showSpinner();
 
     let userID = document.getElementById('idInput').value;

@@ -115,12 +115,8 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    margin: 5px;
-    padding: 5px;
-    border: 1px solid lightgray;
+    justify-content: left;
     border-radius: 5px;
-    background-color: #59a2eb;
     color: white;
 }
 
@@ -128,16 +124,15 @@ body {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid gray;
     border-radius: 5px;
     background-color: #34495e;
     color: white;
 }
 
 .graph-settings .dropdown {
-    width: 50%;
+    width: 25%;
     padding: 10px;
-    margin: 10px 10px;
+    margin: 5px;
     border: none;
     border-radius: 5px;
     background-color: #34495e;
