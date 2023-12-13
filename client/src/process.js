@@ -1,4 +1,4 @@
-/*global document,alert,vis*/
+/*global document,alert,vis,FileReader*/
 import {
     stylingType,
     metricType,
@@ -15,9 +15,11 @@ import {
     generateTitle,
 } from './ui.js';
 import { verifyUserID, verifyLocality, verifyMaxNodes } from './utils.js';
+import './modal.js';
 
 let nodes = []; // array of nodes
 let edges = [];
+let responseJson; // Stores the response from the API
 
 /**
  * Function is called when the user clicks on the "Update" button
@@ -64,6 +66,7 @@ export function updateID() {
     fetch(apiURLWithParams)
         .then((response) => response.json())
         .then((json) => {
+            responseJson = json;
             console.log(json);
             const [nodes, edges] = processData(json, userID);
             console.log('Nodes and edges', nodes, edges);
@@ -93,23 +96,29 @@ export function updateID() {
  */
 
 export function processData(json, mainID) {
-    let main_node = json.filter((node) => node.id == mainID)[0];
-
+    
     let nodesCreated = new Set(); // to keep track of nodes created using the ids of accounts
-    nodes.push({
-        id: main_node.id,
-        value: 20, // size of the node in the graph
-        label: main_node.displayName,
-        followersCount: main_node.followersCount,
-        title: generateTitle(main_node),
-    });
+    let main_node;
 
-    nodesCreated.add(main_node.id);
+    if(mainID != null){
+        main_node = json.filter((node) => node.id == mainID)[0];
+        nodes.push({
+            id: main_node.id,
+            value: 20, // size of the node in the graph
+            label: main_node.displayName,
+            followersCount: main_node.followersCount,
+            title: generateTitle(main_node),
+        });
+        nodesCreated.add(main_node.id);
+    }
 
     // Add nodes
 
     json.forEach((node) => {
-        if (node.id != main_node.id) {
+        if (main_node && node.id == main_node.id) {
+            return;
+        }
+        else {
             nodes.push({
                 id: node.id,
                 value: 15, // lower size for followers
@@ -321,4 +330,64 @@ export function handleNodeSizeSelection(event) {
 export function handleNodeColorSelection(event) {
     const selectedValue = event.target.value;
     applyNodeStyling(nodes, stylingType.COLOR, selectedValue);
+}
+
+/**
+ * Function to export graph to a JSON file
+ * Downloads a JSON file with the graph data
+ */
+export function exportGraph() {
+    // Create a Blob with the JSON data
+    if(responseJson == null){
+        alert("Please enter a valid user ID and update the graph before exporting.");
+        return;
+    }
+
+    // Create a Blob with the JSON object
+    const blob = new Blob([JSON.stringify(responseJson, null, 2)], { type: 'application/json' });
+
+    // Create a download link
+    const a = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    a.href = url;
+    a.download = 'graph.json';
+
+    // Append the link to the body
+    document.body.appendChild(a);
+
+    // Trigger a click on the link to start the download
+    a.click();
+
+    // Remove the link from the body
+    document.body.removeChild(a);
+
+    // Revoke the URL to free up resources
+    URL.revokeObjectURL(url);
+}
+
+/**
+ * Function to import graph from a JSON file
+ */
+
+export function importGraph() {
+    // Get the file from the input element
+    const file = document.getElementById('chooseFile').files[0];
+
+    if (file == null) {
+        alert('Please select a file to import.');
+        return;
+    }
+
+    // Create a new FileReader instance
+    const reader = new FileReader();
+
+    // Read the file
+    reader.readAsText(file);
+
+    // When the file has been read...
+    reader.onload = function () {
+        // ...call the `processData` function and pass the result
+        const [nodes, edges] = processData(JSON.parse(reader.result));
+        drawFromResponse(nodes, edges);
+    };
 }

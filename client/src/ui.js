@@ -34,11 +34,6 @@ export function hideSpinner() {
 }
 
 /**
- * Function to generate the title for the popup
- * @param {Object} node the node on which the user clicks
- */
-
-/**
  * Function to display a legend for the styles applied to the nodes
  */
 
@@ -55,6 +50,10 @@ export function hideLegend() {
     document.getElementById('legend').style.display = 'none';
 }
 
+/**
+ * Function to generate the title for the popup
+ * @param {Object} node the node on which the user clicks
+ */
 export function generateTitle(node) {
     let title = `
         <div class="popup-title">
