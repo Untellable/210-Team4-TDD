@@ -10,6 +10,9 @@ import {
     validateInput,
 } from './validate.js';
 
+/**
+ * Add listener for expandable container, show the expandable content when clicked, and hide it when clicked again
+ */
 document.addEventListener('DOMContentLoaded', (event) => {
     const expandableContainers = document.querySelectorAll(
         '.expandable-container'
@@ -31,6 +34,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
+/**
+ * Add listener to the submit button, disable it and reactivate it until reponse received
+ * to prevent multiple submission, handle empty input, and call validateInput for updates
+ */
 document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submit-btn');
 
@@ -63,6 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+/**
+ * Add listener to no button, go back to the input form
+ */
 document.getElementById('no-btn').addEventListener('click', () => {
     clearInput();
     showForm();
@@ -70,7 +80,9 @@ document.getElementById('no-btn').addEventListener('click', () => {
     hideError();
 });
 
-// TODO: implement save logic and open new page
+/**
+ * Add listener to yes button, go the the visualization page
+ */
 document.getElementById('yes-btn').addEventListener('click', () => {
     console.log('Yes button clicked');
 
