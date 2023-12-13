@@ -11,6 +11,8 @@
                 updateID,
                 handleNodeSizeSelection,
                 handleNodeColorSelection,
+                exportGraph,
+                importGraph,
             } from './process.js';
             document
                 .getElementById('enterButton')
@@ -23,6 +25,14 @@
             document
                 .getElementById('nodeColor')
                 .addEventListener('change', handleNodeColorSelection);
+
+            document
+                .getElementById('exportButton')
+                .addEventListener('click', exportGraph);
+
+            document
+                .getElementById('importButton')
+                .addEventListener('click', importGraph);
         </script>
     </head>
     <body>
@@ -30,7 +40,7 @@
             <h2 class="main-heading">Social media visualizer</h2>
             <div class="input-container">
                 <input
-                    type="text"
+                    type="number"
                     id="idInput"
                     placeholder="Enter ID of the mastodon user"
                 />
@@ -56,6 +66,9 @@
                     <option value="random">Surprise Me</option>
                 </select>
                 <input type="button" id="enterButton" value="Enter" />
+                <button id="importExportButton" class="import-button">
+                    Import/Export Graph
+                </button>
             </div>
             <div class="graph-settings">
                 <div class="dropdown">
@@ -63,7 +76,7 @@
                     <select name="" id="nodeSize">
                         <option value="none">None</option>
                         <option value="followers">Number of followers</option>
-                        <option value="activity">Recent activity</option>
+                        <option value="activity">Activity</option>
                     </select>
                 </div>
                 <div class="dropdown">
@@ -71,7 +84,7 @@
                     <select name="" id="nodeColor">
                         <option value="none">None</option>
                         <option value="followers">Number of followers</option>
-                        <option value="activity">Recent activity</option>
+                        <option value="activity">Activity</option>
                     </select>
                 </div>
             </div>
@@ -82,47 +95,76 @@
                 <div class="spinner"></div>
             </div>
             <div id="legend">
+                <div id="legendHeading"></div>
                 <div class="legend-item">
                     <div
                         class="legend-color"
                         style="background-color: #ff0000"
                     ></div>
-                    <div class="legend-text">0 - 99 followers</div>
+                    <div class="legend-text">0 - 99</div>
                 </div>
                 <div class="legend-item">
                     <div
                         class="legend-color"
                         style="background-color: #ff6600"
                     ></div>
-                    <div class="legend-text">100 - 999 followers</div>
+                    <div class="legend-text">100 - 999</div>
                 </div>
                 <div class="legend-item">
                     <div
                         class="legend-color"
                         style="background-color: #ffcc00"
                     ></div>
-                    <div class="legend-text">1000 - 9999 followers</div>
+                    <div class="legend-text">1000 - 9999</div>
                 </div>
                 <div class="legend-item">
                     <div
                         class="legend-color"
                         style="background-color: #99ff00"
                     ></div>
-                    <div class="legend-text">10000 - 99999 followers</div>
+                    <div class="legend-text">10000 - 99999</div>
                 </div>
                 <div class="legend-item">
                     <div
                         class="legend-color"
                         style="background-color: #00ff00"
                     ></div>
-                    <div class="legend-text">100000 - 999999 followers</div>
+                    <div class="legend-text">100000 - 999999</div>
                 </div>
                 <div class="legend-item">
                     <div
                         class="legend-color"
                         style="background-color: #00ff99"
                     ></div>
-                    <div class="legend-text">1000000+ followers</div>
+                    <div class="legend-text">1000000+</div>
+                </div>
+            </div>
+
+            <!-- The Modal -->
+            <div id="importModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Import/Export Graph</h2>
+                    <p>
+                        Easily import and export your graph data to share with
+                        others.
+                        <br />
+                        1. To import a graph, click on the "Choose File" button
+                        and select the file you want to import.
+                        <br />
+                        2. To export a graph, click on the "Export Graph"
+                        button. This will download a JSON file containing the
+                        graph data.
+                        <br />
+                    </p>
+                    <input type="file" id="chooseFile" class="import-button" />
+                    <button id="importButton" class="import-button">
+                        Import Graph
+                    </button>
+                    <button id="exportButton" class="import-button">
+                        Export Graph
+                    </button>
                 </div>
             </div>
         </div>

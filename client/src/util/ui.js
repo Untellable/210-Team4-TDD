@@ -34,11 +34,6 @@ export function hideSpinner() {
 }
 
 /**
- * Function to generate the title for the popup
- * @param {Object} node the node on which the user clicks
- */
-
-/**
  * Function to display a legend for the styles applied to the nodes
  */
 
@@ -55,17 +50,22 @@ export function hideLegend() {
     document.getElementById('legend').style.display = 'none';
 }
 
+/**
+ * Function to generate the title for the popup
+ * @param {Object} node the node on which the user clicks
+ */
 export function generateTitle(node) {
     let title = `
         <div class="popup-title">
             <div class="popup-title-text">${node.displayName}</div>
             <div>Followers: ${node.followersCount}</div>
             <div>Following: ${node.followingCount}</div>
+            <div>Status count: ${node.statusesCount}</div>
             <div>Username: ${node.username}</div>
         </div>
     `;
 
-    var element = document.createElement('div');
+    let element = document.createElement('div');
     element.innerHTML = title;
 
     return element;

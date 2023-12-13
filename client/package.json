@@ -7,7 +7,8 @@
     "test": "jest",
     "ci": "npm run prettier && npm run lint && npm test",
     "lint": "eslint src",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "start": "node client.js"
   },
   "author": "Hao Luo",
   "license": "ISC",
