@@ -21,32 +21,21 @@ function createAccountInfo(data) {
  *
  * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account related api calls.
  * @param {string} id - Identifier of the account for which followers are to be retrieved.
- * @param {DAO} db - An instance of the DAO to perform database operations.
  *
  * @returns {Promise<object|null>} Object mapping follower IDs to their account info, or null if no data is available.
  */
-async function accountFollowersService(api, id, db) {
-    // First, attempt to get followers from the database
-    const followers = await db.getFollowers(id);
-    if (followers) {
-        console.log(`Getting followers from db`);
-        return followers;
+async function accountFollowersService(api, id) {
+    const followerInfoRaw = await api.getAccountFollowers(id);
+    if (!followerInfoRaw || !followerInfoRaw.data) {
+        return null;
     }
 
-    // If not in the database, fetch from the API
-    console.log(`Getting followers from API`);
-    const { data } = await api.getAccountFollowers(id);
-    if (!data) {
-        return null;
-    } else {
-        let response = {};
-        for (let i = 0; i < data.length; i++) {
-            const accountInfo = createAccountInfo(data[i]);
-            response[data[i].id] = accountInfo;
-            await db.addFollower(id, data[i].id, accountInfo); // Storing fetched data in the database
-        }
-        return response;
+    const data = followerInfoRaw.data;
+    let response = {};
+    for (let i = 0; i < data.length; i++) {
+        response[data[i].id] = createAccountInfo(data[i]);
     }
+    return response;
 }
 
 /**
@@ -54,31 +43,21 @@ async function accountFollowersService(api, id, db) {
  *
  * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account related api calls.
  * @param {string} id - Identifier of the account to check for followings.
- * @param {DAO} db - An instance of the DAO to perform database operations.
  *
  * @returns {Promise<object|null>} Object mapping following IDs to their account info, or null if no data is available.
  */
-async function accountFollowingService(api, id, db) {
-    // Attempt to get the followings from the database
-    const followings = await db.getFollowings(id);
-    if (followings) {
-        console.log(`Getting followings from db`);
-        return followings;
+async function accountFollowingService(api, id) {
+    const followingInfoRaw = await api.getAccountFollowing(id);
+    if (!followingInfoRaw || !followingInfoRaw.data) {
+        return null;
     }
 
-    // If not in the database, fetch from the API
-    const { data } = await api.getAccountFollowing(id);
-    if (!data) {
-        return null;
-    } else {
-        let response = {};
-        for (let i = 0; i < data.length; i++) {
-            const accountInfo = createAccountInfo(data[i]);
-            response[data[i].id] = accountInfo;
-            await db.addFollowing(id, data[i].id, accountInfo); // Storing fetched data in the database
-        }
-        return response;
+    const data = followingInfoRaw.data;
+    let response = {};
+    for (let i = 0; i < data.length; i++) {
+        response[data[i].id] = createAccountInfo(data[i]);
     }
+    return response;
 }
 
 /**
@@ -86,10 +65,9 @@ async function accountFollowingService(api, id, db) {
  *
  * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account related api calls.
  * @param {string} mainId - Identifier of the account to check for followings.
- * @param {DAO} db - An instance of the DAO to perform database operations.
- * @param {integer} maxNodes - Max number of nodes to return.
+ * @param {number} maxNodes - Max number of nodes to return.
  * @param {string} nodeRank - Node parameter to rank nodes based on. Options are: "followers", "posts", "random"
- * @param {integer} locality - Exponential decay of node rank based on distance from mainId. Higher values prioritize closer nodes.
+ * @param {number} locality - Exponential decay of node rank based on distance from mainId. Higher values prioritize closer nodes.
  *
  * @returns {Promise<array|null>} List of account info objects.
  *      The 'following' property contains the nodes in this list that the account follows. Null if no data is available.
@@ -97,7 +75,6 @@ async function accountFollowingService(api, id, db) {
 async function accountInitializeService(
     api,
     mainId,
-    db,
     maxNodes = 10,
     nodeRank = 'followers',
     locality = 2
@@ -106,10 +83,10 @@ async function accountInitializeService(
     try {
         mainNodeInfoRaw = await api.getAccountInfo(mainId);
     } catch (e) {
-        return new Array();
+        return [];
     }
     if (!mainNodeInfoRaw || !mainNodeInfoRaw['data']) {
-        return new Array();
+        return [];
     }
     const mainNodeInfo = createAccountInfo(mainNodeInfoRaw['data']);
 
@@ -126,22 +103,7 @@ async function accountInitializeService(
     const nodeHeap = new Heap(heapComparator);
     nodeHeap.init([accountInfoMap.get(mainId)]);
 
-    let rankFun; // Choose parameter to rank nodes by
-    if (nodeRank == 'followers') {
-        rankFun = (nodeInfo) => nodeInfo['followersCount'];
-    } else if (nodeRank == 'posts') {
-        rankFun = (nodeInfo) => nodeInfo['statusesCount'];
-    } else if (nodeRank == 'random') {
-        rankFun = (nodeInfo) => Math.random();
-    } else {
-        throw new RangeError(
-            'nodeRank must be one of: "followers", "posts", or "random".'
-        );
-    }
-
-    // Calculate node priority based on rank and locality
-    const calcPriority = (nodeInfo) =>
-        rankFun(nodeInfo) / locality ** nodeInfo['depth'];
+    const calcPriority = getPriorityFunction(nodeRank, locality);
 
     while (!nodeHeap.isEmpty() && accountInfoMap.size < maxNodes) {
         console.log(`Node ${accountInfoMap.size} of ${maxNodes}`);
@@ -152,12 +114,12 @@ async function accountInitializeService(
         try {
             curFollowing = new Map(
                 Object.entries(
-                    await accountFollowingService(api, curNodeInfo['id'], db)
+                    await accountFollowingService(api, curNodeInfo['id'])
                 )
             );
             curFollowers = new Map(
                 Object.entries(
-                    await accountFollowersService(api, curNodeInfo['id'], db)
+                    await accountFollowersService(api, curNodeInfo['id'])
                 )
             );
         } catch (e) {
@@ -217,12 +179,30 @@ async function accountInitializeService(
         }
     }
 
-    const accountInfoList = Array.from(accountInfoMap.values());
-    return accountInfoList;
+    return Array.from(accountInfoMap.values());
+}
+
+function getPriorityFunction(nodeRank, locality) {
+    let rankFun; // Choose parameter to rank nodes by
+    if (nodeRank === 'followers') {
+        rankFun = (nodeInfo) => nodeInfo['followersCount'];
+    } else if (nodeRank === 'posts') {
+        rankFun = (nodeInfo) => nodeInfo['statusesCount'];
+    } else if (nodeRank === 'random') {
+        rankFun = () => Math.random();
+    } else {
+        throw new RangeError(
+            'nodeRank must be one of: "followers", "posts", or "random".'
+        );
+    }
+
+    // Calculate node priority based on rank and locality
+    return (nodeInfo) => rankFun(nodeInfo) / locality ** nodeInfo['depth'];
 }
 
 export {
     accountFollowersService,
     accountFollowingService,
     accountInitializeService,
+    getPriorityFunction,
 };

@@ -1,13 +1,6 @@
 import { accountInitializeService } from '../../service/initialize/initialize-service.js';
 import FediverseAPIFactory from '../../fediverse/fediverse-api-factory.js';
 
-import GUN from 'gun';
-import DAO from '../../db/dao.js';
-import GunDBAdaptor from '../../db/gun/gun-db-adapator.js';
-
-// Create database and API instances
-const db = new DAO(new GunDBAdaptor(GUN()));
-
 /**
  * Asynchronous route handler for retrieving initialization data of a user account in the Fediverse network.
  * It parses the account URL from the query parameters, validates it, and then uses the Fediverse API to get
@@ -34,7 +27,6 @@ export default async function accountInitializeHandler(req, res) {
         const accountInfoList = await accountInitializeService(
             api,
             mainId,
-            db,
             req.query['maxNodes'],
             req.query['nodeRank'],
             req.query['locality']
