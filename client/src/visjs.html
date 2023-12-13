@@ -37,38 +37,50 @@
     </head>
     <body>
         <div id="mainContainer">
-            <h2 class="main-heading">Social media visualizer</h2>
-            <div class="input-container">
-                <input
-                    type="number"
-                    id="idInput"
-                    placeholder="Enter ID of the mastodon user"
-                />
-                <input
-                    type="number"
-                    id="maxNodesInput"
-                    placeholder="Max Nodes (10-500)"
-                    min="10"
-                    max="500"
-                    value="10"
-                />
-                <input
-                    type="number"
-                    id="localityInput"
-                    placeholder="Locality (1-10)"
-                    min="1"
-                    max="10"
-                    value="2"
-                />
-                <select id="rankingOptions" class="ranking-options">
-                    <option value="followers">Rank by Followers</option>
-                    <option value="posts">Rank by Posts</option>
-                    <option value="random">Surprise Me</option>
-                </select>
-                <input type="button" id="enterButton" value="Enter" />
-                <button id="importExportButton" class="import-button">
-                    Import/Export Graph
+            <div class="heading-container">
+                <h2 class="main-heading">Social media visualizer</h2>
+                <button id="instructionsButton" class="instructions-button" onclick="showInstructions()">
+                    Instructions
                 </button>
+            </div>
+            <div class="fields-container">
+                <div class="input-container">
+                    <input
+                        type="number"
+                        id="idInput"
+                        placeholder="Enter ID of the mastodon user"
+                    />
+                    <input
+                        type="number"
+                        id="maxNodesInput"
+                        placeholder="Max Nodes (10-500)"
+                        min="10"
+                        max="500"
+                        value="10"
+                    />
+                    <input
+                        type="number"
+                        id="localityInput"
+                        placeholder="Locality (1-10)"
+                        min="1"
+                        max="10"
+                        value="2"
+                    />
+                    <select id="rankingOptions" class="ranking-options">
+                        <option value="followers">Rank by Followers</option>
+                        <option value="posts">Rank by Posts</option>
+                        <option value="random">Surprise Me</option>
+                    </select>
+                    <input type="button" id="enterButton" value="Enter" />
+                </div>
+                <div>
+                    <button id="importExportButton" class="import-button">
+                        Import/Export Graph
+                    </button>
+                </div>
+            </div>
+            
+                
             </div>
             <div class="graph-settings">
                 <div class="dropdown">
@@ -165,6 +177,23 @@
                     <button id="exportButton" class="import-button">
                         Export Graph
                     </button>
+                </div>
+            </div>
+
+            <!-- The Modal -->
+            <div id="instructionsModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Instructions</h2>
+                    <p>
+                        Network Visualization Tool: Customize Your View
+                        <li>Metric Selection: Choose between 'Number of followers' and 'Recent Activity' from the dropdown to size and color nodes.</li>
+                        <li>Limit Nodes: Set a maximum number of nodes to display for a clearer view. </li>
+                        <li>Locality Filter: Enter a 'locality' criterion to focus on the most popular/active users in your local network. </li>
+                        <li>Dynamic Visualization: The graph updates automatically to reflect your choices. </li>
+                        Explore, analyze, and understand your network with ease! 
+                    </p>
                 </div>
             </div>
         </div>

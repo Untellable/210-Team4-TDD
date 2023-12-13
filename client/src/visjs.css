@@ -1,6 +1,8 @@
 body {
-    font: 10pt arial;
     height: 95vh;
+    background-color: #282c37;
+    font-family: 'Roboto', Arial;
+    color: white;
 }
 
 #idInput {
@@ -25,7 +27,7 @@ body {
 #enterButton {
     padding: 10px 15px;
     font-size: 16px;
-    background-color: #4caf50;
+    background-color: #6364ff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -47,7 +49,6 @@ body {
 #mainContainer {
     display: flex;
     margin-left: 5px;
-    height: 100%;
     width: 100%;
     flex-direction: column;
 }
@@ -133,7 +134,6 @@ body {
     margin: 5px;
     border: none;
     border-radius: 5px;
-    background-color: #34495e;
     color: white;
 }
 
@@ -188,7 +188,7 @@ body {
     /* Aligning the button to the right */
     padding: 10px 15px;
     font-size: 16px;
-    background-color: #4caf50;
+    background-color: #6364ff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -211,11 +211,12 @@ body {
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
 }
 
 /* The Close Button */
@@ -231,4 +232,30 @@ body {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.instructions-button {
+    /* Aligning the button to the right */
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #6364ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.heading-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fields-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
