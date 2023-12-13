@@ -47,8 +47,7 @@ body {
 .input-container {
     display: flex;
     flex-direction: row;
-    /* align-items: left; */
-    justify-content: center;
+    justify-content: left;
 }
 
 .spinner-container {
@@ -82,7 +81,7 @@ body {
 
 .main-heading {
     display: flex;
-    justify-content: center;
+    justify-content: left;
 }
 
 @keyframes spin {
@@ -99,8 +98,8 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin: 10px;
-    padding: 10px;
+    margin: 5px;
+    padding: 5px;
     border: 1px solid lightgray;
     border-radius: 5px;
     background-color: #59a2eb;

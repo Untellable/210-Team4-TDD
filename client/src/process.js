@@ -1,5 +1,4 @@
 /*global document,alert,vis*/
-// eslint-disable-next-line no-unused-vars
 import {
     stylingType,
     metricType,
@@ -36,8 +35,7 @@ export function updateID() {
         return;
     }
 
-    // let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`;
-    let apiURL = `example_response.json`;
+    let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`;
 
     // Need to write a common http request function with error handling
     fetch(apiURL)
