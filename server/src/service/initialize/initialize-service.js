@@ -93,10 +93,10 @@ async function accountInitializeService(
     try {
         mainNodeInfoRaw = await api.getAccountInfo(mainId);
     } catch (e) {
-        return { accountInfoMap: {} }; // TODO Specifically catch axios errors somewhere else and case on return being null here
+        return new Array(); // TODO Specifically catch axios errors somewhere else and case on return being null here
     } // TODO: how to handle slow axios responses giving errors? Auto retry in api?
-    if (!mainNodeInfoRaw) {
-        return { accountInfoMap: {} };
+    if (!mainNodeInfoRaw || !mainNodeInfoRaw['data']) {
+        return new Array();
     }
     const mainNodeInfo = createAccountInfo(mainNodeInfoRaw['data']);
 
@@ -187,7 +187,9 @@ async function accountInitializeService(
         // convert to array for json conversion
         nodeInfo['following'] = Array.from(nodeInfo['following']);
     }
-    return accountInfoMap;
+
+    const accountInfoList = Array.from(accountInfoMap.values());
+    return accountInfoList;
 }
 
 export {

@@ -32,7 +32,7 @@ export default async function accountInitializeHandler(req, res) {
     try {
         // Server is unknown given the id, create an adapter with default server
         const api = FediverseAPIFactory.createAdapter();
-        const accountInfoMap = await accountInitializeService(
+        const accountInfoList = await accountInitializeService(
             api,
             mainId,
             db,
@@ -41,8 +41,8 @@ export default async function accountInitializeHandler(req, res) {
             locality
         );
 
-        if (accountInfoMap.size > 0) {
-            res.status(200).json(Object.fromEntries(accountInfoMap));
+        if (accountInfoList.length > 0) {
+            res.status(200).json(accountInfoList);
         } else {
             res.status(404).json({
                 error: `Record not found for id: ${mainId}`,
