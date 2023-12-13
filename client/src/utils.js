@@ -30,7 +30,6 @@ export function verifyMaxNodes(maxNodes) {
     return true;
 }
 
-
 /**
  * Function to validate the locality entered in the input box
  * @param {Number} locality locality entered in the input box

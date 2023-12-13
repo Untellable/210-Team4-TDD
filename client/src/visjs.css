@@ -21,7 +21,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-right: 10px;
-    width: 250px; 
+    width: 250px;
 }
 
 #enterButton {
@@ -61,7 +61,7 @@ body {
     justify-content: left;
 }
 
-.ranking-options{
+.ranking-options {
     padding: 10px;
     margin: 10px;
     border: 1px solid #ccc;

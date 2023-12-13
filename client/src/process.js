@@ -56,7 +56,7 @@ export function updateID() {
     let queryParams = new URLSearchParams({
         maxNodes: maxNodes,
         locality: locality,
-        nodeRank: nodeRank
+        nodeRank: nodeRank,
     });
 
     let apiURLWithParams = `${apiURL}?${queryParams}`;
