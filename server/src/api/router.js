@@ -6,15 +6,15 @@ const router = express.Router();
 
 /**
  *  @swagger
- *  /api/v1/account/{id}/initialize:
+ *  /api/v1/account/{mainId}/initialize:
  *      get:
  *        description: Get all necessary account data for a specified account.
  *        parameters:
  *          - in: path
- *            name: id
+ *            name: mainId
  *            required: true
  *            type: string
- *            description: The unique identifier of the account.
+ *            description: The unique identifier of the main node account.
  *            example: "109252111498807689"
  *          - in: query
  *            name: maxNodes
@@ -79,7 +79,7 @@ const router = express.Router();
  *                        description: Priority assigned to this account based on ranking parameter, locality, and depth.
  *                  description: A list containing information for each account.
  */
-router.get('/account/:id/initialize?', accountInitializeHandler);
+router.get('/account/:mainId/initialize?', accountInitializeHandler);
 
 /**
  *  @swagger
