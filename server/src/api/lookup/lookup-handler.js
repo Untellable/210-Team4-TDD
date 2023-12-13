@@ -28,7 +28,7 @@ export default async function accountLookupHandler(req, res) {
 
     const { username, server } = account;
     try {
-        const api = FediverseAPIFactory.createAdapter();
+        const api = FediverseAPIFactory.createAdapter(server);
         const accountInfo = await accountLookupService(api, acct);
         if (accountInfo) {
             res.json(accountInfo);
