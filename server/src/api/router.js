@@ -8,7 +8,7 @@ const router = express.Router();
  *  @swagger
  *  /api/v1/account/{mainId}/initialize:
  *      get:
- *        description: Get all necessary account data for a specified account.
+ *        description: Get a list of node information and connections around the given main node.
  *        parameters:
  *          - in: path
  *            name: mainId
