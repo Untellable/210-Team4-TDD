@@ -206,14 +206,15 @@ async function accountInitializeService(
     // Update node follower info to only contain nodes in accountInfoMap
     const selectedNodes = new Set(accountInfoMap.keys());
     for (const nodeInfo of accountInfoMap.values()) {
-        nodeInfo['following'].forEach((nodeId) => {
-            if (!selectedNodes.has(nodeId)) {
-                nodeInfo['following'].delete(nodeId);
-            }
-        });
-
-        // convert to array for json conversion
-        nodeInfo['following'] = Array.from(nodeInfo['following']);
+        if (nodeInfo['following']) {
+            nodeInfo['following']?.forEach((nodeId) => {
+                if (!selectedNodes.has(nodeId)) {
+                    nodeInfo['following'].delete(nodeId);
+                }
+            });
+            // convert to array for json conversion
+            nodeInfo['following'] = Array.from(nodeInfo['following']);
+        }
     }
 
     const accountInfoList = Array.from(accountInfoMap.values());

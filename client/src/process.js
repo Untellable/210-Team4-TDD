@@ -139,7 +139,7 @@ export function processData(json, mainID) {
     // Add edges
 
     json.forEach((node) => {
-        node.following.forEach((followingID) => {
+        node.following?.forEach((followingID) => {
             edges.push({
                 from: node.id,
                 to: followingID,
