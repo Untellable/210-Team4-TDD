@@ -16,29 +16,35 @@ body {
     text-align: left;
 }
 
+.title {
+    font-size: 25px;
+}
 
 .subtitle {
-    color: rgb(200, 200, 200);
-    font-size: 20px;
-    margin: 0 0 20px 0;
+    color: #d9e1e8;
+    font-size: 18px;
+    margin: 0 0 40px 0;
 }
 
 /* Input Fields */
+.fields-group {
+    margin: 15px 0 0 0;
+}
+
 .input-label {
     color: white;
-    font-size: 20px;
-    margin: 0 0 10px 0;
+    font-size: 18px;
 }
 
 .input-box {
     background-color: rgb(19, 20, 25);
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     border: 1px solid black;
     border-radius: 5px;
     outline: none;
     transition: border-color 0.2s;
-    margin: 5px 0 20px 0;
+    margin: 10px 0 10px 0;
     padding: 10px 15px;
     width: 100%;
     box-sizing: border-box;
@@ -72,14 +78,14 @@ body {
     cursor: pointer;
     background-color: rgb(99, 100, 255);
     color: white;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 500;
     border: none;
     border-radius: 5px;
     width: 100%;
     display: flex;
     justify-content: center;
-    margin: 30px 0 5px 0;
+    margin: 40px 0 30px 0;
     padding: 10px 0;
 }
 
@@ -90,30 +96,23 @@ body {
 /* Expandable Container */
 .expandable-container {
     width: 100%;
-    border-bottom: 2px solid rgba(99, 100, 255, 0.5);
-}
-
-#expandable-container-1 {
-    border-top: 2px solid rgba(99, 100, 255, 0.5);
+    margin: 5px 0 0 0;
 }
 
 .expandable-trigger {
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     border: none;
-    background: rgba(40, 44, 55);
-    color: white;
-    font-size: 18px;
+    background-color: rgb(40, 44, 55);
+    color: #9baec8;
+    font-size: 15px;
     margin: 0;
     width: 100%;
 }
 
-.expandable-trigger-arrow {
-    color: rgb(99, 100, 255);
-    font-size: 30px;
-    transition: transform 0.1s ease;
+.expandable-trigger:hover {
+    text-decoration: underline;
 }
 
 .expandable-content {
@@ -123,33 +122,20 @@ body {
     padding-bottom: 10px;
 }
 
-.expandable-trigger.active .expandable-trigger-arrow {
-    transform: rotate(-180deg);
-}
-
 .expandable-trigger.active + .expandable-content {
     max-height: 100%;
 }
 
 .expandable-content li {
+    font-size: 15px;
     list-style: none;
-    color: rgb(200, 200, 200);
+    color: #d9e1e8;
     margin: 10px 0 0 7px;
 }
 
-.expandable-content li a {
-    color: rgb(155, 174, 200);
-    text-decoration: none;
-}
-
-.expandable-content li a:hover {
-    text-decoration: underline;
-}
-
 .address {
-    font-weight: 550;
+    font-weight: 600;
     font-style: italic;
-    color: white;
 }
 
 .instruction-image {
@@ -233,7 +219,7 @@ body {
 }
 
 #display-account {
-    color: rgb(200, 200, 200);
+    color: #d9e1e8;
 }
 
 .account-followers {
@@ -303,6 +289,10 @@ body {
     font-size: 15px;
     color: #9baec8;
     text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
 }
 
 .links-group {
