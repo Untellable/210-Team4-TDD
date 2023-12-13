@@ -1,4 +1,4 @@
-/*global document,alert,vis,sessionStorage*/
+/*global document,alert,vis,sessionStorage,FileReader*/
 import {
     stylingType,
     metricType,
