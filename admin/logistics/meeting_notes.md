@@ -597,3 +597,122 @@ Omkar and Devam showcased a frontend UI page that lets you select the following 
 
 #### Ranking Algorithm Task
 Ben and Zheyu discussed the ranking algorithm. Ben had a rough outline of what needed to be done, but the key question/difficulty was optimization. At the very least, it doesn't need to significantly slow down other things. 
+
+---
+
+## Standup Meeting on December 9th, 2023
+
+### Participants
+- Hao
+- Ben
+- Keran
+- Yunlong
+- Suhas
+- Omkar
+- Devam
+- Zheyu
+
+### Agenda
+1. **Node Ranking Algorithm**
+2. **UI Cohesion across different pages**
+
+### Meeting Details
+
+#### Node Ranking Algorithm
+Ben, Suhas, Zheyu and Devam discussed the node ranking algorithm and divvied up the tasks for this. Suhas and Devam were mainly focusing on the front-end, while Ben and Zheyu were looking at the back-end.
+
+#### UI Cohesion across different pages
+Yunlong and Omkar had created two UI pages, namely, the login page and the visualisation page independently from each other. As a result, there was some discrepancy in both pages. They discussed the color schemas and CSS used so we could have a cohesive and uniform UI. 
+
+--- 
+
+## Standup Meeting on December 10th, 2023
+
+### Participants
+- Hao
+- Ben
+- Keran
+- Yunlong
+- Suhas
+- Omkar
+- Devam
+- Zheyu
+
+### Agenda
+1. **Node Ranking Algorithm - JS and Unit Tests**
+2. **Update on Login UI page**
+3. **Changes to Node Colors and Sizes**
+
+### Meeting Details
+
+#### Node Ranking Algorithm - JS and Unit Tests
+Ben and Zheyu gave an overview of the pseudocode of the final version of the node ranking algorithm. The next steps were discussed - writing it out in JavaScript and adding unit tests. 
+
+#### Update on Login UI page
+The login page now confirms whether the account a user is trying to log into is correct using a profile photo, ID and number of followers associated with the Login ID. 
+
+#### Changes to Node Colors and Sizes
+We talked about giving users the option to change the color and size of the nodes. Suhas said that he will be able to take over this task. 
+
+--- 
+
+## Standup Meeting on December 11th, 2023
+
+### Participants
+- Hao
+- Ben
+- Keran
+- Yunlong
+- Suhas
+- Omkar
+- Devam
+- Zheyu
+
+### Agenda
+1. **Updates to Viz Page**
+2. **Updates to Login Page**
+3. **Node Ranking Algorithm Frontend**
+
+### Meeting Details
+
+#### Updates to Viz Page
+Suhas made changes to the front-end through which the nodes can be colored either by follower count or by recent activity. He also included a legend in the bottom left corner through which an end user can see what each color signifies. Moreover, we talked about including a pop up which serves as a guide to a user for the tool. 
+
+#### Updates to Login Page
+Yunlong pushed some code so that the User ID used to login can be stored in the database and then passed on to the visualisation page. 
+
+#### Node Ranking Algorithm Frontend
+Devam altered Suhas' front-end page such that they have the required input fields. Ben made changes to the Swagger documentation for the initialize API. 
+
+---
+
+## Standup Meeting on December 12th, 2023
+
+### Participants
+- Hao
+- Ben
+- Keran
+- Yunlong
+- Suhas
+- Omkar
+- Devam
+- Zheyu
+
+### Agenda
+1. **Synchronising the tasks**
+2. **Front-End for the Node Ranking Algorithm**
+3. **Unit Tests/Documentation for PR**
+
+### Meeting Details
+
+#### Synchronising the tasks
+Hao raised a PR which was approved by other team members. This PR included an admin folder, which included logistical data, meeting notes, documentation, and most importantly, memes. 
+
+#### Front-End for the Node Ranking Algorithm
+Devam made some changes to the front-end which allows a user to input the following things: 
+1. Maximum nodes to visualise
+2. Locality (Distance from centre node)
+3. Rank by followers, by post counts, or randomly. 
+
+#### Unit Tests/Documentation for PR
+Ben worked on unit tests/documentation and notes for the /initialize branch. He plans to raise a PR by EoD. 
