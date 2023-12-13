@@ -79,7 +79,7 @@ const router = express.Router();
  *                        description: Priority assigned to this account based on ranking parameter, locality, and depth.
  *                  description: A list containing information for each account.
  */
-router.get('/account/:mainId/initialize?', accountInitializeHandler);
+router.get('/account/:mainId/initialize', accountInitializeHandler);
 
 /**
  *  @swagger
