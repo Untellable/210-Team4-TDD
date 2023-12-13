@@ -12,7 +12,7 @@
                 handleNodeSizeSelection,
                 handleNodeColorSelection,
                 exportGraph,
-                importGraph
+                importGraph,
             } from './process.js';
             document
                 .getElementById('enterButton')
@@ -33,7 +33,6 @@
             document
                 .getElementById('importButton')
                 .addEventListener('click', importGraph);
-            
         </script>
     </head>
     <body>
@@ -67,7 +66,9 @@
                     <option value="random">Surprise Me</option>
                 </select>
                 <input type="button" id="enterButton" value="Enter" />
-                <button id="importExportButton" class="import-button">Import/Export Graph</button>
+                <button id="importExportButton" class="import-button">
+                    Import/Export Graph
+                </button>
             </div>
             <div class="graph-settings">
                 <div class="dropdown">
@@ -158,24 +159,30 @@
 
             <!-- The Modal -->
             <div id="importModal" class="modal">
-
                 <!-- Modal content -->
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <h2>Import/Export Graph</h2>
                     <p>
-                        Easily import and export your graph data to share with others.
-                    </br>
-                        1. To import a graph, click on the "Choose File" button and select the file you want to import.
-                    </br>
-                        2. To export a graph, click on the "Export Graph" button. This will download a JSON file containing the graph data.
-                    </br>
+                        Easily import and export your graph data to share with
+                        others.
+                        <br />
+                        1. To import a graph, click on the "Choose File" button
+                        and select the file you want to import.
+                        <br />
+                        2. To export a graph, click on the "Export Graph"
+                        button. This will download a JSON file containing the
+                        graph data.
+                        <br />
                     </p>
-                    <input type="file" id="chooseFile" class="import-button" ></input>
-                    <button id="importButton" class="import-button">Import Graph</button>
-                    <button id="exportButton" class="import-button">Export Graph</button>
+                    <input type="file" id="chooseFile" class="import-button" />
+                    <button id="importButton" class="import-button">
+                        Import Graph
+                    </button>
+                    <button id="exportButton" class="import-button">
+                        Export Graph
+                    </button>
                 </div>
-            
             </div>
         </div>
     </body>
