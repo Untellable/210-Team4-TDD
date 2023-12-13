@@ -60,6 +60,7 @@ export function generateTitle(node) {
             <div class="popup-title-text">${node.displayName}</div>
             <div>Followers: ${node.followersCount}</div>
             <div>Following: ${node.followingCount}</div>
+            <div>Status count: ${node.statusesCount}</div>
             <div>Username: ${node.username}</div>
         </div>
     `;

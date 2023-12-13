@@ -16,10 +16,13 @@ import {
 } from './ui.js';
 import { verifyUserID, verifyLocality, verifyMaxNodes } from './utils.js';
 import './modal.js';
+import { hideModal } from './modal.js';
 
 let nodes = []; // array of nodes
 let edges = [];
 let responseJson; // Stores the response from the API
+
+var legendHeading = document.getElementById('legendHeading');
 
 /**
  * Function is called when the user clicks on the "Update" button
@@ -106,6 +109,8 @@ export function processData(json, mainID) {
             value: 20, // size of the node in the graph
             label: main_node.displayName,
             followersCount: main_node.followersCount,
+            followingCount: main_node.followingCount,
+            statusesCount: main_node.statusesCount,
             title: generateTitle(main_node),
         });
         nodesCreated.add(main_node.id);
@@ -123,6 +128,7 @@ export function processData(json, mainID) {
                 label: node.displayName,
                 followersCount: node.followersCount,
                 followingCount: node.followingCount,
+                statusesCount: node.statusesCount,
                 title: generateTitle(node),
             });
             console.log('Added node', node.displayName);
@@ -146,7 +152,14 @@ export function processData(json, mainID) {
     return [nodes, edges];
 }
 
+/**
+ * Applies styling to the nodes based on the number of followers
+ * @param {*} nodes
+ * @param {*} type
+ * @returns
+ */
 export function applyFollowerMetric(nodes, type) {
+    legendHeading.innerHTML = 'Number of followers';
     if (type == stylingType.SIZE) {
         nodes.forEach((node) => {
             if (node.followersCount == 0) {
@@ -180,14 +193,12 @@ export function applyFollowerMetric(nodes, type) {
 
     return nodes;
 }
-
 /**
- *
+ * Default styling for nodes
  * @param {*} nodes
  * @param {*} type
  * @returns
  */
-
 export function applyNoneMetric(nodes, type) {
     if (type == stylingType.SIZE) {
         nodes.forEach((node) => {
@@ -199,6 +210,48 @@ export function applyNoneMetric(nodes, type) {
         });
         hideLegend();
     }
+    return nodes;
+}
+
+/**
+ * Applies styling to the nodes based on the number of posts
+ * @param {*} nodes
+ * @param {*} type
+ * @returns
+ */
+export function applyActivityMetric(nodes, type) {
+    legendHeading.innerHTML = 'Number of posts';
+    if (type == stylingType.SIZE) {
+        nodes.forEach((node) => {
+            if (node.statusesCount == 0) {
+                node.value = 1;
+            } else {
+                node.value = parseInt(1 + Math.log(node.statusesCount) * 10);
+            }
+            console.log('Node value', node.statusesCount, node.value);
+        });
+    } else if (type == stylingType.COLOR) {
+        nodes.forEach((node) => {
+            if (node.statusesCount < 100) {
+                node.color = '#ff0000';
+            } else if (node.statusesCount < 1000) {
+                node.color = '#ff6600';
+            } else if (node.statusesCount < 10000) {
+                node.color = '#ffcc00';
+            } else if (node.statusesCount < 100000) {
+                node.color = '#99ff00';
+            } else if (node.statusesCount < 1000000) {
+                node.color = '#00ff00';
+            } else {
+                node.color = '#00ff99';
+            }
+        });
+    }
+
+    if (type == stylingType.COLOR) {
+        displayLegend();
+    }
+
     return nodes;
 }
 
@@ -216,7 +269,7 @@ export function applyNodeStyling(nodes, type, metric) {
     if (metric == metricType.FOLLOWERS) {
         nodes = applyFollowerMetric(nodes, type);
     } else if (metric == metricType.ACTIVITY) {
-        //Relevant code to be added here
+        nodes = applyActivityMetric(nodes, type);
     } else if (metric == metricType.NONE) {
         nodes = applyNoneMetric(nodes, type);
     }
@@ -391,5 +444,6 @@ export function importGraph() {
         // ...call the `processData` function and pass the result
         const [nodes, edges] = processData(JSON.parse(reader.result));
         drawFromResponse(nodes, edges);
+        hideModal();
     };
 }
