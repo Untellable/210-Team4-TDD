@@ -100,14 +100,13 @@ describe('GunDBAdaptor', () => {
             gunDbAdaptor.addFollower(userId, followerId, followerData);
 
             expect(mockGun.get).toHaveBeenCalledWith('users');
-            expect(mockGun.get().get).toHaveBeenCalledWith(followerId);
-            expect(mockGun.get().get().put).toHaveBeenCalledWith(followerData);
+            expect(mockGun.get().get).toHaveBeenCalledWith(userId);
             expect(mockGun.get().get().get).toHaveBeenCalledWith('followers');
             expect(mockGun.get().get().get().get).toHaveBeenCalledWith(
                 followerId
             );
-            expect(mockGun.get().get().get().get().set).toHaveBeenCalledWith(
-                mockGun.get().get().put()
+            expect(mockGun.get().get().get().get().put).toHaveBeenCalledWith(
+                followerData
             );
         });
     });

@@ -133,7 +133,6 @@ export default class GunDBAdaptor extends BaseDBAdaptor {
                     { wait: 0 }
                 );
 
-
             const checkCompletion = setInterval(() => {
                 if (Object.keys(response).length === 0) {
                     clearInterval(checkCompletion);
