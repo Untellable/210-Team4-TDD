@@ -34,6 +34,27 @@
                     id="idInput"
                     placeholder="Enter ID of the mastodon user"
                 />
+                <input
+                    type="number"
+                    id="maxNodesInput"
+                    placeholder="Max Nodes (10-500)"
+                    min="10"
+                    max="500"
+                    value="10"
+                />
+                <input
+                    type="number"
+                    id="localityInput"
+                    placeholder="Locality (1-10)"
+                    min="1"
+                    max="10"
+                    value="2"
+                />
+                <select id="rankingOptions">
+                    <option value="followers">Rank by Followers</option>
+                    <option value="posts">Rank by Posts</option>
+                    <option value="random">Surprise Me</option>
+                </select>
                 <input type="button" id="enterButton" value="Enter" />
             </div>
             <div class="graph-settings">

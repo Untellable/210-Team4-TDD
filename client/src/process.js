@@ -14,7 +14,7 @@ import {
     displayLegend,
     generateTitle,
 } from './ui.js';
-import { verifyUserID } from './utils.js';
+import { verifyUserID, verifyLocality, verifyMaxNodes } from './utils.js';
 
 let nodes = []; // array of nodes
 let edges = [];
@@ -29,6 +29,9 @@ export function updateID() {
     showSpinner();
 
     let userID = document.getElementById('idInput').value;
+    let maxNodes = document.getElementById('maxNodesInput').value;
+    let locality = document.getElementById('localityInput').value;
+    let nodeRank = document.getElementById('rankingOptions').value;
 
     if (!verifyUserID(userID)) {
         alert('Please enter a valid number.');
@@ -36,10 +39,30 @@ export function updateID() {
         return;
     }
 
+    if (!verifyMaxNodes(maxNodes)) {
+        alert('Please enter a number between 1 and 500 for number of nodes.');
+        hideSpinner();
+        return;
+    }
+
+    if (!verifyLocality(locality)) {
+        alert('Please enter a number between 1 and 10 for locality.');
+        hideSpinner();
+        return;
+    }
+
     let apiURL = `${baseURL}/api/v1/account/${userID}/initialize`;
 
+    let queryParams = new URLSearchParams({
+        maxNodes: maxNodes,
+        locality: locality,
+        nodeRank: nodeRank
+    });
+
+    let apiURLWithParams = `${apiURL}?${queryParams}`;
+
     // Need to write a common http request function with error handling
-    fetch(apiURL)
+    fetch(apiURLWithParams)
         .then((response) => response.json())
         .then((json) => {
             console.log(json);
