@@ -27,12 +27,12 @@ describe('accountFollowingService', () => {
             account1: {
                 id: 'account1',
                 username: 'user1',
-                display_name: 'User One',
+                displayName: 'User One',
             },
             account2: {
                 id: 'account2',
                 username: 'user2',
-                display_name: 'User Two',
+                displayName: 'User Two',
             },
         };
 
@@ -76,12 +76,12 @@ describe('accountFollowingService', () => {
             account1: {
                 id: 'account1',
                 username: 'user1',
-                display_name: 'User One',
+                displayName: 'User One',
             },
             account2: {
                 id: 'account2',
                 username: 'user2',
-                display_name: 'User Two',
+                displayName: 'User Two',
             },
         });
     });
@@ -108,12 +108,12 @@ describe('accountFollowersService', () => {
             account1: {
                 id: 'account1',
                 username: 'user1',
-                display_name: 'User One',
+                displayName: 'User One',
             },
             account2: {
                 id: 'account2',
                 username: 'user2',
-                display_name: 'User Two',
+                displayName: 'User Two',
             },
         };
 
@@ -157,12 +157,12 @@ describe('accountFollowersService', () => {
             account1: {
                 id: 'account1',
                 username: 'user1',
-                display_name: 'User One',
+                displayName: 'User One',
             },
             account2: {
                 id: 'account2',
                 username: 'user2',
-                display_name: 'User Two',
+                displayName: 'User Two',
             },
         });
     });

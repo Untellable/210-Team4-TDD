@@ -6,57 +6,80 @@ const router = express.Router();
 
 /**
  *  @swagger
- *  /api/v1/account/{id}/initialize:
+ *  /api/v1/account/{mainId}/initialize:
  *      get:
- *        description: Get all necessary account data for a specified account.
+ *        description: Get a list of node information and connections around the given main node.
  *        parameters:
  *          - in: path
- *            name: id
+ *            name: mainId
  *            required: true
  *            type: string
- *            description: The unique identifier of the account.
+ *            description: The unique identifier of the main node account.
  *            example: "109252111498807689"
+ *          - in: query
+ *            name: maxNodes
+ *            required: false
+ *            type: integer
+ *            description: Max number of account nodes to return.
+ *            example: 10
+ *          - in: query
+ *            name: nodeRank
+ *            required: false
+ *            type: string
+ *            description: Account parameter to rank based on. Only nodes with a high rank will be selected.
+ *            example: "followers"
+ *            enum:
+ *              - followers
+ *              - posts
+ *              - random
+ *          - in: query
+ *            name: locality
+ *            required: false
+ *            type: integer
+ *            description: Strength of preference for nodes closer to the main node. Node priority = nodeRank value / locality^depth.
+ *            example: 2
  *        responses:
  *          200:
  *            description: A successful response containing account data.
  *            content:
  *              application/json:
  *                schema:
- *                  type: object
- *                  properties:
- *                    relations:
- *                      type: object
- *                      additionalProperties:
+ *                  type: array
+ *                  items:
+ *                    type: object
+ *                    properties:
+ *                      id:
+ *                        type: string
+ *                        description: Unique identifier of the account.
+ *                      username:
+ *                        type: string
+ *                        description: Username of the account.
+ *                      displayName:
+ *                        type: string
+ *                        description: Display name of the account.
+ *                      followingCount:
+ *                        type: integer
+ *                        description: Number of accounts this account is following.
+ *                      followersCount:
+ *                        type: integer
+ *                        description: Number of followers this account has.
+ *                      statusesCount:
+ *                        type: integer
+ *                        description: Number of statuses posted by this account.
+ *                      following:
  *                        type: array
  *                        items:
  *                          type: string
- *                      description: A map of account relationships, showing connections between various accounts.
- *                    accountInfoList:
- *                      type: array
- *                      items:
- *                        type: object
- *                        properties:
- *                          id:
- *                            type: string
- *                            description: Unique identifier of the account.
- *                          username:
- *                            type: string
- *                            description: Username of the account.
- *                          display_name:
- *                            type: string
- *                            description: Display name of the account.
- *                          following_count:
- *                            type: integer
- *                            description: Number of accounts this account is following.
- *                          followers_count:
- *                            type: integer
- *                            description: Number of followers this account has.
- *                          statuses_count:
- *                            type: integer
- *                            description: Number of statuses posted by this account.
- *                      description: A list containing information for each account.
+ *                        description: List of accounts in this list which this account follows.
+ *                      depth:
+ *                        type: integer
+ *                        description: Estimated minimum path distance from the id account.
+ *                      priority:
+ *                        type: float
+ *                        description: Priority assigned to this account based on ranking parameter, locality, and depth.
+ *                  description: A list containing information for each account.
  */
-router.get('/account/:id/initialize', accountInitializeHandler);
+router.get('/account/:mainId/initialize', accountInitializeHandler);
 
 /**
  *  @swagger
