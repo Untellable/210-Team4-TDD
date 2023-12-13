@@ -205,7 +205,7 @@ async function accountInitializeService(
 
     // Update node follower info to only contain nodes in accountInfoMap
     const selectedNodes = new Set(accountInfoMap.keys());
-    for (const [nodeId, nodeInfo] of accountInfoMap) {
+    for (const nodeInfo of accountInfoMap.values()) {
         const removeUnusedFollower = (nodeId) =>
             !selectedNodes.has(nodeId)
                 ? nodeInfo['following'].delete(nodeId)
