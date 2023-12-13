@@ -86,8 +86,8 @@ async function accountInitializeService(
     mainId,
     db,
     maxNodes = 10,
-    locality = 2,
-    nodeRank = 'followers'
+    nodeRank = 'followers',
+    locality = 2
 ) {
     let mainNodeInfoRaw;
     try {
