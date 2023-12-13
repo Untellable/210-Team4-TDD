@@ -1,14 +1,5 @@
+/*global document*/
 import { JSDOM } from 'jsdom';
-import {
-    hideError,
-    showForm,
-    hideAccount,
-    clearInput,
-    recoverErrorMessage,
-    emptyInputHandler,
-    getInput,
-    validateInput,
-} from './validate.js';
 
 // Mocking the imported functions from validate.js
 jest.mock('./validate.js', () => ({
