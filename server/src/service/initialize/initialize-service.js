@@ -81,6 +81,19 @@ async function accountFollowingService(api, id, db) {
     }
 }
 
+/**
+ * Returns a list of node information objects selected through a greedy search starting from the id provided.
+ *
+ * @param {MastodonAPI} api - An instance of the MastodonAPI to perform the account related api calls.
+ * @param {string} mainId - Identifier of the account to check for followings.
+ * @param {DAO} db - An instance of the DAO to perform database operations.
+ * @param {integer} maxNodes - Max number of nodes to return.
+ * @param {string} nodeRank - Node parameter to rank nodes based on. Options are: "followers", "posts", "random"
+ * @param {integer} locality - Exponential decay of node rank based on distance from mainId. Higher values prioritize closer nodes.
+ *
+ * @returns {Promise<array|null>} List of account info objects.
+ *      The 'following' property contains the nodes in this list that the account follows. Null if no data is available.
+ */
 async function accountInitializeService(
     api,
     mainId,
