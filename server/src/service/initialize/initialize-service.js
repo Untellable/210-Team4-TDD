@@ -115,7 +115,11 @@ async function accountInitializeService(
 
     const seenNodes = new Set([mainId]); // Track seen nodes
     const accountInfoMap = new Map(); // Track info of selected nodes
-    accountInfoMap.set(mainId, { ...mainNodeInfo, depth: 0, priority: 1 });
+    accountInfoMap.set(mainId, {
+        ...mainNodeInfo,
+        depth: 0,
+        priority: 1,
+    });
 
     // Sort nodes by priority using custom max heap
     const heapComparator = (a, b) => b.priority - a.priority;
@@ -160,10 +164,11 @@ async function accountInitializeService(
         } catch (e) {
             continue; // TODO:
         }
-
+        const curFollowingIds = new Set(curFollowing.keys());
+        const curFollowersIds = new Set(curFollowers.keys());
         const curNeighbors = [...curFollowing, ...curFollowers];
 
-        const newNeighbors = new Map();
+        const newNeighbors = new Map(); // Filter out seen neighbors which are already in the heap
         for (const [nodeId, nodeInfo] of curNeighbors) {
             if (!seenNodes.has(nodeId)) {
                 newNeighbors.set(nodeId, nodeInfo);
@@ -178,13 +183,24 @@ async function accountInitializeService(
         }
 
         // Update current node info
-        curNodeInfo['following'] = new Set(curFollowing.keys());
+        curNodeInfo['following'] = curFollowingIds;
+        if ('followingSource' in curNodeInfo) {
+            curNodeInfo['following'].add(curNodeInfo['followingSource']);
+        }
         accountInfoMap.set(curNodeInfo['id'], curNodeInfo);
 
         for (const [nodeId, nodeInfo] of newNeighbors) {
             nodeInfo['depth'] = curNodeInfo['depth'] + 1;
-            const nodePriority = calcPriority(nodeInfo);
-            nodeHeap.push({ ...nodeInfo, priority: nodePriority });
+            nodeInfo['priority'] = calcPriority(nodeInfo);
+
+            // Need to add this connection directly bc. api only returns a subset of following,
+            // which may not contain the account which led to that account and would lead to a
+            // disconnected graph.
+            if (curFollowersIds.has(nodeId)) {
+                nodeInfo['followingSource'] = curNodeInfo['id'];
+            }
+
+            nodeHeap.push(nodeInfo);
         }
     }
 
