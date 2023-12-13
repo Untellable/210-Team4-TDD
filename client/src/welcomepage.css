@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(40, 44, 55);
+    background-color: #282C37;
     font-family: 'Roboto', Arial;
     color: white;
 }
@@ -10,9 +10,6 @@ body {
     max-width: 480px;
     margin: 2% auto;
     margin-top: 100px;
-}
-
-.form-container * {
     text-align: left;
 }
 
@@ -26,7 +23,6 @@ body {
     margin: 0 0 40px 0;
 }
 
-/* Input Fields */
 .fields-group {
     margin: 15px 0 0 0;
 }
@@ -37,7 +33,7 @@ body {
 }
 
 .input-box {
-    background-color: rgb(19, 20, 25);
+    background-color: #131415;
     color: white;
     font-size: 18px;
     border: 1px solid black;
@@ -51,32 +47,28 @@ body {
 }
 
 .input-box:focus {
-    border-color: rgb(87, 60, 207);
-    background-color: rgb(19, 20, 25);
+    border-color: #573CCF;
+    background-color: #131415;
 }
 
-/* default autofill background color override for Chrome and Safari */
 .input-box:-webkit-autofill,
 .input-box:-webkit-autofill:hover, 
 .input-box:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
-    -webkit-box-shadow: 0 0 0px 1000px rgb(19, 20, 25) inset;
+    -webkit-box-shadow: 0 0 0px 1000px #131415 inset;
     transition: background-color 5000s;
 }
 
-/* for Firefox */
 .input-box:-moz-autofill,
 .input-box:-moz-autofill:hover, 
 .input-box:-moz-autofill:focus {
     color: white;
-    background-color: rgb(19, 20, 25);
+    background-color: #131415;
 }
 
-
-/* Submit Button */
 .btn {
     cursor: pointer;
-    background-color: rgb(99, 100, 255);
+    background-color: #6364FF;
     color: white;
     font-size: 18px;
     font-weight: 500;
@@ -90,10 +82,9 @@ body {
 }
 
 .btn:hover {
-    background-color: rgb(90, 71, 220);
+    background-color: #5A47DC;
 }
 
-/* Expandable Container */
 .expandable-container {
     width: 100%;
     margin: 5px 0 0 0;
@@ -104,7 +95,7 @@ body {
     display: flex;
     align-items: center;
     border: none;
-    background-color: rgb(40, 44, 55);
+    background-color: #282C37;
     color: #9baec8;
     font-size: 15px;
     margin: 0;
@@ -116,7 +107,6 @@ body {
 }
 
 .expandable-content {
-    max-height: 0;
     overflow: hidden;
     transition: max-height 1s ease-out;
     padding-bottom: 10px;
@@ -138,29 +128,39 @@ body {
     font-style: italic;
 }
 
-.instruction-image {
-    width: 95%;
-    border: 2px solid rgb(155, 174, 200);
-    border-radius: 10px;
-    margin: 10px 0 0 7px;
+.form-footer a {
+    font-size: 15px;
+    color: #9baec8;
+    text-decoration: none;
 }
 
+.form-footer a:hover {
+    text-decoration: underline;
+}
 
+.links-group {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.error-message {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgba(223, 64, 90, .1);
+    border: 1px solid rgba(223, 64, 90, .5);
+    color: #df405a;
+    border-radius: 4px;
+    padding: 15px 10px;
+    text-align: center;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 480px;
+}
 
 .account-container {
     display: none;
@@ -180,14 +180,13 @@ body {
     margin-bottom: 25px;
 }
 
-
 .account {
     display: flex;
     align-items: center;
-    background-color: rgb(54, 58, 70);
+    background-color: #363A46;
     padding: 10px;
     border-radius: 8px;
-    border: 1px solid rgb(150, 150, 150);
+    border: 1px solid #969696;
     max-width: 100%;
     margin: auto;
     margin-bottom: 25px;
@@ -200,7 +199,7 @@ body {
 #avatar {
     width: 50px;
     height: 50px;
-    border-radius: 5px;
+    border-radius: 50%;
 }
 
 .account-contents {
@@ -208,7 +207,7 @@ body {
     flex-direction: column;
 }
 
-.display-name {
+.display-name-account {
     display: flex;
     align-items: center;
 }
@@ -234,7 +233,7 @@ body {
 }
 
 .yes-no-btn {
-    cursor: pointer;  
+    cursor: pointer;
     color: white;
     font-size: 20px;
     font-weight: bold;
@@ -246,58 +245,23 @@ body {
     margin: 0 20px 0 0;
     padding: 10px 0;
     text-align: center;
-
 }
 
-#yes-btn{
-    background-color: rgb(99, 100, 255);
+#yes-btn {
+    background-color: #6364FF;
     color: white;
     margin-right: 0px;
 }
+
 #yes-btn:hover {
-    background-color: rgb(90, 71, 220);
+    background-color: #5A47DC;
 }
 
-#no-btn{
-    border: 0px solid rgb(99, 100, 255);
-    background-color: rgb(100, 100, 100);
+#no-btn {
+    background-color: #646464;
 }
 
 #no-btn:hover {
-    background-color: rgb(90, 71, 220);
+    background-color: #5A47DC;
 }
 
-
-.error-message {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background: rgba(223, 64, 90, .1);
-    border: 1px solid rgba(223, 64, 90, .5);
-    color: #df405a;
-    border-radius: 4px;
-    padding: 15px 10px;
-    text-align: center;
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 480px;
-}
-
-.form-footer a {
-    font-size: 15px;
-    color: #9baec8;
-    text-decoration: none;
-}
-
-.form-footer a:hover {
-    text-decoration: underline;
-}
-
-.links-group {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    padding: 0; 
-}
