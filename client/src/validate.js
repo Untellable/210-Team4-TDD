@@ -64,24 +64,18 @@ function combineInput(username, serverDomain){
 }
 
 
-
-
-
 function processResponse(json) {
-
     if ('error' in json) {
         showError();
         clearInput();
         return;
     }
-    
     else {
         hideError();
         id = json.id;
         displayName = json.display_name;
         profImgUrl = json.avatar;
         numFollowers = json.followers_count;
-        
         return [id, displayName, profImgUrl, numFollowers];
     }
 }
@@ -118,24 +112,23 @@ function validateInput(username, serverDomain) {
             
             console.log('user_acct, display_name, profile_img_url, num_followers: ', combinedInputData, displayName, profImgUrl, numFollowers);
             
+            // show the username if the user has never set the display name
             if (displayName === '') {
                 displayName = username;
             }
             
+            // update the account info using parsed data from api fetching
             updateFromResponse(combinedInputData, displayName, profImgUrl, numFollowers);
             
+            // switch to welcome/input page display
             hideForm();
             showAccount();
         })
         .catch((error) => {
-            console.log(
-              'Invalid username or server domain.'
-            );
-
             console.log('Error Caught in api fetch', error);
             
+            // switch to account info display
             showForm();
             hideAccount();
-  
         });
 }

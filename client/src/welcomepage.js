@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', (event) => {
     const expandableContainers = document.querySelectorAll('.expandable-container');
 
@@ -27,36 +25,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         [username, serverDomain] = getInput();
 
+        // show error msg directly without api fetching
         isEmpty = emptyInputHandler(username, serverDomain);
 
         console.log('Got Input After Submit Button is Clicked, username: ', username, 'serverDomain: ', serverDomain);      
         
+        // only do api fetching for non-empty input
         if (!isEmpty) {
             validateInput(username, serverDomain);
         }
         
         // reactivate the submit button
         submitBtn.disabled = false;
-
     });
 });
 
 
 document.getElementById('no-btn').addEventListener('click', () => {
-    const formContainer = document.querySelector('.form-container');
-    const accountContainer = document.querySelector('.account-container');
-    const errorContainer = document.querySelector('.error-message');
-    const inputUsername = document.getElementById('input-username');
-    const inputServerDomain = document.getElementById('input-serverdomain');
-    
-    formContainer.style.display = 'block';
-    accountContainer.style.display = 'none';
-    errorContainer.style.display = 'none';
-    inputUsername.value = '';
-    inputServerDomain.value = '';
+    clearInput();
+    showForm();
+    hideAccount();
+    hideError();
 });
-
-
 
 
 // TODO: implement save logic and open new page
