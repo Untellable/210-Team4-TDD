@@ -54,16 +54,16 @@ const router = express.Router();
  *                      username:
  *                        type: string
  *                        description: Username of the account.
- *                      display_name:
+ *                      displayName:
  *                        type: string
  *                        description: Display name of the account.
- *                      following_count:
+ *                      followingCount:
  *                        type: integer
  *                        description: Number of accounts this account is following.
- *                      followers_count:
+ *                      followersCount:
  *                        type: integer
  *                        description: Number of followers this account has.
- *                      statuses_count:
+ *                      statusesCount:
  *                        type: integer
  *                        description: Number of statuses posted by this account.
  *                      following:

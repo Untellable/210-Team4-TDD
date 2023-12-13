@@ -38,13 +38,11 @@ describe('accountInitializeHandler', () => {
     });
 
     test('should return 404 if account not found', async () => {
-        mockRequest.params.id = 'non_existing_id';
+        mockRequest.params.mainId = 'non_existing_id';
+        mockRequest.query = {}
 
         // Mock the accountInitializeService to return data with empty accountInfoList
-        accountInitializeService.mockResolvedValue({
-            accountInfoList: [],
-            relations: {},
-        });
+        accountInitializeService.mockResolvedValue([]);
 
         await accountInitializeHandler(mockRequest, mockResponse);
 
@@ -53,7 +51,8 @@ describe('accountInitializeHandler', () => {
     });
 
     test('should return 500 if unexpected error', async () => {
-        mockRequest.params.id = 'valid_id';
+        mockRequest.params.mainId = 'valid_id';
+        mockRequest.query = {}
 
         // Mock the accountInitializeService to throw an error
         accountInitializeService.mockRejectedValue(
@@ -67,19 +66,16 @@ describe('accountInitializeHandler', () => {
     });
 
     test('should return 200 if account found', async () => {
-        mockRequest.params.id = 'valid_id';
-        const mockAccountData = {
-            accountInfoList: [
-                {
-                    id: 'valid_id',
-                    username: 'valid_username',
-                    display_name: 'Valid User',
-                },
-            ],
-            relations: {
-                valid_id: ['valid_id', 'valid_id'],
+        mockRequest.params.mainId = 'valid_id';
+        mockRequest.query = {}
+        const mockAccountData = [
+            {
+                id: 'valid_id',
+                username: 'valid_username',
+                displayName: 'Valid User',
+                following: ['valid_id', 'valid_id'],
             },
-        };
+        ];
 
         await accountInitializeService.mockResolvedValue(mockAccountData);
         await accountInitializeHandler(mockRequest, mockResponse);
