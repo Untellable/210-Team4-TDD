@@ -58,9 +58,9 @@ export function hideLegend() {
 export function generateTitle(node) {
     let title = `
         <div class="popup-title">
-            <div class="popup-title-text">${node.display_name}</div>
-            <div>Followers: ${node.followers_count}</div>
-            <div>Following: ${node.following_count}</div>
+            <div class="popup-title-text">${node.displayName}</div>
+            <div>Followers: ${node.followersCount}</div>
+            <div>Following: ${node.followingCount}</div>
             <div>Username: ${node.username}</div>
         </div>
     `;

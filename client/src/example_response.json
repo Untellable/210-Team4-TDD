@@ -1,506 +1,583 @@
-{
-    "relations": {
-        "306327": [
-            "109252111498807689",
-            "111029831180625031",
-            "109249653128957332",
-            "110928536662734403",
-            "111230229715634426",
-            "109388804944266898",
-            "109257951334540746",
-            "110814211685581064",
-            "895746",
-            "109312789961305241",
-            "110686000291953285"
-        ],
-        "322656": ["110647103793672331"],
-        "895746": ["306327"],
-        "109252111498807689": [
-            "111336453268784694",
-            "111333928408484253",
-            "111349523487351145",
-            "111344152004531698",
-            "111343668341922173",
-            "111346580516369918",
-            "110244608171697320",
-            "306327",
+[
+    {
+        "id": "109252111498807689",
+        "username": "thomasapowell",
+        "displayName": "ThomasAPowell",
+        "followingCount": 321,
+        "followersCount": 187,
+        "statusesCount": 1189,
+        "depth": 0,
+        "priority": 1,
+        "following": [
+            "7112",
+            "7393",
+            "7423",
+            "7480",
+            "14774",
+            "146113",
+            "254743",
+            "384390",
+            "405755",
+            "490031",
+            "110939684209379656",
             "110647103793672331",
-            "111366410980877957"
-        ],
-        "111346580516369918": [
-            "109252111498807689",
-            "109922226888185889",
-            "109377472370506401",
-            "110613069562154393",
-            "109268140473989256",
-            "109537588319423538",
-            "109332801685714217",
-            "109948173150235007",
-            "111490531223792794",
-            "109258407066609903",
-            "109365921707420397"
-        ],
-        "109922226888185889": ["111346580516369918"],
-        "109377472370506401": ["111346580516369918"],
-        "110613069562154393": ["111346580516369918"],
-        "109268140473989256": ["111346580516369918"],
-        "109537588319423538": ["111346580516369918"],
-        "109332801685714217": ["111346580516369918"],
-        "109948173150235007": ["111346580516369918"],
-        "111490531223792794": ["111346580516369918", "110647103793672331"],
-        "109258407066609903": ["111346580516369918"],
-        "109365921707420397": ["111346580516369918"],
-        "110244608171697320": [
-            "109252111498807689",
-            "111497550785423827",
-            "111495472528410961",
-            "109250658798084622",
-            "109513162483728999",
-            "111491802706929404",
-            "109982113847829591",
-            "110673759067007381",
-            "110749815174271699",
-            "111488037545005818",
-            "111239329583594002"
-        ],
-        "111497550785423827": ["110244608171697320"],
-        "111495472528410961": ["110244608171697320"],
-        "109250658798084622": ["110244608171697320"],
-        "109513162483728999": ["110244608171697320"],
-        "111491802706929404": ["110244608171697320"],
-        "109982113847829591": ["110244608171697320", "110647103793672331"],
-        "110673759067007381": ["110244608171697320"],
-        "110749815174271699": ["110244608171697320"],
-        "111488037545005818": ["110244608171697320"],
-        "111239329583594002": ["110244608171697320"],
-        "111029831180625031": ["306327"],
-        "109249653128957332": ["306327"],
-        "110928536662734403": ["306327"],
-        "111230229715634426": ["306327"],
-        "109388804944266898": ["306327"],
-        "109257951334540746": ["306327"],
-        "110814211685581064": ["306327"],
-        "109312789961305241": ["306327"],
-        "110686000291953285": ["306327"],
-        "110647103793672331": [
-            "109252111498807689",
-            "109327268720023850",
-            "111495370804622124",
-            "109365157154293804",
-            "111429374740504373",
-            "107222937323750038",
-            "109982113847829591",
-            "111490531223792794",
-            "106630210923026537",
-            "322656",
-            "110583142071564485"
-        ],
-        "109327268720023850": ["110647103793672331"],
-        "111495370804622124": ["110647103793672331"],
-        "109365157154293804": ["110647103793672331"],
-        "111429374740504373": ["110647103793672331"],
-        "107222937323750038": ["110647103793672331"],
-        "106630210923026537": ["110647103793672331"],
-        "110583142071564485": ["110647103793672331"],
-        "111336453268784694": ["109252111498807689"],
-        "111333928408484253": ["109252111498807689"],
-        "111366410980877957": ["109252111498807689"],
-        "111349523487351145": ["109252111498807689"],
-        "111344152004531698": ["109252111498807689", "111343668341922173"],
-        "111343668341922173": ["111344152004531698", "109252111498807689"]
+            "111336453268784694",
+            "111343668341922173",
+            "111349523487351145",
+            "111333928408484253",
+            "111070953707480262",
+            "108197900630052143",
+            "108292580980067149",
+            "109257722985061490",
+            "110312266534706151",
+            "109243948715863756",
+            "109253075745809751",
+            "110589096435209705",
+            "109224415414500824",
+            "108269301093121738",
+            "110002402224724403",
+            "109362198063604253",
+            "109305165689125251",
+            "109297280241538513"
+        ]
     },
-    "accountInfoList": [
-        {
-            "id": "111346580516369918",
-            "username": "Killertomato",
-            "display_name": "Killertomato",
-            "following_count": 854,
-            "followers_count": 170,
-            "statuses_count": 457
-        },
-        {
-            "id": "109922226888185889",
-            "username": "KrissyKat",
-            "display_name": "KrissyKat 🏳️‍⚧️",
-            "following_count": 1598,
-            "followers_count": 954,
-            "statuses_count": 8731
-        },
-        {
-            "id": "109377472370506401",
-            "username": "liquor_american",
-            "display_name": "George Liquor, American",
-            "following_count": 364,
-            "followers_count": 189,
-            "statuses_count": 5468
-        },
-        {
-            "id": "110613069562154393",
-            "username": "EricKHoward",
-            "display_name": "",
-            "following_count": 1004,
-            "followers_count": 379,
-            "statuses_count": 11560
-        },
-        {
-            "id": "109268140473989256",
-            "username": "clickhere",
-            "display_name": "Joan // Stay apart, Mask up",
-            "following_count": 1464,
-            "followers_count": 1146,
-            "statuses_count": 6862
-        },
-        {
-            "id": "109537588319423538",
-            "username": "tangleofwires",
-            "display_name": "Dom Tyer",
-            "following_count": 483,
-            "followers_count": 342,
-            "statuses_count": 883
-        },
-        {
-            "id": "109332801685714217",
-            "username": "spmatich",
-            "display_name": "spmatich :blobcoffee:",
-            "following_count": 280,
-            "followers_count": 116,
-            "statuses_count": 2510
-        },
-        {
-            "id": "109948173150235007",
-            "username": "BrennpunktUA",
-            "display_name": "BrennpunktUA debunked 🕵🏻‍♀️",
-            "following_count": 6315,
-            "followers_count": 559,
-            "statuses_count": 107
-        },
-        {
-            "id": "111490531223792794",
-            "username": "Donaldtristian",
-            "display_name": "",
-            "following_count": 238,
-            "followers_count": 3,
-            "statuses_count": 1
-        },
-        {
-            "id": "109258407066609903",
-            "username": "rohy",
-            "display_name": "Maarten Reijnders",
-            "following_count": 820,
-            "followers_count": 821,
-            "statuses_count": 365
-        },
-        {
-            "id": "109365921707420397",
-            "username": "RickiTarr",
-            "display_name": "Ricki Even More Halloween Tarr",
-            "following_count": 5611,
-            "followers_count": 5783,
-            "statuses_count": 68639
-        },
-        {
-            "id": "110244608171697320",
-            "username": "Pitico",
-            "display_name": "Pitikoo 4:20 🍁🔥🚭",
-            "following_count": 7499,
-            "followers_count": 770,
-            "statuses_count": 3529
-        },
-        {
-            "id": "111497550785423827",
-            "username": "tharsis",
-            "display_name": "Petyroil",
-            "following_count": 2,
-            "followers_count": 0,
-            "statuses_count": 2
-        },
-        {
-            "id": "111495472528410961",
-            "username": "LeonPalhares",
-            "display_name": "Leon Palhares",
-            "following_count": 6,
-            "followers_count": 0,
-            "statuses_count": 0
-        },
-        {
-            "id": "109250658798084622",
-            "username": "xs4me2",
-            "display_name": "xs4me2",
-            "following_count": 1444,
-            "followers_count": 604,
-            "statuses_count": 29192
-        },
-        {
-            "id": "109513162483728999",
-            "username": "ZoraSaidSo",
-            "display_name": "ZoraSaidSo",
-            "following_count": 670,
-            "followers_count": 503,
-            "statuses_count": 3683
-        },
-        {
-            "id": "111491802706929404",
-            "username": "Meaghandiel",
-            "display_name": "Meaghan diel",
-            "following_count": 20,
-            "followers_count": 0,
-            "statuses_count": 1
-        },
-        {
-            "id": "109982113847829591",
-            "username": "markosprem",
-            "display_name": "Marko Šprem",
-            "following_count": 2255,
-            "followers_count": 1806,
-            "statuses_count": 12
-        },
-        {
-            "id": "110673759067007381",
-            "username": "robtherunt",
-            "display_name": "robtherunt🌱",
-            "following_count": 179,
-            "followers_count": 89,
-            "statuses_count": 517
-        },
-        {
-            "id": "110749815174271699",
-            "username": "draculastevens",
-            "display_name": "dracula stevens",
-            "following_count": 1351,
-            "followers_count": 139,
-            "statuses_count": 57
-        },
-        {
-            "id": "111488037545005818",
-            "username": "carlos20918",
-            "display_name": "Carlos",
-            "following_count": 78,
-            "followers_count": 6,
-            "statuses_count": 3
-        },
-        {
-            "id": "111239329583594002",
-            "username": "undefined_seljo",
-            "display_name": "Villager",
-            "following_count": 109,
-            "followers_count": 110,
-            "statuses_count": 144
-        },
-        {
-            "id": "306327",
-            "username": "ramonakira",
-            "display_name": "Ramon",
-            "following_count": 277,
-            "followers_count": 42,
-            "statuses_count": 421
-        },
-        {
-            "id": "111029831180625031",
-            "username": "Radical_EgoCom",
-            "display_name": "C Ⓐ T",
-            "following_count": 4351,
-            "followers_count": 883,
-            "statuses_count": 364
-        },
-        {
-            "id": "109249653128957332",
-            "username": "thanhtunoo",
-            "display_name": "𝐓𝐇𝐀𝐍 𝐇𝐓𝐔𝐍 𝐎𝐎",
-            "following_count": 197,
-            "followers_count": 0,
-            "statuses_count": 18
-        },
-        {
-            "id": "110928536662734403",
-            "username": "TETRAPERATOS",
-            "display_name": "ΤETRAPERATOS.",
-            "following_count": 3202,
-            "followers_count": 1572,
-            "statuses_count": 9669
-        },
-        {
-            "id": "111230229715634426",
-            "username": "C_W_WC",
-            "display_name": "",
-            "following_count": 79,
-            "followers_count": 14,
-            "statuses_count": 136
-        },
-        {
-            "id": "109388804944266898",
-            "username": "huwfulcher",
-            "display_name": "Huw Fulcher",
-            "following_count": 60,
-            "followers_count": 23,
-            "statuses_count": 48
-        },
-        {
-            "id": "109257951334540746",
-            "username": "pablolarah",
-            "display_name": "pablolarah",
-            "following_count": 180,
-            "followers_count": 320,
-            "statuses_count": 4088
-        },
-        {
-            "id": "110814211685581064",
-            "username": "stephanie",
-            "display_name": "Stéphanie Pageau",
-            "following_count": 1328,
-            "followers_count": 1188,
-            "statuses_count": 2329
-        },
-        {
-            "id": "895746",
-            "username": "tchambers",
-            "display_name": "Tim Chambers",
-            "following_count": 3681,
-            "followers_count": 15582,
-            "statuses_count": 37338
-        },
-        {
-            "id": "109312789961305241",
-            "username": "ZedSlayer",
-            "display_name": "Kirby Space Program",
-            "following_count": 434,
-            "followers_count": 58,
-            "statuses_count": 1219
-        },
-        {
-            "id": "110686000291953285",
-            "username": "HaldeCraft",
-            "display_name": "Lorena H",
-            "following_count": 804,
-            "followers_count": 854,
-            "statuses_count": 247
-        },
-        {
-            "id": "110647103793672331",
-            "username": "oldbookillustrations",
-            "display_name": "Old Book Illustrations",
-            "following_count": 1052,
-            "followers_count": 1613,
-            "statuses_count": 1120
-        },
-        {
-            "id": "109327268720023850",
-            "username": "trewhytte",
-            "display_name": "trew",
-            "following_count": 143,
-            "followers_count": 31,
-            "statuses_count": 68
-        },
-        {
-            "id": "111495370804622124",
-            "username": "ThatMermaid_J",
-            "display_name": "J🎶",
-            "following_count": 1904,
-            "followers_count": 1205,
-            "statuses_count": 61
-        },
-        {
-            "id": "109365157154293804",
-            "username": "RejoinEU",
-            "display_name": "Simon Flett",
-            "following_count": 680,
-            "followers_count": 364,
-            "statuses_count": 809
-        },
-        {
-            "id": "111429374740504373",
-            "username": "winterson",
-            "display_name": "风信子",
-            "following_count": 5,
-            "followers_count": 1,
-            "statuses_count": 38
-        },
-        {
-            "id": "107222937323750038",
-            "username": "albertochimal",
-            "display_name": "Alberto Chimal",
-            "following_count": 230,
-            "followers_count": 1891,
-            "statuses_count": 2106
-        },
-        {
-            "id": "106630210923026537",
-            "username": "deerbard",
-            "display_name": "deerbard",
-            "following_count": 143,
-            "followers_count": 672,
-            "statuses_count": 2026
-        },
-        {
-            "id": "322656",
-            "username": "helga_j",
-            "display_name": "Helen J",
-            "following_count": 269,
-            "followers_count": 96,
-            "statuses_count": 24
-        },
-        {
-            "id": "110583142071564485",
-            "username": "Research_FTW",
-            "display_name": "Helen LH",
-            "following_count": 354,
-            "followers_count": 271,
-            "statuses_count": 1581
-        },
-        {
-            "id": "111336453268784694",
-            "username": "kkkkr",
-            "display_name": "",
-            "following_count": 1,
-            "followers_count": 1,
-            "statuses_count": 0
-        },
-        {
-            "id": "109252111498807689",
-            "username": "thomasapowell",
-            "display_name": "ThomasAPowell",
-            "following_count": 310,
-            "followers_count": 187,
-            "statuses_count": 1164
-        },
-        {
-            "id": "111333928408484253",
-            "username": "distributedgeek",
-            "display_name": "Gagan Gopalaiah",
-            "following_count": 4,
-            "followers_count": 1,
-            "statuses_count": 0
-        },
-        {
-            "id": "111366410980877957",
-            "username": "Birdy_13",
-            "display_name": "Birdy",
-            "following_count": 1,
-            "followers_count": 0,
-            "statuses_count": 2
-        },
-        {
-            "id": "111349523487351145",
-            "username": "TheGuyFromGallifrey",
-            "display_name": "Om Prakaash",
-            "following_count": 3,
-            "followers_count": 1,
-            "statuses_count": 0
-        },
-        {
-            "id": "111344152004531698",
-            "username": "realvarunsingh",
-            "display_name": "",
-            "following_count": 3,
-            "followers_count": 2,
-            "statuses_count": 6
-        },
-        {
-            "id": "111343668341922173",
-            "username": "jacksonconte",
-            "display_name": "",
-            "following_count": 3,
-            "followers_count": 2,
-            "statuses_count": 1
-        }
-    ]
-}
+    {
+        "id": "109257722985061490",
+        "username": "patrick_h_lauke",
+        "displayName": "Patrick H. Lauke",
+        "followingCount": 537,
+        "followersCount": 1106,
+        "statusesCount": 7054,
+        "depth": 1,
+        "priority": 0.09857236986892866,
+        "following": []
+    },
+    {
+        "id": "108193245242726097",
+        "username": "RonJeffries",
+        "displayName": "Ron Jeffries",
+        "followingCount": 562,
+        "followersCount": 2761,
+        "statusesCount": 2056,
+        "depth": 1,
+        "priority": 0.09793293189934191,
+        "following": []
+    },
+    {
+        "id": "109247536983419789",
+        "username": "TeamTopologies",
+        "displayName": "Team Topologies",
+        "followingCount": 1042,
+        "followersCount": 1284,
+        "statusesCount": 310,
+        "depth": 1,
+        "priority": 0.09730999102072821,
+        "following": []
+    },
+    {
+        "id": "109358518638051532",
+        "username": "debasispaul",
+        "displayName": "DEBASIS PAUL®™(Zhýralý Pāvils)",
+        "followingCount": 2411,
+        "followersCount": 293,
+        "statusesCount": 10,
+        "depth": 1,
+        "priority": 0.09717218991373322,
+        "following": []
+    },
+    {
+        "id": "110736277394615438",
+        "username": "schizanon",
+        "displayName": "🍄🌈🎮💻🚲🥓🎃💀🏴🛻🇺🇸",
+        "followingCount": 54,
+        "followersCount": 21,
+        "statusesCount": 390,
+        "depth": 1,
+        "priority": 0.09663172522326868,
+        "following": ["109252111498807689"]
+    },
+    {
+        "id": "109362198063604253",
+        "username": "danyoder",
+        "displayName": "Dan Yoder",
+        "followingCount": 141,
+        "followersCount": 92,
+        "statusesCount": 806,
+        "depth": 1,
+        "priority": 0.09525679001815268,
+        "following": ["110939684209379656"]
+    },
+    {
+        "id": "111346580516369918",
+        "username": "Killertomato",
+        "displayName": "Killertomato",
+        "followingCount": 1027,
+        "followersCount": 211,
+        "statusesCount": 709,
+        "depth": 1,
+        "priority": 0.09409918760121402,
+        "following": []
+    },
+    {
+        "id": "111333928408484253",
+        "username": "distributedgeek",
+        "displayName": "Gagan Gopalaiah",
+        "followingCount": 4,
+        "followersCount": 1,
+        "statusesCount": 0,
+        "depth": 1,
+        "priority": 0.09383599967805056,
+        "following": ["109252111498807689"]
+    },
+    {
+        "id": "7112",
+        "username": "Edent",
+        "displayName": "Terence Eden",
+        "followingCount": 1151,
+        "followersCount": 5845,
+        "statusesCount": 12235,
+        "depth": 1,
+        "priority": 0.09304620732724955,
+        "following": []
+    },
+    {
+        "id": "109322080955260878",
+        "username": "grimalkina",
+        "displayName": "Cat Hicks",
+        "followingCount": 748,
+        "followersCount": 5026,
+        "statusesCount": 1401,
+        "depth": 1,
+        "priority": 0.09207710679015044,
+        "following": []
+    },
+    {
+        "id": "110002402224724403",
+        "username": "RyanRongY",
+        "displayName": "Ryan Rong",
+        "followingCount": 5,
+        "followersCount": 1,
+        "statusesCount": 1,
+        "depth": 1,
+        "priority": 0.08904658510780272,
+        "following": ["109252111498807689"]
+    },
+    {
+        "id": "108197900630052143",
+        "username": "randahl",
+        "displayName": "Randahl Fink",
+        "followingCount": 5107,
+        "followersCount": 6343,
+        "statusesCount": 4474,
+        "depth": 1,
+        "priority": 0.08849716892497428,
+        "following": []
+    },
+    {
+        "id": "7393",
+        "username": "bastianallgeier",
+        "displayName": "Bastian Allgeier",
+        "followingCount": 760,
+        "followersCount": 3361,
+        "statusesCount": 2812,
+        "depth": 1,
+        "priority": 0.0858604210641328,
+        "following": []
+    },
+    {
+        "id": "33932",
+        "username": "webreflection",
+        "displayName": "Andrea Giammarchi",
+        "followingCount": 474,
+        "followersCount": 699,
+        "statusesCount": 328,
+        "depth": 1,
+        "priority": 0.08472067686038527,
+        "following": []
+    },
+    {
+        "id": "109297280241538513",
+        "username": "MarkRuffalo",
+        "displayName": "Mark Ruffalo",
+        "followingCount": 6,
+        "followersCount": 56879,
+        "statusesCount": 150,
+        "depth": 1,
+        "priority": 0.08019972298573708,
+        "following": []
+    },
+    {
+        "id": "111349523487351145",
+        "username": "TheGuyFromGallifrey",
+        "displayName": "Om Prakaash",
+        "followingCount": 3,
+        "followersCount": 1,
+        "statusesCount": 0,
+        "depth": 1,
+        "priority": 0.07909441745722154,
+        "following": ["109252111498807689"]
+    },
+    {
+        "id": "109305165689125251",
+        "username": "kidehen",
+        "displayName": "Kingsley Uyi Idehen",
+        "followingCount": 413,
+        "followersCount": 801,
+        "statusesCount": 2350,
+        "depth": 1,
+        "priority": 0.07586002136185573,
+        "following": []
+    },
+    {
+        "id": "405755",
+        "username": "vruz",
+        "displayName": "vruz",
+        "followingCount": 647,
+        "followersCount": 953,
+        "statusesCount": 21077,
+        "depth": 1,
+        "priority": 0.07569012308096759,
+        "following": []
+    },
+    {
+        "id": "109353830905089509",
+        "username": "wfaler",
+        "displayName": "Wille",
+        "followingCount": 2015,
+        "followersCount": 1130,
+        "statusesCount": 83,
+        "depth": 1,
+        "priority": 0.07538461801937195,
+        "following": []
+    },
+    {
+        "id": "490031",
+        "username": "Mrfunkedude",
+        "displayName": "Mr. Funk E. Dude",
+        "followingCount": 103,
+        "followersCount": 3871,
+        "statusesCount": 39403,
+        "depth": 1,
+        "priority": 0.07439294270544683,
+        "following": []
+    },
+    {
+        "id": "110045112965022035",
+        "username": "TechInsight",
+        "displayName": "TechInsight",
+        "followingCount": 1875,
+        "followersCount": 392,
+        "statusesCount": 60,
+        "depth": 1,
+        "priority": 0.07215636016188884,
+        "following": []
+    },
+    {
+        "id": "111336453268784694",
+        "username": "kkkkr",
+        "displayName": "",
+        "followingCount": 0,
+        "followersCount": 1,
+        "statusesCount": 0,
+        "depth": 1,
+        "priority": 0.07093885269071802,
+        "following": []
+    },
+    {
+        "id": "109224415414500824",
+        "username": "AbandonedAmerica",
+        "displayName": "Abandoned America",
+        "followingCount": 906,
+        "followersCount": 44830,
+        "statusesCount": 8773,
+        "depth": 1,
+        "priority": 0.06901614166648173,
+        "following": []
+    },
+    {
+        "id": "254743",
+        "username": "thejapantimes",
+        "displayName": "The Japan Times",
+        "followingCount": 2,
+        "followersCount": 2810,
+        "statusesCount": 8899,
+        "depth": 1,
+        "priority": 0.06713301615240264,
+        "following": []
+    },
+    {
+        "id": "110312266534706151",
+        "username": "vaguelytagged",
+        "displayName": "Vincent Sgherzi",
+        "followingCount": 16,
+        "followersCount": 1,
+        "statusesCount": 2,
+        "depth": 1,
+        "priority": 0.0656597287214284,
+        "following": ["109252111498807689"]
+    },
+    {
+        "id": "110647103793672331",
+        "username": "oldbookillustrations",
+        "displayName": "Old Book Illustrations",
+        "followingCount": 1158,
+        "followersCount": 1793,
+        "statusesCount": 1218,
+        "depth": 1,
+        "priority": 0.06525301030513617,
+        "following": []
+    },
+    {
+        "id": "108269301093121738",
+        "username": "zephoria",
+        "displayName": "danah boyd",
+        "followingCount": 206,
+        "followersCount": 6197,
+        "statusesCount": 96,
+        "depth": 1,
+        "priority": 0.06447934607516495,
+        "following": []
+    },
+    {
+        "id": "109253075745809751",
+        "username": "GottaLaff",
+        "displayName": "Laffy",
+        "followingCount": 5546,
+        "followersCount": 18327,
+        "statusesCount": 58335,
+        "depth": 1,
+        "priority": 0.06429540360892154,
+        "following": []
+    },
+    {
+        "id": "111364876822612665",
+        "username": "ekdnam",
+        "displayName": "",
+        "followingCount": 2,
+        "followersCount": 0,
+        "statusesCount": 0,
+        "depth": 1,
+        "priority": 0.06226908761693854,
+        "following": ["109252111498807689"]
+    },
+    {
+        "id": "110734866785132802",
+        "username": "chewyric",
+        "displayName": "",
+        "followingCount": 24,
+        "followersCount": 1,
+        "statusesCount": 0,
+        "depth": 1,
+        "priority": 0.05435747551523586,
+        "following": ["109252111498807689", "109297280241538513"]
+    },
+    {
+        "id": "111070953707480262",
+        "username": "indivisibleteam",
+        "displayName": "Indivisible",
+        "followingCount": 64,
+        "followersCount": 3893,
+        "statusesCount": 313,
+        "depth": 1,
+        "priority": 0.05202438530643823,
+        "following": []
+    },
+    {
+        "id": "110589096435209705",
+        "username": "lisamelton",
+        "displayName": "Lisa Melton",
+        "followingCount": 7318,
+        "followersCount": 21519,
+        "statusesCount": 28749,
+        "depth": 1,
+        "priority": 0.050369947685700134,
+        "following": []
+    },
+    {
+        "id": "146113",
+        "username": "jarango",
+        "displayName": "Jorge Arango",
+        "followingCount": 190,
+        "followersCount": 820,
+        "statusesCount": 1480,
+        "depth": 1,
+        "priority": 0.049387947337318015,
+        "following": []
+    },
+    {
+        "id": "111343668341922173",
+        "username": "jacksonconte",
+        "displayName": "",
+        "followingCount": 3,
+        "followersCount": 2,
+        "statusesCount": 1,
+        "depth": 1,
+        "priority": 0.04858693401177823,
+        "following": ["109252111498807689"]
+    },
+    {
+        "id": "110617772614886905",
+        "username": "philthycasualmedia",
+        "displayName": "Philthy Casual Media",
+        "followingCount": 81,
+        "followersCount": 36,
+        "statusesCount": 172,
+        "depth": 1,
+        "priority": 0.047007686810545325,
+        "following": ["109252111498807689"]
+    },
+    {
+        "id": "14774",
+        "username": "harold",
+        "displayName": "Harold Jarche",
+        "followingCount": 301,
+        "followersCount": 1090,
+        "statusesCount": 3352,
+        "depth": 1,
+        "priority": 0.0463663226473275,
+        "following": []
+    },
+    {
+        "id": "110035387155664859",
+        "username": "akshayprabhu",
+        "displayName": "Akshay Prabhu",
+        "followingCount": 10,
+        "followersCount": 0,
+        "statusesCount": 0,
+        "depth": 1,
+        "priority": 0.04398930238444236,
+        "following": ["109252111498807689"]
+    },
+    {
+        "id": "7480",
+        "username": "prushforth",
+        "displayName": "Peter Rushforth 🇨🇦🇺🇦",
+        "followingCount": 623,
+        "followersCount": 246,
+        "statusesCount": 409,
+        "depth": 1,
+        "priority": 0.04281004575552905,
+        "following": ["109252111498807689"]
+    },
+    {
+        "id": "384390",
+        "username": "jbrains",
+        "displayName": "J. B. Rainsberger (he)",
+        "followingCount": 1088,
+        "followersCount": 1294,
+        "statusesCount": 742,
+        "depth": 1,
+        "priority": 0.03840413385978179,
+        "following": []
+    },
+    {
+        "id": "110258170249980553",
+        "username": "leonleungjeehei",
+        "displayName": "Leon Leung",
+        "followingCount": 45,
+        "followersCount": 10,
+        "statusesCount": 23,
+        "depth": 1,
+        "priority": 0.03768379951195462,
+        "following": ["110589096435209705", "109252111498807689"]
+    },
+    {
+        "id": "110244608171697320",
+        "username": "Pitico",
+        "displayName": "Pitikoo 4:20 🍁🔥🚭",
+        "followingCount": 7492,
+        "followersCount": 815,
+        "statusesCount": 3550,
+        "depth": 1,
+        "priority": 0.03723637514029297,
+        "following": []
+    },
+    {
+        "id": "108292580980067149",
+        "username": "8bitboyz",
+        "displayName": "8-Bit Boyz",
+        "followingCount": 410,
+        "followersCount": 1159,
+        "statusesCount": 373,
+        "depth": 1,
+        "priority": 0.03668542179678538,
+        "following": []
+    },
+    {
+        "id": "110770582384056412",
+        "username": "orbite",
+        "displayName": "Orbite",
+        "followingCount": 6459,
+        "followersCount": 1529,
+        "statusesCount": 2465,
+        "depth": 1,
+        "priority": 0.03616043592300071,
+        "following": []
+    },
+    {
+        "id": "7423",
+        "username": "matthiasott",
+        "displayName": "Matthias Ott",
+        "followingCount": 562,
+        "followersCount": 2960,
+        "statusesCount": 3705,
+        "depth": 1,
+        "priority": 0.03519269909337712,
+        "following": []
+    },
+    {
+        "id": "110483354370247058",
+        "username": "haitchfive",
+        "displayName": "haitchfive",
+        "followingCount": 128,
+        "followersCount": 4,
+        "statusesCount": 1146,
+        "depth": 1,
+        "priority": 0.034423563619000654,
+        "following": []
+    },
+    {
+        "id": "110939684209379656",
+        "username": "404mediaco",
+        "displayName": "404 Media",
+        "followingCount": 6,
+        "followersCount": 5154,
+        "statusesCount": 152,
+        "depth": 1,
+        "priority": 0.03400054161302697,
+        "following": []
+    },
+    {
+        "id": "109243948715863756",
+        "username": "elevatebart",
+        "displayName": "elevatebart",
+        "followingCount": 68,
+        "followersCount": 29,
+        "statusesCount": 88,
+        "depth": 1,
+        "priority": 0.03218507795433816,
+        "following": []
+    },
+    {
+        "id": "109246004333443292",
+        "username": "albertocairo",
+        "displayName": "Alberto Cairo",
+        "followingCount": 574,
+        "followersCount": 5037,
+        "statusesCount": 397,
+        "depth": 1,
+        "priority": 0.03011819494091992,
+        "following": []
+    },
+    {
+        "id": "109521012111777616",
+        "username": "cros87by",
+        "displayName": "Mark VanDervoort",
+        "followingCount": 226,
+        "followersCount": 50,
+        "statusesCount": 143,
+        "depth": 1,
+        "priority": 0.029139000304778874,
+        "following": ["110589096435209705"]
+    }
+]

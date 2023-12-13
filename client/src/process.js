@@ -2,6 +2,7 @@
 import {
     stylingType,
     metricType,
+    // eslint-disable-next-line no-unused-vars
     baseURL,
     defaultNodeColor,
     defaultNodeSize,
@@ -70,45 +71,48 @@ export function updateID() {
  */
 
 export function processData(json, mainID) {
-    let nodes_json = json.accountInfoList;
-    let edges_json = json.relations;
-
-    let main_node = nodes_json.filter((node) => node.id == mainID)[0];
+    let main_node = json.filter((node) => node.id == mainID)[0];
 
     let nodesCreated = new Set(); // to keep track of nodes created using the ids of accounts
     nodes.push({
         id: main_node.id,
         value: 20, // size of the node in the graph
-        label: main_node.display_name,
-        followers_count: main_node.followers_count,
+        label: main_node.displayName,
+        followersCount: main_node.followersCount,
         title: generateTitle(main_node),
     });
 
     nodesCreated.add(main_node.id);
 
-    nodes_json.forEach((node) => {
+    // Add nodes
+
+    json.forEach((node) => {
         if (node.id != main_node.id) {
             nodes.push({
                 id: node.id,
                 value: 15, // lower size for followers
-                label: node.display_name,
-                followers_count: node.followers_count,
+                label: node.displayName,
+                followersCount: node.followersCount,
+                followingCount: node.followingCount,
                 title: generateTitle(node),
             });
-            console.log('Added node', node.display_name);
+            console.log('Added node', node.displayName);
             nodesCreated.add(node.id);
         }
     });
 
-    for (let key in edges_json) {
-        let followers = edges_json[key];
-        followers.forEach((follower) => {
+    // Add edges
+
+    json.forEach((node) => {
+        node.following.forEach((followingID) => {
             edges.push({
-                from: follower,
-                to: key,
+                from: node.id,
+                to: followingID,
+                value: 1,
             });
+            console.log('Added edge', node.displayName, followingID);
         });
-    }
+    });
 
     return [nodes, edges];
 }
@@ -116,24 +120,24 @@ export function processData(json, mainID) {
 export function applyFollowerMetric(nodes, type) {
     if (type == stylingType.SIZE) {
         nodes.forEach((node) => {
-            if (node.followers_count == 0) {
+            if (node.followersCount == 0) {
                 node.value = 1;
             } else {
-                node.value = parseInt(1 + Math.log(node.followers_count) * 10);
+                node.value = parseInt(1 + Math.log(node.followersCount) * 10);
             }
-            console.log('Node value', node.followers_count, node.value);
+            console.log('Node value', node.followersCount, node.value);
         });
     } else if (type == stylingType.COLOR) {
         nodes.forEach((node) => {
-            if (node.followers_count < 100) {
+            if (node.followersCount < 100) {
                 node.color = '#ff0000';
-            } else if (node.followers_count < 1000) {
+            } else if (node.followersCount < 1000) {
                 node.color = '#ff6600';
-            } else if (node.followers_count < 10000) {
+            } else if (node.followersCount < 10000) {
                 node.color = '#ffcc00';
-            } else if (node.followers_count < 100000) {
+            } else if (node.followersCount < 100000) {
                 node.color = '#99ff00';
-            } else if (node.followers_count < 1000000) {
+            } else if (node.followersCount < 1000000) {
                 node.color = '#00ff00';
             } else {
                 node.color = '#00ff99';
