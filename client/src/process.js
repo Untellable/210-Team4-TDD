@@ -1,74 +1,23 @@
-/* eslint-disable no-undef */
+/*global document,alert,vis*/
 // eslint-disable-next-line no-unused-vars
-const baseURL = 'http://localhost:10000';
-
-// Enum for options
-const metricType = {
-    FOLLOWERS: 'followers',
-    ACTIVITY: 'activity',
-    NONE: 'none',
-};
-
-const stylingType = {
-    SIZE: 'size',
-    COLOR: 'color',
-};
-
-const defaultNodeColor = '#666666';
-const defaultNodeSize = 15;
-
-/**
- * Function displays the overlay
- */
-
-export function showOverlay() {
-    document.getElementById('overlay').style.display = 'block';
-}
-
-/**
- * Function hides the overlay
- */
-
-export function hideOverlay() {
-    document.getElementById('overlay').style.display = 'none';
-}
-
-/**
- * Function displays the loading spinner and overlay
- */
-
-export function showSpinner() {
-    showOverlay();
-    document.getElementById('loadingSpinner').style.display = 'block';
-}
-
-/**
- * Function hides the loading spinner and overlay
- */
-
-export function hideSpinner() {
-    hideOverlay();
-    document.getElementById('loadingSpinner').style.display = 'none';
-}
+import {
+    stylingType,
+    metricType,
+    baseURL,
+    defaultNodeColor,
+    defaultNodeSize,
+} from './constants.js';
+import {
+    showSpinner,
+    hideSpinner,
+    hideLegend,
+    displayLegend,
+    generateTitle,
+} from './ui.js';
+import { verifyUserID } from './utils.js';
 
 let nodes = []; // array of nodes
-let edges = []; 
-
-/**
- * Funntion to validate the user ID entered in the input box
- * @param {Number} userID user ID entered in the input box
- * @returns {Boolean} true if the user ID is valid, else false
- */
-export function verifyUserID(userID) {
-    if (!/^\d+$/.test(userID)) {
-        console.log('Invalid user ID entered');
-        return false;
-    }
-
-    console.log('User ID', userID);
-
-    return true;
-}
+let edges = [];
 
 /**
  * Function is called when the user clicks on the "Update" button
@@ -134,6 +83,7 @@ export function processData(json, mainID) {
         value: 20, // size of the node in the graph
         label: main_node.display_name,
         followers_count: main_node.followers_count,
+        title: generateTitle(main_node),
     });
 
     nodesCreated.add(main_node.id);
@@ -145,6 +95,7 @@ export function processData(json, mainID) {
                 value: 15, // lower size for followers
                 label: node.display_name,
                 followers_count: node.followers_count,
+                title: generateTitle(node),
             });
             console.log('Added node', node.display_name);
             nodesCreated.add(node.id);
@@ -164,47 +115,10 @@ export function processData(json, mainID) {
     return [nodes, edges];
 }
 
-/**
- * Function to display a legend for the styles applied to the nodes
- */
-
-export function displayLegend() {
-    let legend = document.getElementById('legend');
-    legend.style.display = 'block';
-    legend.innerHTML = `
-    <div class="legend-item">
-        <div class="legend-color" style="background-color: #ff0000;"></div>
-        <div class="legend-text">0 - 99 followers</div>
-    </div>
-    <div class="legend-item">
-        <div class="legend-color" style="background-color: #ff6600;"></div>
-        <div class="legend-text">100 - 999 followers</div>
-    </div>
-    <div class="legend-item">
-        <div class="legend-color" style="background-color: #ffcc00;"></div>
-        <div class="legend-text">1000 - 9999 followers</div>
-    </div>
-    <div class="legend-item">
-        <div class="legend-color" style="background-color: #99ff00;"></div>
-        <div class="legend-text">10000 - 99999 followers</div>
-    </div>
-    <div class="legend-item">
-        <div class="legend-color" style="background-color: #00ff00;"></div>
-        <div class="legend-text">100000 - 999999 followers</div>
-    </div>
-    <div class="legend-item">
-        <div class="legend-color" style="background-color: #00ff99;"></div>
-        <div class="legend-text">1000000+ followers</div>
-    </div>
-    `;
-}
-
-
-export function applyFollowerMetric(nodes,type) {
-
-    if(type == stylingType.SIZE) {
+export function applyFollowerMetric(nodes, type) {
+    if (type == stylingType.SIZE) {
         nodes.forEach((node) => {
-            if(node.followers_count == 0) {
+            if (node.followers_count == 0) {
                 node.value = 1;
             } else {
                 node.value = parseInt(1 + Math.log(node.followers_count) * 10);
@@ -229,20 +143,22 @@ export function applyFollowerMetric(nodes,type) {
         });
     }
 
-    return nodes;
+    if (type == stylingType.COLOR) {
+        displayLegend();
+    }
 
+    return nodes;
 }
 
 /**
- * 
- * @param {*} nodes 
- * @param {*} type 
- * @returns 
+ *
+ * @param {*} nodes
+ * @param {*} type
+ * @returns
  */
 
-export function applyNoneMetric(nodes,type){
-
-    if(type == stylingType.SIZE) {
+export function applyNoneMetric(nodes, type) {
+    if (type == stylingType.SIZE) {
         nodes.forEach((node) => {
             node.value = defaultNodeSize;
         });
@@ -250,6 +166,7 @@ export function applyNoneMetric(nodes,type){
         nodes.forEach((node) => {
             node.color = defaultNodeColor;
         });
+        hideLegend();
     }
     return nodes;
 }
@@ -260,24 +177,22 @@ export function applyNoneMetric(nodes,type){
  * - or color of the nodes based on the number of followers
  * @param string nodes
  * @param string type
- * @param string metric  
+ * @param string metric
  * @returns {*} nodesdrawFromResponse
  */
 
 export function applyNodeStyling(nodes, type, metric) {
-
     if (metric == metricType.FOLLOWERS) {
-        nodes = applyFollowerMetric(nodes,type);  
+        nodes = applyFollowerMetric(nodes, type);
     } else if (metric == metricType.ACTIVITY) {
-       //Relevant code to be added here
+        //Relevant code to be added here
     } else if (metric == metricType.NONE) {
-        nodes = applyNoneMetric(nodes,type);
+        nodes = applyNoneMetric(nodes, type);
     }
 
-    drawFromResponse(nodes,edges);
+    drawFromResponse(nodes, edges);
     return nodes;
 }
-
 
 /**
  * Draws the network graph using the nodes and edges array
@@ -339,6 +254,9 @@ export function drawFromResponse(nodes, edges) {
             randomSeed: 191006,
             improvedLayout: true,
         },
+        interaction: {
+            tooltipDelay: 20000, // a really long delay so that popup is displayed on click instead of hover
+        },
     };
     let network = new vis.Network(container, data, options);
     network.once('beforeDrawing', function () {
@@ -346,7 +264,7 @@ export function drawFromResponse(nodes, edges) {
             scale: 12,
         });
     });
-    
+
     network.once('afterDrawing', function () {
         network.fit({
             animation: {
@@ -356,25 +274,27 @@ export function drawFromResponse(nodes, edges) {
         });
     });
 
+    // Intercept the click event
     network.on('click', function (params) {
-        params.event = '[original event]';
-        console.log(
-            'click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM)
-        );
+        // Check if you clicked on a node; if so, display the title (if any) in a popup
+        network.interactionHandler._checkShowPopup(params.pointer.DOM);
     });
 }
 
 /**
  * Function to handle node size option selection
- * @param {*} event 
+ * @param {*} event
  */
 export function handleNodeSizeSelection(event) {
     const selectedValue = event.target.value;
-    applyNodeStyling(nodes,stylingType.SIZE,selectedValue);
+    applyNodeStyling(nodes, stylingType.SIZE, selectedValue);
 }
 
-// Function to handle node color option selection
+/**
+ * Function to handle node color option selection
+ * @param {*} event
+ */
 export function handleNodeColorSelection(event) {
     const selectedValue = event.target.value;
-    applyNodeStyling(nodes,stylingType.COLOR,selectedValue);
+    applyNodeStyling(nodes, stylingType.COLOR, selectedValue);
 }
