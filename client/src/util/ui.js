@@ -65,7 +65,7 @@ export function generateTitle(node) {
         </div>
     `;
 
-    var element = document.createElement('div');
+    let element = document.createElement('div');
     element.innerHTML = title;
 
     return element;

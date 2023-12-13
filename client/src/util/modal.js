@@ -1,12 +1,12 @@
 /*global document,window*/
 
-var modal = document.getElementById('importModal');
+let modal = document.getElementById('importModal');
 
 // Get the button that opens the modal
-var modalOpenButton = document.getElementById('importExportButton');
+let modalOpenButton = document.getElementById('importExportButton');
 
 // Get the <span> element that closes the modal
-var modalSpan = document.getElementsByClassName('close')[0];
+let modalSpan = document.getElementsByClassName('close')[0];
 
 // When the user clicks on the button, open the modal
 modalOpenButton.onclick = function () {
@@ -20,7 +20,7 @@ modalSpan.onclick = function () {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
-    if (event.target == modal) {
+    if (event.target === modal) {
         modal.style.display = 'none';
     }
 };

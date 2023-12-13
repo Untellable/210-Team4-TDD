@@ -6,29 +6,28 @@ import {
     baseURL,
     defaultNodeColor,
     defaultNodeSize,
-} from './constants.js';
+} from './util/constants.js';
 import {
     showSpinner,
     hideSpinner,
     hideLegend,
     displayLegend,
     generateTitle,
-} from './ui.js';
-import { verifyUserID, verifyLocality, verifyMaxNodes } from './utils.js';
-import './modal.js';
-import { hideModal } from './modal.js';
+} from './util/ui.js';
+import { verifyUserID, verifyLocality, verifyMaxNodes } from './util/utils.js';
+import './util/modal.js';
+import { hideModal } from './util/modal.js';
 
 let nodes = []; // array of nodes
 let edges = [];
 let responseJson; // Stores the response from the API
 
-var legendHeading = document.getElementById('legendHeading');
+const legendHeading = document.getElementById('legendHeading');
 
 /**
  * Function is called when the user clicks on the "Update" button
  * Updates the network graph with the user ID entered in the input box
  */
-
 export function updateID() {
     showSpinner();
 
@@ -101,13 +100,12 @@ export function updateID() {
  *
  *
  */
-
 export function processData(json, mainID) {
     let nodesCreated = new Set(); // to keep track of nodes created using the ids of accounts
     let main_node;
 
     if (mainID != null) {
-        main_node = json.filter((node) => node.id == mainID)[0];
+        main_node = json.filter((node) => node.id === mainID)[0];
         nodes.push({
             id: main_node.id,
             value: 20, // size of the node in the graph
@@ -123,9 +121,7 @@ export function processData(json, mainID) {
     // Add nodes
 
     json.forEach((node) => {
-        if (main_node && node.id == main_node.id) {
-            return;
-        } else {
+        if (!main_node || node.id !== main_node.id) {
             nodes.push({
                 id: node.id,
                 value: 15, // lower size for followers
@@ -164,16 +160,16 @@ export function processData(json, mainID) {
  */
 export function applyFollowerMetric(nodes, type) {
     legendHeading.innerHTML = 'Number of followers';
-    if (type == stylingType.SIZE) {
+    if (type === stylingType.SIZE) {
         nodes.forEach((node) => {
-            if (node.followersCount == 0) {
+            if (node.followersCount === 0) {
                 node.value = 1;
             } else {
                 node.value = parseInt(1 + Math.log(node.followersCount) * 10);
             }
             console.log('Node value', node.followersCount, node.value);
         });
-    } else if (type == stylingType.COLOR) {
+    } else if (type === stylingType.COLOR) {
         nodes.forEach((node) => {
             if (node.followersCount < 100) {
                 node.color = '#ff0000';
@@ -191,7 +187,7 @@ export function applyFollowerMetric(nodes, type) {
         });
     }
 
-    if (type == stylingType.COLOR) {
+    if (type === stylingType.COLOR) {
         displayLegend();
     }
 
@@ -204,11 +200,11 @@ export function applyFollowerMetric(nodes, type) {
  * @returns
  */
 export function applyNoneMetric(nodes, type) {
-    if (type == stylingType.SIZE) {
+    if (type === stylingType.SIZE) {
         nodes.forEach((node) => {
             node.value = defaultNodeSize;
         });
-    } else if (type == stylingType.COLOR) {
+    } else if (type === stylingType.COLOR) {
         nodes.forEach((node) => {
             node.color = defaultNodeColor;
         });
@@ -225,16 +221,16 @@ export function applyNoneMetric(nodes, type) {
  */
 export function applyActivityMetric(nodes, type) {
     legendHeading.innerHTML = 'Number of posts';
-    if (type == stylingType.SIZE) {
+    if (type === stylingType.SIZE) {
         nodes.forEach((node) => {
-            if (node.statusesCount == 0) {
+            if (node.statusesCount === 0) {
                 node.value = 1;
             } else {
                 node.value = parseInt(1 + Math.log(node.statusesCount) * 10);
             }
             console.log('Node value', node.statusesCount, node.value);
         });
-    } else if (type == stylingType.COLOR) {
+    } else if (type === stylingType.COLOR) {
         nodes.forEach((node) => {
             if (node.statusesCount < 100) {
                 node.color = '#ff0000';
@@ -252,7 +248,7 @@ export function applyActivityMetric(nodes, type) {
         });
     }
 
-    if (type == stylingType.COLOR) {
+    if (type === stylingType.COLOR) {
         displayLegend();
     }
 
@@ -263,18 +259,18 @@ export function applyActivityMetric(nodes, type) {
  * Function to apply styling to the nodes -
  * - Size of the nodes based on the number of followers
  * - or color of the nodes based on the number of followers
- * @param string nodes
- * @param string type
- * @param string metric
+ * @param {string} nodes
+ * @param {string} type
+ * @param {string} metric
  * @returns {*} nodesdrawFromResponse
  */
 
 export function applyNodeStyling(nodes, type, metric) {
-    if (metric == metricType.FOLLOWERS) {
+    if (metric === metricType.FOLLOWERS) {
         nodes = applyFollowerMetric(nodes, type);
-    } else if (metric == metricType.ACTIVITY) {
+    } else if (metric === metricType.ACTIVITY) {
         nodes = applyActivityMetric(nodes, type);
-    } else if (metric == metricType.NONE) {
+    } else if (metric === metricType.NONE) {
         nodes = applyNoneMetric(nodes, type);
     }
 
@@ -325,14 +321,19 @@ export function drawFromResponse(nodes, edges) {
                     drawThreshold: 5,
                 },
             },
-            length: 100,
+            length:
+                100 +
+                Math.log(document.getElementById('maxNodesInput').value) * 20,
         },
         physics: {
             adaptiveTimestep: true,
             barnesHut: {
                 gravitationalConstant: -8000,
                 springConstant: 0.04,
-                springLength: 95,
+                springLength:
+                    100 +
+                    Math.log(document.getElementById('maxNodesInput').value) *
+                        20,
             },
             stabilization: {
                 iterations: 2000,
