@@ -39,7 +39,7 @@ describe('accountInitializeHandler', () => {
 
     test('should return 404 if account not found', async () => {
         mockRequest.params.mainId = 'non_existing_id';
-        mockRequest.query = {}
+        mockRequest.query = {};
 
         // Mock the accountInitializeService to return data with empty accountInfoList
         accountInitializeService.mockResolvedValue([]);
@@ -52,7 +52,7 @@ describe('accountInitializeHandler', () => {
 
     test('should return 500 if unexpected error', async () => {
         mockRequest.params.mainId = 'valid_id';
-        mockRequest.query = {}
+        mockRequest.query = {};
 
         // Mock the accountInitializeService to throw an error
         accountInitializeService.mockRejectedValue(
@@ -67,7 +67,7 @@ describe('accountInitializeHandler', () => {
 
     test('should return 200 if account found', async () => {
         mockRequest.params.mainId = 'valid_id';
-        mockRequest.query = {}
+        mockRequest.query = {};
         const mockAccountData = [
             {
                 id: 'valid_id',
