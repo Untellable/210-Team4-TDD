@@ -96,11 +96,10 @@ export function updateID() {
  */
 
 export function processData(json, mainID) {
-    
     let nodesCreated = new Set(); // to keep track of nodes created using the ids of accounts
     let main_node;
 
-    if(mainID != null){
+    if (mainID != null) {
         main_node = json.filter((node) => node.id == mainID)[0];
         nodes.push({
             id: main_node.id,
@@ -117,8 +116,7 @@ export function processData(json, mainID) {
     json.forEach((node) => {
         if (main_node && node.id == main_node.id) {
             return;
-        }
-        else {
+        } else {
             nodes.push({
                 id: node.id,
                 value: 15, // lower size for followers
@@ -338,13 +336,17 @@ export function handleNodeColorSelection(event) {
  */
 export function exportGraph() {
     // Create a Blob with the JSON data
-    if(responseJson == null){
-        alert("Please enter a valid user ID and update the graph before exporting.");
+    if (responseJson == null) {
+        alert(
+            'Please enter a valid user ID and update the graph before exporting.'
+        );
         return;
     }
 
     // Create a Blob with the JSON object
-    const blob = new Blob([JSON.stringify(responseJson, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(responseJson, null, 2)], {
+        type: 'application/json',
+    });
 
     // Create a download link
     const a = document.createElement('a');
