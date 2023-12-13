@@ -1,13 +1,13 @@
 import MockAdapter from 'axios-mock-adapter';
 import httpInstance from './http';
 
-describe('HTTP Instance with Axios Retry', (object, method) => {
+describe('HTTP Instance with Axios Retry', () => {
     let mock;
     let testUrl =
         'https://mastodon.social/api/v1/accounts/lookup?acct=thomasapowell@fosstodon.org';
     let consoleSpy;
 
-    beforeEach((object, method) => {
+    beforeEach(() => {
         mock = new MockAdapter(httpInstance);
         consoleSpy = jest.spyOn(console, 'log');
     });
@@ -17,7 +17,6 @@ describe('HTTP Instance with Axios Retry', (object, method) => {
         consoleSpy.mockRestore();
     });
 
-    // Increase the timeout for this test
     test('should retry on timeout', async () => {
         mock.onGet(testUrl).timeout();
 
