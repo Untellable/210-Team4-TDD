@@ -8,34 +8,73 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="error-container">
+        <div class="error-message">
+            <strong>Invalid username or server domain.</strong>
+        </div>
+    </div> 
+    
+    <div class="account-container">
+        <h1 class = "account-title" style="font-size:32px"> Is this the correct account? </h1>
+
+        <div class="account">
+            <div class="account-avatar">
+                <img id="avatar" src="https://files.mastodon.social/cache/accounts/avatars/109/359/856/258/486/879/original/2dd226d0347b29c1.jpeg" alt="this is the avatar">
+            </div>
+            <div class="account-contents">
+                <span class="display-name">
+                    <bdi>
+                        <strong id="display-name">Thomas A Powell</strong>
+                    </bdi>
+                    <span id="display-account">
+                    @thomasapowell@vis.social
+                    </span>
+                </span>
+                <div class="account-followers">
+                    <span>
+                    <strong>
+                        <span id="followers-count">8</span>
+                    </strong>
+                    &nbsp;Followers 
+                    </span>
+                </div>
+            </div>
+          </div>
+              
+        <div class="actions">
+            <button name="button" class="yes-no-btn" id="no-btn"> NO </button>
+            <button name="button" class="yes-no-btn" id="yes-btn"> YES </button>
+        </div>
+
+    </div>
+    
     <div class="form-container">
-        <form class="input-form">
-            <h1 class = "title"> Welcome to Network Visualizer!</h1>
-            <p class="subtitle">
-                Enter the username and the server domain of your Mastodon account to see the social network visualizer made just for you.
-            </p>
+        <h1 class = "title" style="font-size:25px"> Welcome to Mastodon Network Visualizer!</h1>
+        <p class="subtitle">
+            Enter the username and the server domain of a Mastodon account for a social network visualizer customized for your account.
+        </p>
 
-            <div class="fields-group">
-                <label class="input-label"> Username </label>
-                <div class="input-container">
-                    <input type="text" id="input-username" class="input-box", placeholder="e.g. joe123">
-                </div>
+        <div class="fields-group">
+            <label class="input-label"> Username </label>
+            <div class="input-container">
+                <input type="text" id="input-username" class="input-box", placeholder="e.g. joe123">
             </div>
+        </div>
 
-            <div class="fields-group">
-                <label class="input-label"> Server Domain </label>
-                <div class="input-container">
-                    <input type="text" id="input-serverdomain" class="input-box", placeholder="e.g. mastodon.social">
-                </div>
+        <div class="fields-group">
+            <label class="input-label"> Server Domain </label>
+            <div class="input-container">
+                <input type="text" id="input-serverdomain" class="input-box", placeholder="e.g. mastodon.social">
             </div>
+        </div>
 
-            <div class="actions">
-                <button name="button" type="submit" class="btn"> SUBMIT </button>
-            </div>
-        </form>
+        <div>
+            <button name="button" type="submit" class="btn" id="submit-btn"> SUBMIT </button>
+        </div>
 
 
-        <div class="expandable-container" id="expandable-container-1">
+
+        <!-- <div class="expandable-container" id="expandable-container-1">
             <button class="expandable-trigger">
                 <span class="expandable-trigger-text">What is Mastodon?</span>
                 <span class="expandable-trigger-arrow">&#x2C5;</span>
@@ -71,21 +110,60 @@
                     <img src="assets/username serverdomain instruction.jpg" alt="Image" class="instruction-image">
                 </div>
             </div>
-        </div>
-
-        <!-- <div class="form-footer">
-            <ul class="links-group">               
-                <li>
-                    <a href="https://joinmastodon.org/">Join Mastodon</a>
-                </li>
-                <li>
-                    <a href="https://mastodonservers.net/"> Explore Mastodon Servers </a>
-                </li>
-            </ul>
         </div> -->
 
+        <div class="form-footer">
+            <ul class="links-group">               
+                <li>
+                    <a href="https://joinmastodon.org/">Don't have an account? Sign up</a>
+                </li>
+            </ul>
+        </div>
+
+
+
+
+
+
+
+        
     </div>
 
+    <!-- <div class="account-container">
+        <h1 class = "account-title" style="font-size:32px"> Is this the correct account? </h1>
+
+        <div class="account">
+            <div class="account-avatar">
+                <img id="avatar" src="https://files.mastodon.social/cache/accounts/avatars/109/359/856/258/486/879/original/2dd226d0347b29c1.jpeg" alt="this is the avatar">
+            </div>
+            <div class="account-contents">
+                <span class="display-name">
+                    <bdi>
+                        <strong id="display-name">Thomas A Powell</strong>
+                    </bdi>
+                    <span id="display-account">
+                    @thomasapowell@vis.social
+                    </span>
+                </span>
+                <div class="account-followers">
+                    <span>
+                    <strong>
+                        <span id="followers-count">8</span>
+                    </strong>
+                    &nbsp;Followers 
+                    </span>
+                </div>
+            </div>
+          </div>
+              
+        <div class="actions">
+            <button name="button" class="yes-no-btn" id="no-btn"> NO </button>
+            <button name="button" class="yes-no-btn" id="yes-btn"> YES </button>
+        </div>
+
+    </div> -->
+
     <script src="welcomepage.js"></script>
+    <script src="validate.js"></script>
 </body>
 </html>
