@@ -1,4 +1,4 @@
-/*global document,alert,vis*/
+/*global document,alert,vis,sessionStorage*/
 import {
     stylingType,
     metricType,

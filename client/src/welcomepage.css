@@ -1,5 +1,5 @@
 body {
-    background-color: #282C37;
+    background-color: #282c37;
     font-family: 'Roboto', Arial;
     color: white;
 }
@@ -47,12 +47,12 @@ body {
 }
 
 .input-box:focus {
-    border-color: #573CCF;
+    border-color: #573ccf;
     background-color: #131415;
 }
 
 .input-box:-webkit-autofill,
-.input-box:-webkit-autofill:hover, 
+.input-box:-webkit-autofill:hover,
 .input-box:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
     -webkit-box-shadow: 0 0 0px 1000px #131415 inset;
@@ -60,7 +60,7 @@ body {
 }
 
 .input-box:-moz-autofill,
-.input-box:-moz-autofill:hover, 
+.input-box:-moz-autofill:hover,
 .input-box:-moz-autofill:focus {
     color: white;
     background-color: #131415;
@@ -68,7 +68,7 @@ body {
 
 .btn {
     cursor: pointer;
-    background-color: #6364FF;
+    background-color: #6364ff;
     color: white;
     font-size: 18px;
     font-weight: 500;
@@ -82,7 +82,7 @@ body {
 }
 
 .btn:hover {
-    background-color: #5A47DC;
+    background-color: #5a47dc;
 }
 
 .expandable-container {
@@ -95,7 +95,7 @@ body {
     display: flex;
     align-items: center;
     border: none;
-    background-color: #282C37;
+    background-color: #282c37;
     color: #9baec8;
     font-size: 15px;
     margin: 0;
@@ -149,8 +149,8 @@ body {
     display: none;
     justify-content: center;
     align-items: center;
-    background: rgba(223, 64, 90, .1);
-    border: 1px solid rgba(223, 64, 90, .5);
+    background: rgba(223, 64, 90, 0.1);
+    border: 1px solid rgba(223, 64, 90, 0.5);
     color: #df405a;
     border-radius: 4px;
     padding: 15px 10px;
@@ -183,7 +183,7 @@ body {
 .account {
     display: flex;
     align-items: center;
-    background-color: #363A46;
+    background-color: #363a46;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #969696;
@@ -248,13 +248,13 @@ body {
 }
 
 #yes-btn {
-    background-color: #6364FF;
+    background-color: #6364ff;
     color: white;
     margin-right: 0px;
 }
 
 #yes-btn:hover {
-    background-color: #5A47DC;
+    background-color: #5a47dc;
 }
 
 #no-btn {
@@ -262,6 +262,5 @@ body {
 }
 
 #no-btn:hover {
-    background-color: #5A47DC;
+    background-color: #5a47dc;
 }
-

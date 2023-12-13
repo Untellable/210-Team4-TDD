@@ -1,14 +1,32 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    const expandableContainers = document.querySelectorAll('.expandable-container');
+/*global document,window*/
+import {
+    hideError,
+    showForm,
+    hideAccount,
+    clearInput,
+    recoverErrorMessage,
+    emptyInputHandler,
+    getInput,
+    validateInput,
+} from './validate.js';
 
-    expandableContainers.forEach(container => {
-        const expandableTrigger = container.querySelector('.expandable-trigger');
-        const expandableContent = container.querySelector('.expandable-content');
-        
+document.addEventListener('DOMContentLoaded', (event) => {
+    const expandableContainers = document.querySelectorAll(
+        '.expandable-container'
+    );
+
+    expandableContainers.forEach((container) => {
+        const expandableTrigger = container.querySelector(
+            '.expandable-trigger'
+        );
+        const expandableContent = container.querySelector(
+            '.expandable-content'
+        );
+
         expandableTrigger.addEventListener('click', () => {
             // Toggle the content visibility
-            const isVisible = expandableContent.style.display === "block";
-            expandableContent.style.display = isVisible ? "none" : "block";
+            const isVisible = expandableContent.style.display === 'block';
+            expandableContent.style.display = isVisible ? 'none' : 'block';
         });
     });
 });
@@ -19,27 +37,31 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.addEventListener('click', (event) => {
         // disable the submit button prevent multiple submission when waiting for response
         submitBtn.disabled = true;
-        
+
         // recover the error message to default: invalid
         recoverErrorMessage();
 
-        [username, serverDomain] = getInput();
+        let [username, serverDomain] = getInput();
 
         // show error msg directly without api fetching
-        isEmpty = emptyInputHandler(username, serverDomain);
+        let isEmpty = emptyInputHandler(username, serverDomain);
 
-        console.log('Got Input After Submit Button is Clicked, username: ', username, 'serverDomain: ', serverDomain);      
-        
+        console.log(
+            'Got Input After Submit Button is Clicked, username: ',
+            username,
+            'serverDomain: ',
+            serverDomain
+        );
+
         // only do api fetching for non-empty input
         if (!isEmpty) {
             validateInput(username, serverDomain);
         }
-        
+
         // reactivate the submit button
         submitBtn.disabled = false;
     });
 });
-
 
 document.getElementById('no-btn').addEventListener('click', () => {
     clearInput();
@@ -48,10 +70,8 @@ document.getElementById('no-btn').addEventListener('click', () => {
     hideError();
 });
 
-
 // TODO: implement save logic and open new page
 document.getElementById('yes-btn').addEventListener('click', () => {
-
     console.log('Yes button clicked');
 
     window.location.href = 'visjs.html';
