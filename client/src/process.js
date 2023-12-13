@@ -13,7 +13,7 @@ import {
     displayLegend,
     generateTitle,
 } from './ui.js';
-import { verifyUserID } from './utils.js';
+import { verifyUserID, verifyLocality, verifyMaxNodes } from './utils.js';
 
 let nodes = []; // array of nodes
 let edges = [];
@@ -34,6 +34,18 @@ export function updateID() {
 
     if (!verifyUserID(userID)) {
         alert('Please enter a valid number.');
+        hideSpinner();
+        return;
+    }
+
+    if (!verifyMaxNodes(maxNodes)) {
+        alert('Please enter a number between 1 and 500 for number of nodes.');
+        hideSpinner();
+        return;
+    }
+
+    if (!verifyLocality(locality)) {
+        alert('Please enter a number between 1 and 10 for locality.');
         hideSpinner();
         return;
     }
