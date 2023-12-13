@@ -171,7 +171,7 @@ async function accountInitializeService(
         for (const [nodeId, nodeInfo] of newNeighbors) {
             nodeInfo['depth'] = curNodeInfo['depth'] + 1;
             const nodePriority = calcPriority(nodeInfo);
-            nodeHeap.push({ priority: nodePriority, ...nodeInfo });
+            nodeHeap.push({ ...nodeInfo, priority: nodePriority });
         }
     }
 
