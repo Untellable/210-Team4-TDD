@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Vis Network | Data | Scaling Nodes and Edges</title>
+        <link rel="stylesheet" type="text/css" href="visjs.css" />
+
+        <script type="text/javascript" src="vis-network.min.js"></script>
+
+        <script type="module">
+            import {
+                updateID,
+                handleNodeSizeSelection,
+                handleNodeColorSelection,
+                exportGraph,
+                importGraph,
+            } from './process.js';
+            document
+                .getElementById('enterButton')
+                .addEventListener('click', updateID);
+
+            document
+                .getElementById('nodeSize')
+                .addEventListener('change', handleNodeSizeSelection);
+
+            document
+                .getElementById('nodeColor')
+                .addEventListener('change', handleNodeColorSelection);
+
+            document
+                .getElementById('exportButton')
+                .addEventListener('click', exportGraph);
+
+            document
+                .getElementById('importButton')
+                .addEventListener('click', importGraph);
+        </script>
+    </head>
+    <body>
+        <div id="mainContainer">
+            <div class="heading-container">
+                <h2 class="main-heading">Mastodon Network Visualizer</h2>
+                <button
+                    id="instructionsButton"
+                    class="instructions-button"
+                    onclick="showInstructions()"
+                >
+                    User Guide
+                </button>
+            </div>
+            <div class="fields-container">
+                <div class="input-container">
+                    <input
+                        type="number"
+                        id="maxNodesInput"
+                        placeholder="Max Nodes (10-500)"
+                        min="10"
+                        max="500"
+                        value="10"
+                    />
+                    <input
+                        type="number"
+                        id="localityInput"
+                        placeholder="Locality (1-10)"
+                        min="1"
+                        max="10"
+                        value="2"
+                    />
+                    <select id="rankingOptions" class="ranking-options">
+                        <option value="followers">Rank by Followers</option>
+                        <option value="posts">Rank by Posts</option>
+                        <option value="random">Surprise Me</option>
+                    </select>
+                    <input type="button" id="enterButton" value="Enter" />
+                </div>
+                <div>
+                    <button id="importExportButton" class="import-button">
+                        Import/Export Graph
+                    </button>
+                </div>
+            </div>
+            <div class="graph-settings">
+                <div class="dropdown">
+                    <label for="nodeSize">Node size</label>
+                    <select name="" id="nodeSize">
+                        <option value="none">None</option>
+                        <option value="followers">Number of followers</option>
+                        <option value="activity">Activity</option>
+                    </select>
+                </div>
+                <div class="dropdown">
+                    <label for="nodeColor">Node color</label>
+                    <select name="" id="nodeColor">
+                        <option value="none">None</option>
+                        <option value="followers">Number of followers</option>
+                        <option value="activity">Activity</option>
+                    </select>
+                </div>
+            </div>
+            <div id="mynetwork"></div>
+            <div id="node-popup"></div>
+            <div id="overlay" class="overlay"></div>
+            <div id="loadingSpinner" class="spinner-container">
+                <div class="spinner"></div>
+            </div>
+            <div id="legend">
+                <div id="legendHeading"></div>
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #ff0000"
+                    ></div>
+                    <div class="legend-text">0 - 99</div>
+                </div>
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #ff6600"
+                    ></div>
+                    <div class="legend-text">100 - 999</div>
+                </div>
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #ffcc00"
+                    ></div>
+                    <div class="legend-text">1000 - 9999</div>
+                </div>
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #99ff00"
+                    ></div>
+                    <div class="legend-text">10000 - 99999</div>
+                </div>
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #00ff00"
+                    ></div>
+                    <div class="legend-text">100000 - 999999</div>
+                </div>
+                <div class="legend-item">
+                    <div
+                        class="legend-color"
+                        style="background-color: #00ff99"
+                    ></div>
+                    <div class="legend-text">1000000+</div>
+                </div>
+            </div>
+
+            <!-- The Modal -->
+            <div id="importModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Import/Export Graph</h2>
+                    <p>
+                        Easily import and export your graph data to share with
+                        others.
+                        <br />
+                        1. To import a graph, click on the "Choose File" button
+                        and select the file you want to import.
+                        <br />
+                        2. To export a graph, click on the "Export Graph"
+                        button. This will download a JSON file containing the
+                        graph data.
+                        <br />
+                    </p>
+                    <input type="file" id="chooseFile" class="import-button" />
+                    <button id="importButton" class="import-button">
+                        Import Graph
+                    </button>
+                    <button id="exportButton" class="import-button">
+                        Export Graph
+                    </button>
+                </div>
+            </div>
+
+            <!-- The Modal -->
+            <div id="instructionsModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Instructions</h2>
+                    <p>
+                        Network Visualization Tool: Customize Your View
+                        <li>
+                            Rank Selection: Choose between 'Followers', 'Posts',
+                            or 'Surprise Me' to focus on the most popular/active
+                            users in your local network.
+                        </li>
+                        <li>
+                            Limit Nodes: Set a maximum number of nodes to
+                            display for a clearer view.
+                        </li>
+                        <li>
+                            Locality Weight: Focus on users closer to you by
+                            weighting them more heavily during node selection.
+                        </li>
+                        <li>
+                            Dynamic Visualization: The graph updates
+                            automatically to reflect your choice of node color
+                            and size.
+                        </li>
+                        Explore, analyze, and understand your network with ease!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

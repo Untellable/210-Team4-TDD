@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mastodon Network Visualizer</title>
+        <link rel="stylesheet" href="welcomepage.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="error-container">
+            <div class="error-message">
+                <strong id="input-error-message"
+                    >Invalid username or server domain.</strong
+                >
+            </div>
+        </div>
+
+        <div class="account-container">
+            <h1 class="account-title" style="font-size: 32px">
+                Is this the correct account?
+            </h1>
+            <div class="account">
+                <div class="account-avatar">
+                    <img id="avatar" alt="this is the avatar" />
+                </div>
+                <div class="account-contents">
+                    <span class="display-name-account">
+                        <bdi>
+                            <strong id="display-name">display name</strong>
+                        </bdi>
+                        <span id="display-account"> @username@server </span>
+                    </span>
+                    <div class="account-followers">
+                        <span>
+                            <strong>
+                                <span id="followers-count">?</span>
+                            </strong>
+                            &nbsp;Followers
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button name="button" class="yes-no-btn" id="no-btn">NO</button>
+                <button name="button" class="yes-no-btn" id="yes-btn">
+                    YES
+                </button>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <h1 class="title">Welcome to Mastodon Network Visualizer</h1>
+            <p class="subtitle">
+                Enter the username and the server domain of a Mastodon account
+                for a social network visualizer customized for your account.
+            </p>
+
+            <div class="fields-group">
+                <label class="input-label"> Username </label>
+                <div class="input-container">
+                    <input
+                        type="text"
+                        id="input-username"
+                        class="input-box"
+                        ,
+                        placeholder="e.g. joe123"
+                    />
+                </div>
+            </div>
+
+            <div class="fields-group">
+                <label class="input-label"> Server Domain </label>
+                <div class="input-container">
+                    <input
+                        type="text"
+                        id="input-serverdomain"
+                        class="input-box"
+                        ,
+                        placeholder="e.g. mastodon.social"
+                    />
+                </div>
+            </div>
+
+            <div class="expandable-container">
+                <button class="expandable-trigger">
+                    <span class="expandable-trigger-text"
+                        >Invalid username/server domain?</span
+                    >
+                </button>
+                <div class="expandable-content" style="display: none">
+                    <li>
+                        1. Log in to your Mastodon server and go to your profile
+                        page.
+                    </li>
+                    <li>
+                        2. Under the profile picture, find the unique address in
+                        the format of @<span class="address">username</span
+                        >@<span class="address">serverdomain </span>
+                    </li>
+                </div>
+            </div>
+
+            <div>
+                <button name="button" type="submit" class="btn" id="submit-btn">
+                    SUBMIT
+                </button>
+            </div>
+
+            <div class="form-footer">
+                <ul class="links-group">
+                    <li>
+                        <a href="https://joinmastodon.org/"
+                            >Don't have an account? Sign up</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <script type="module" src="welcomepage.js"></script>
+    </body>
+</html>
